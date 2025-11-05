@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/layout/app-sidebar";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,12 +27,19 @@ export default async function RootLayout({
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <AuthProvider session={session}>
           <SidebarProvider>
-            <div className="flex h-screen">
-              {session ? <AppSidebar /> : null}
-              <main className="flex-1 overflow-y-auto">
-                {children}
-              </main>
-            </div>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="flex h-screen">
+                {session ? <AppSidebar /> : null}
+                <main className="flex-1 overflow-y-auto">
+                  {children}
+                </main>
+              </div>
+            </ThemeProvider>
           </SidebarProvider>
         </AuthProvider>
       </body>
