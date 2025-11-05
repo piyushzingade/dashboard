@@ -4,6 +4,7 @@ import "./globals.css";
 import AuthProvider from "@/components/providers/session-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import { Sidebar, SidebarProvider } from "@/components/ui/sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className={`${inter.className} antialiased`}>
-        <AuthProvider>
-          {children}
+      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
+        <AuthProvider session={session}>
+          <SidebarProvider>
+            {children}
+          </SidebarProvider>
         </AuthProvider>
       </body>
     </html>
