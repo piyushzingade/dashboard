@@ -45,26 +45,39 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { Icons } from '../ui/icons';
+import { OrgSwitcher } from '../org-switch';
 
-interface NavItem {
-    title: string;
-    url: string;
-    icon?: keyof typeof Icons;
-    items?: NavItem[];
-    isActive?: boolean;
-}
+
+export const company = {
+    name: 'Acme Inc',
+    logo: IconPhotoUp,
+    plan: 'Enterprise'
+};
+
+const tenants = [
+    { id: '1', name: 'Acme Inc' },
+    { id: '2', name: 'Beta Corp' },
+    { id: '3', name: 'Gamma Ltd' }
+];
 
 export default function AppSidebar() {
     const pathname = usePathname();
     const { data: session } = useSession();
     const router = useRouter();
 
+    const handleSwitchTenant = (_tenantId: string) => {
+        // Tenant switching functionality would be implemented here
+    };
+    const activeTenant = tenants[0];
+
     return (
         <Sidebar collapsible='icon'>
             <SidebarHeader>
-                <div className="flex items-center px-2 py-4">
-                    <h2 className="text-lg font-semibold">Dashboard</h2>
-                </div>
+                <OrgSwitcher
+                    tenants={tenants}
+                    defaultTenant={activeTenant}
+                    onTenantSwitch={handleSwitchTenant}
+                />
             </SidebarHeader>
             <SidebarContent className='overflow-x-hidden'>
                 <SidebarGroup>
