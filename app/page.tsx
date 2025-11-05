@@ -1,4 +1,3 @@
-import { Sidebar } from "@/components/ui/sidebar";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
@@ -11,14 +10,9 @@ export default async function Home() {
   }
 
   return (
-    <div className="flex min-h-screen bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full flex-col bg-white dark:bg-black">
-        <Sidebar />
-        <div className="flex-1 p-8">
-          {/* Add your dashboard content here */}
-          <h1 className="text-2xl font-bold">Welcome, {session.user?.name}</h1>
-        </div>
-      </main>
+    <div className="p-8">
+      <h1 className="text-2xl font-bold">Welcome, {session.user?.name}</h1>
+      <p className="mt-2 text-gray-600">This is your dashboard home page.</p>
     </div>
   );
 }
