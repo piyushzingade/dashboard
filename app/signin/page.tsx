@@ -5,7 +5,6 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import Turnstile from "react-turnstile";
-import axiosInstance from "@/lib/axios";
 import axios from "axios";
 
 export default function SignInPage() {

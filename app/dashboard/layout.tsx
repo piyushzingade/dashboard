@@ -1,4 +1,4 @@
-import { Header } from "@/components/Headers";
+import Header from "@/components/Headers";
 import AppSidebar from "@/components/layout/app-sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { authOptions } from "@/lib/auth";
@@ -18,7 +18,7 @@ export default async function DashboardLayout({
 
     return (
         <SidebarProvider>
-            <div className="flex h-screen">
+            <div className="flex h-screen w-full">
                 <AppSidebar />
                 <main className="flex-1 overflow-y-auto">
                     <Header />
