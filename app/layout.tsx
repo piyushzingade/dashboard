@@ -35,12 +35,7 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <div className="flex h-screen">
-                {session ? <AppSidebar /> : null}
-                <main className="flex-1 overflow-y-auto">
-                  {children}
-                </main>
-              </div>
+              {children}
             </ThemeProvider>
           </SidebarProvider>
         </AuthProvider>
