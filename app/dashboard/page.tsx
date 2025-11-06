@@ -1,14 +1,14 @@
+import { authOptions } from '@/lib/auth';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
-
-export default async function DashboardPage() {
+export default async function Dashboard() {
     const session = await getServerSession(authOptions);
+    const userId = session?.user
 
-    return (
-        <div className="p-8">
-            <h1 className="text-2xl font-bold">Welcome, {session?.user?.name}</h1>
-            <p className="mt-2 text-gray-600">This is your dashboard home page.</p>
-        </div>
-    );
+    if (!userId) {
+        return redirect('/auth/sign-in');
+    } else {
+        redirect('/dashboard/overview');
+    }
 }
