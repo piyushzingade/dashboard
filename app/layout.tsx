@@ -28,16 +28,14 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <AuthProvider session={session}>
-          <SidebarProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              {children}
-            </ThemeProvider>
-          </SidebarProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>
