@@ -1,4 +1,7 @@
 import { ValueLineBarChart } from '@/components/graphs/BarChart';
+import { PartialLineChart } from '@/components/graphs/LineChart';
+import { GlowingMultipleStrokeRadarChart } from '@/components/graphs/RadarChart';
+import { RecentSales } from '@/components/graphs/Sales';
 import { Badge } from '@/components/ui/badge';
 import {
     Card,
@@ -110,14 +113,32 @@ export default function OverviewPage() {
                     </CardFooter>
                 </Card>
             </div>
-            <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
-                <div className='col-span-4'><ValueLineBarChart /></div>
-                <div className='col-span-4 md:col-span-3'>
-                    {/* sales arallel routes */}
-                    {/* {sales} */}
+
+            {/* Main Content Area */}
+            <div className="flex flex-col md:flex-row gap-4 mt-4">
+                {/* Left Section - Charts */}
+                <div className="flex-1 md:w-2/3">
+                    <div className="grid auto-rows-[minmax(180px,auto)] gap-4">
+                        <div>
+                            <ValueLineBarChart />
+                        </div>
+                        <div>
+                            <PartialLineChart />
+                        </div>
+                    </div>
                 </div>
-                {/* <div className='col-span-4'>{area_stats}</div> */}
-                {/* <div className='col-span-4 md:col-span-3'>{pie_stats}</div> */}
+
+                {/* Right Section - Stats */}
+                <div className="md:w-1/3">
+                    <div className="grid auto-rows-[minmax(180px,auto)] gap-4">
+                        <div>
+                            <GlowingMultipleStrokeRadarChart />
+                        </div>
+                        <div>
+                            <RecentSales />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
