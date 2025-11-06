@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useCallback } from "react";
 import Turnstile from "react-turnstile";
 import axiosInstance from "@/lib/axios";
+import axios from "axios";
 
 export default function SignInPage() {
   const { data: session, status } = useSession();
@@ -25,7 +26,7 @@ export default function SignInPage() {
 
   const verifyToken = async (token: string) => {
     try {
-      const { data } = await axiosInstance.post("/verify-captcha", { token });
+      const { data } = await axios.post("/api/verify-captcha", { token });
       return data.success;
     } catch (error: any) {
       if (error?.response?.data?.error) {
