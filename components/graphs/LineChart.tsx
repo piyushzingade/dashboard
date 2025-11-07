@@ -50,7 +50,7 @@ export function PartialLineChart() {
     });
 
     return (
-        <Card >
+        <Card className="p-6.5" >
             <CardHeader>
                 <CardTitle>
                     Partial Line Chart

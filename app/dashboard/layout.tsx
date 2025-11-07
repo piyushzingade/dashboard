@@ -20,11 +20,11 @@ export default async function DashboardLayout({
     return (
         <KBar>
             <SidebarProvider>
-                <div className="flex h-screen overflow-hidden">
+                <div className="flex h-screen w-full overflow-hidden">
                     <AppSidebar />
                     <SidebarInset className="flex flex-col flex-1 overflow-hidden">
                         <Header />
-                        <div className="flex-1 overflow-auto px-6 py-4">
+                        <div className="flex-1 overflow-auto custom-scrollbar">
                             {children}
                         </div>
                     </SidebarInset>

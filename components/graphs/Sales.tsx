@@ -57,6 +57,13 @@ const salesData = [
         fallback: 'SD',
         amount: '+$39.00'
     },
+    {
+        name: 'Sofia Davis',
+        email: 'sofia.davis@email.com',
+        avatar: 'https://api.slingacademy.com/public/sample-users/5.png',
+        fallback: 'SD',
+        amount: '+$39.00'
+    },
 
 ];
 
@@ -71,7 +78,7 @@ export function RecentSales() {
                 <div className='space-y-8'>
                     {salesData.map((sale, index) => (
                         <div key={index} className='flex items-center'>
-                            <Avatar className='h-9 w-9'>
+                            <Avatar className='h-8 w-8'>
                                 <AvatarImage src={sale.avatar} alt='Avatar' />
                                 <AvatarFallback>{sale.fallback}</AvatarFallback>
                             </Avatar>
