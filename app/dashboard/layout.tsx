@@ -1,6 +1,7 @@
 import Header from "@/components/Headers";
+import KBar from "@/components/kbar";
 import AppSidebar from "@/components/layout/app-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -17,15 +18,19 @@ export default async function DashboardLayout({
     }
 
     return (
-        <SidebarProvider>
-            <div className="flex max-h-screen w-full">
-                <AppSidebar />
-                <main className="flex-1 overflow-y-auto mt-auto">
-                    <Header />
-                    {children}
-                </main>
-            </div>
-        </SidebarProvider>
+        <KBar>
+            <SidebarProvider>
+                <div className="flex h-screen overflow-hidden">
+                    <AppSidebar />
+                    <SidebarInset className="flex flex-col flex-1 overflow-hidden">
+                        <Header />
+                        <div className="flex-1 overflow-auto px-6 py-4">
+                            {children}
+                        </div>
+                    </SidebarInset>
+                </div>
+            </SidebarProvider>
+        </KBar>
     )
 }
 

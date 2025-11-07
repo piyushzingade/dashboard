@@ -16,7 +16,7 @@ import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 export default function OverviewPage() {
     return (
         <div className='flex flex-1 flex-col space-y-2'>
-            <div className='flex items-center justify-between space-y-2'>
+            <div className='flex items-center justify-between '>
                 <h2 className='text-2xl font-bold tracking-tight'>
                     Hi, Welcome back 👋
                 </h2>
@@ -115,7 +115,7 @@ export default function OverviewPage() {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex flex-col md:flex-row gap-4 mt-4">
+            <div className="flex flex-col md:flex-row gap-4 mt-2">
                 {/* Left Section - Charts */}
                 <div className="flex-1 md:w-2/3">
                     <div className="grid auto-rows-[minmax(180px,auto)] gap-4">
