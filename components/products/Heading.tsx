@@ -1,10 +1,10 @@
 import { Plus } from "lucide-react";
-import { Button } from "../ui/button";
+import Link from "next/link";
 
 export function Heading() {
 
     return (
-        <div className="h-16 w-full flex items-center justify-between border-b border-muted-foreground/30">
+        <div className="h-16 w-full flex items-center justify-between ">
             {/* Text */}
             <div className="">
                 <div className="text-foreground text-2xl font-bold">Product</div>
@@ -12,13 +12,9 @@ export function Heading() {
             </div>
             {/* Button */}
             <div className="">
-                <Button className="bg-foreground text-background px-6 py-2"><Plus className="size-4" /> Add</Button>
+                <Link href='/dashboard/product/add' className="bg-foreground text-background px-3 py-2 flex items-center gap-3 rounded-md"><Plus className="size-4" /> Add</Link>
             </div>
         </div>
     )
 }
-
-// 
-// Product 
-// Manage products (Server side table functionalities.)
 

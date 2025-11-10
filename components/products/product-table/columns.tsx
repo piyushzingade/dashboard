@@ -13,15 +13,17 @@ import { CATEGORY_OPTIONS } from './options';
 export const columns: ColumnDef<Product>[] = [
     {
         accessorKey: 'photo_url',
-        header: 'IMAGE',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='Image' />
+        ),
         cell: ({ row }) => {
             return (
-                <div className='relative aspect-square'>
+                <div className='relative w-12 h-12'>
                     <Image
                         src={row.getValue('photo_url')}
                         alt={row.getValue('name')}
                         fill
-                        className='rounded-lg'
+                        className='rounded-lg object-cover'
                     />
                 </div>
             );
@@ -30,10 +32,10 @@ export const columns: ColumnDef<Product>[] = [
     {
         id: 'name',
         accessorKey: 'name',
-        header: ({ column }: { column: Column<Product, unknown> }) => (
+        header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Name' />
         ),
-        cell: ({ cell }) => <div>{cell.getValue<Product['name']>()}</div>,
+        cell: ({ cell }) => <div className="font-medium">{cell.getValue<string>()}</div>,
         meta: {
             label: 'Name',
             placeholder: 'Search products...',
@@ -45,17 +47,14 @@ export const columns: ColumnDef<Product>[] = [
     {
         id: 'category',
         accessorKey: 'category',
-        header: ({ column }: { column: Column<Product, unknown> }) => (
+        header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Category' />
         ),
         cell: ({ cell }) => {
-            const status = cell.getValue<Product['category']>();
-            const Icon = status === 'active' ? CheckCircle2 : XCircle;
-
+            const category = cell.getValue<string>();
             return (
                 <Badge variant='outline' className='capitalize'>
-                    <Icon />
-                    {status}
+                    {category}
                 </Badge>
             );
         },
@@ -68,15 +67,29 @@ export const columns: ColumnDef<Product>[] = [
     },
     {
         accessorKey: 'price',
-        header: 'PRICE'
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='Price' />
+        ),
+        cell: ({ cell }) => {
+            const price = cell.getValue<number>();
+            return <div className="font-medium">₹{price.toLocaleString()}</div>;
+        }
     },
     {
         accessorKey: 'description',
-        header: 'DESCRIPTION'
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='Description' />
+        ),
+        cell: ({ cell }) => {
+            const description = cell.getValue<string>();
+            return <div className="line-clamp-2 text-sm text-muted-foreground">{description}</div>;
+        }
     },
-
     {
         id: 'actions',
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title='Actions' />
+        ),
         cell: ({ row }) => <CellAction data={row.original} />
     }
 ];
