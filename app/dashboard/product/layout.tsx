@@ -8,12 +8,10 @@ export default function ProductLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="w-full h-fit">
-            <PageContainer scrollable={true}>
-                <NuqsAdapter>
-                    {children}
-                </NuqsAdapter>
-            </PageContainer>
-        </div>
+        <PageContainer scrollable={true}>
+            <NuqsAdapter>
+                {children}
+            </NuqsAdapter>
+        </PageContainer>
     );
 }

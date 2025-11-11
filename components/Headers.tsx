@@ -19,7 +19,7 @@ export default function Header({ className }: HeaderProps) {
             role="banner"
             className={cn(
                 "sticky top-0 z-50 w-full h-14 shrink-0",
-                "border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+                "border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60",
                 "overflow-hidden",
                 "transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12",
                 className

@@ -18,6 +18,35 @@ export const navItems: NavItem[] = [
         items: [] // No child items
     },
     {
+        title: 'Kanban',
+        url: '/dashboard/kanban',
+        icon: 'kanban',
+        shortcut: ['k', 'k'],
+        isActive: false,
+        items: [] // No child items
+    }, {
+        title: 'Calendar',
+        url: '/dashboard/calendar',
+        icon: 'calendar',
+        shortcut: ['c', 'c'],
+        isActive: false,
+        items: [] // No child items
+    }, {
+        title: 'Reports',
+        url: '/dashboard/reports',
+        icon: 'reports',
+        shortcut: ['c', 'c'],
+        isActive: false,
+        items: [] // No child items
+    }, {
+        title: 'Transactions',
+        url: '/dashboard/transactions',
+        icon: 'transaction',
+        shortcut: ['c', 'c'],
+        isActive: true,
+        items: [] // No child items
+    },
+    {
         title: 'Account',
         url: '#', // Placeholder as there is no direct link for the parent
         icon: 'billing',
@@ -37,13 +66,31 @@ export const navItems: NavItem[] = [
                 icon: 'login'
             }
         ]
+    }, {
+        title: 'General',
+        url: '#', // Placeholder as there is no direct link for the parent
+        icon: 'billing',
+        isActive: true,
+
+        items: [
+            {
+                title: 'Settings',
+                url: '/dashboard/settings',
+                icon: 'settings',
+                shortcut: ['m', 'm']
+            },
+            {
+                title: 'Help Center',
+                shortcut: ['l', 'l'],
+                url: '/',
+                icon: 'help'
+            },
+            {
+                title: 'Feedback',
+                shortcut: ['l', 'l'],
+                url: '/',
+                icon: 'feedback'
+            }
+        ]
     },
-    {
-        title: 'Kanban',
-        url: '/dashboard/kanban',
-        icon: 'kanban',
-        shortcut: ['k', 'k'],
-        isActive: false,
-        items: [] // No child items
-    }
 ];
