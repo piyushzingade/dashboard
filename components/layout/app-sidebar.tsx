@@ -46,6 +46,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { Icons } from '../ui/icons';
 import { OrgSwitcher } from '../org-switch';
+import { SidebarCard } from '../sidebar-card';
 
 
 export const company = {
@@ -139,6 +140,10 @@ export default function AppSidebar() {
                     </SidebarMenu>
                 </SidebarGroup>
             </SidebarContent>
+
+            <div className="mx-auto">
+                <SidebarCard />
+            </div>
             <SidebarFooter>
                 <SidebarMenu>
                     <SidebarMenuItem>
@@ -199,6 +204,7 @@ export default function AppSidebar() {
                                         Notifications
                                     </DropdownMenuItem>
                                 </DropdownMenuGroup>
+
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
                                     onClick={() => signOut({ callbackUrl: '/signin' })}
