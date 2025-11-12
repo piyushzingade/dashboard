@@ -11,6 +11,8 @@
   "dependencies": {
     "@auth/core": "^0.34.3",
     "@auth/prisma-adapter": "^2.11.1",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
     "@faker-js/faker": "^10.1.0",
     "@marsidev/react-turnstile": "^1.3.1",
     "@prisma/client": "^6.18.0",
@@ -29,6 +31,7 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tabler/icons-react": "^3.35.0",
     "@tanstack/react-table": "^8.21.3",
+    "@vercel/analytics": "^1.5.0",
     "axios": "^1.13.2",
     "better-auth": "^1.3.34",
     "class-variance-authority": "^0.7.1",

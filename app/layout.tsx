@@ -5,11 +5,8 @@ import "./globals.css";
 import AuthProvider from "@/components/providers/session-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import AppSidebar from "@/components/layout/app-sidebar";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { KBarProvider } from "kbar";
-
+import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -38,6 +35,7 @@ export default async function RootLayout({
             {children}
           </ThemeProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );

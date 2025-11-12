@@ -1,16 +1,17 @@
 import PageContainer from '@/components/layout/page-container';
-
 import { Heading } from '../Heading';
+import { AddTask } from './AddTask';
+import { KanbanBoard } from './KanbanBoard';
 
 export default function KanbanViewPage() {
     return (
         <PageContainer>
-            <div className='space-y-4'>
-                <div className='flex items-start justify-between'>
+            <div className='space-y-4 w-full'>
+                <div className='flex items-center justify-between w-full'>
                     <Heading title={`Kanban`} description='Manage tasks by dnd' />
-                    {/* <NewTaskDialog /> */}
+                    <AddTask />
                 </div>
-                {/* <KanbanBoard /> */}
+                <KanbanBoard />
             </div>
         </PageContainer>
     );

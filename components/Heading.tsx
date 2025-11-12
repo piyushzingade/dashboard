@@ -1,5 +1,3 @@
-import { Plus } from "lucide-react";
-import Link from "next/link";
 
 export function Heading({ title, description }: { title: string, description?: string }) {
 
