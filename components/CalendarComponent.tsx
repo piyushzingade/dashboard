@@ -12,14 +12,14 @@ import {
     CalendarMonthPicker,
     CalendarProvider,
     CalendarYearPicker,
-} from "@/components/ui/calendar";
+} from "@/components/calendarComp";
 
 const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);
 
 const statuses = [
-    { id: faker.string.uuid(), name: "Planned", color: "#6B7280" },
-    { id: faker.string.uuid(), name: "In Progress", color: "#F59E0B" },
-    { id: faker.string.uuid(), name: "Done", color: "#10B981" },
+    { id: faker.string.uuid(), name: "Planned", color: "#0a0b0b" },
+    { id: faker.string.uuid(), name: "In Progress", color: "#0a0b0b" },
+    { id: faker.string.uuid(), name: "Done", color: "#0a0b0b" },
 ];
 
 const exampleFeatures = Array.from({ length: 20 }).map(() => ({

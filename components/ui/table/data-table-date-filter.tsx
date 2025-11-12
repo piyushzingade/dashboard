@@ -6,7 +6,6 @@ import * as React from 'react';
 import type { DateRange } from 'react-day-picker';
 
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/CalendarComponent';
 import {
     Popover,
     PopoverContent,
@@ -14,6 +13,7 @@ import {
 } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
 import { formatDate } from '@/lib/format';
+import { Calendar } from '../calendar';
 
 type DateSelection = Date[] | DateRange;
 

@@ -1,5 +1,4 @@
 import PageContainer from '@/components/layout/page-container';
-import { title } from 'process';
 
 
 export const metadata = {
