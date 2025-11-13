@@ -7,6 +7,7 @@ import {
     useEffect,
     useState
 } from 'react';
+import { useTheme } from 'next-themes';
 
 const COOKIE_NAME = 'active_theme';
 const DEFAULT_THEME = 'default';
@@ -34,6 +35,7 @@ export function ActiveThemeProvider({
     const [activeTheme, setActiveTheme] = useState<string>(
         () => initialTheme || DEFAULT_THEME
     );
+    const { resolvedTheme } = useTheme();
 
     useEffect(() => {
         setThemeCookie(activeTheme);
@@ -42,38 +44,27 @@ export function ActiveThemeProvider({
         const root = document.documentElement;
         root.setAttribute('data-theme', activeTheme);
 
+        const isDark = resolvedTheme === 'dark';
         const baseVars: Record<string, string> = {
-            '--background': 'oklch(1 0 0)',
-            '--foreground': 'oklch(0.145 0 0)',
-            '--card': 'oklch(1 0 0)',
-            '--card-foreground': 'oklch(0.145 0 0)',
-            '--primary': 'oklch(0.205 0 0)',
-            '--primary-foreground': 'oklch(0.985 0 0)'
+            '--background': isDark ? 'oklch(0.145 0 0)' : 'oklch(1 0 0)',
+            '--foreground': isDark ? 'oklch(0.985 0 0)' : 'oklch(0.145 0 0)',
+            '--card': isDark ? 'oklch(0.205 0 0)' : 'oklch(1 0 0)',
+            '--card-foreground': isDark ? 'oklch(0.985 0 0)' : 'oklch(0.145 0 0)',
+            '--primary': isDark ? 'oklch(0.922 0 0)' : 'oklch(0.205 0 0)',
+            '--primary-foreground': isDark ? 'oklch(0.205 0 0)' : 'oklch(0.985 0 0)'
         };
 
         const themes: Record<string, Record<string, string>> = {
             'default': {},
             'blue': {
-                '--background': '#f8fdff',
-                '--foreground': '#012e3d',
-                '--card': '#ffffff',
-                '--card-foreground': '#012e3d',
                 '--primary': '#0ea5e9',
                 '--primary-foreground': '#003049'
             },
             'green': {
-                '--background': '#f6fffb',
-                '--foreground': '#04251a',
-                '--card': '#ffffff',
-                '--card-foreground': '#04251a',
                 '--primary': '#10b981',
                 '--primary-foreground': '#00331a'
             },
             'amber': {
-                '--background': '#fffaf0',
-                '--foreground': '#33210b',
-                '--card': '#ffffff',
-                '--card-foreground': '#33210b',
                 '--primary': '#f59e0b',
                 '--primary-foreground': '#3b2709'
             },
@@ -89,7 +80,7 @@ export function ActiveThemeProvider({
         Object.entries(themeVars).forEach(([k, v]) => {
             root.style.setProperty(k, v);
         });
-    }, [activeTheme]);
+    }, [activeTheme, resolvedTheme]);
 
     return (
         <ThemeContext.Provider value={{ activeTheme, setActiveTheme }}>
