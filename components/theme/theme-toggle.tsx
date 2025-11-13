@@ -1,21 +1,21 @@
 'use client';
 
-import { IconBrightness } from '@tabler/icons-react';
-import { useTheme } from 'next-themes';
+import { Moon, Sun } from 'lucide-react';
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { useThemeConfig } from '@/components/active-theme';
 
 export function ModeToggle() {
-    const { setTheme, resolvedTheme } = useTheme();
+    const { themeName, themeMode, setTheme } = useThemeConfig();
 
     const handleThemeToggle = React.useCallback(
         (e?: React.MouseEvent) => {
-            const newMode = resolvedTheme === 'dark' ? 'light' : 'dark';
+            const newMode = themeMode === 'dark' ? 'light' : 'dark';
             const root = document.documentElement;
 
             if (!document.startViewTransition) {
-                setTheme(newMode);
+                setTheme(themeName, newMode);
                 return;
             }
 
@@ -26,10 +26,10 @@ export function ModeToggle() {
             }
 
             document.startViewTransition(() => {
-                setTheme(newMode);
+                setTheme(themeName, newMode);
             });
         },
-        [resolvedTheme, setTheme]
+        [themeName, themeMode, setTheme]
     );
 
     return (
@@ -38,8 +38,13 @@ export function ModeToggle() {
             size='icon'
             className='group/toggle size-8'
             onClick={handleThemeToggle}
+            title={`Switch to ${themeMode === 'dark' ? 'light' : 'dark'} mode`}
         >
-            <IconBrightness />
+            {themeMode === 'dark' ? (
+                <Sun className='w-4 h-4' />
+            ) : (
+                <Moon className='w-4 h-4' />
+            )}
             <span className='sr-only'>Toggle theme</span>
         </Button>
     );

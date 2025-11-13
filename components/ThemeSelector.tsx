@@ -7,70 +7,97 @@ import {
     SelectGroup,
     SelectItem,
     SelectLabel,
-    SelectSeparator,
     SelectTrigger,
     SelectValue
 } from '@/components/ui/select';
 import { useThemeConfig } from './active-theme';
+import { Button } from '@/components/ui/button';
+import { Moon, Sun } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-const THEMES = [
-    {
-        name: 'Default',
-        value: 'default'
-    }, {
-        name: 'Mauve',
-        value: 'mauve'
-    },
-    {
-        name: 'Amber',
-        value: 'amber'
-    },
-    {
-        name: 'Lilac',
-        value: 'lilac'
-    },
-    {
-        name: 'Candy',
-        value: 'candy'
-    },
-    {
-        name: 'Sky',
-        value: 'sky'
-    }
-];
-
+type Theme = {
+    displayName: string;
+    light: Record<string, string>;
+    dark: Record<string, string>;
+};
 
 export function ThemeSelector() {
-    const { activeTheme, setActiveTheme } = useThemeConfig();
+    const { themeName, themeMode, setTheme } = useThemeConfig();
+    const [themes, setThemes] = useState<Record<string, Theme> | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        fetch('/theme.json')
+            .then((res) => res.json())
+            .then((data) => {
+                setThemes(data);
+                setIsLoading(false);
+            })
+            .catch((error) => {
+                console.error('Failed to load themes:', error);
+                setIsLoading(false);
+            });
+    }, []);
+
+    if (isLoading || !themes) {
+        return (
+            <div className='flex items-center gap-2'>
+                <Label htmlFor='theme-selector' className='sr-only'>
+                    Theme
+                </Label>
+                <div className='h-9 w-32 bg-muted animate-pulse rounded-md' />
+            </div>
+        );
+    }
+
+    const themeNames = Object.keys(themes);
 
     return (
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-3'>
             <Label htmlFor='theme-selector' className='sr-only'>
                 Theme
             </Label>
-            <Select value={activeTheme} onValueChange={setActiveTheme}>
+            <Select value={themeName} onValueChange={(value) => setTheme(value, themeMode)}>
                 <SelectTrigger
                     id='theme-selector'
-                    className='justify-start *:data-[slot=select-value]:w-12'
+                    className='justify-start w-40'
                 >
-                    <span className='text-muted-foreground hidden sm:block'>
-                        Select a theme:
+                    <span className='text-muted-foreground hidden sm:inline-block text-sm'>
+                        {themes[themeName]?.displayName || 'Select Theme'}
                     </span>
-                    <span className='text-muted-foreground block sm:hidden'>Theme</span>
                     <SelectValue placeholder='Select a theme' />
                 </SelectTrigger>
                 <SelectContent align='end'>
                     <SelectGroup>
                         <SelectLabel>Themes</SelectLabel>
-                        {THEMES.map((theme) => (
-                            <SelectItem key={theme.name} value={theme.value}>
-                                {theme.name}
+                        {themeNames.map((name) => (
+                            <SelectItem key={name} value={name}>
+                                {themes[name].displayName}
                             </SelectItem>
                         ))}
                     </SelectGroup>
-
                 </SelectContent>
             </Select>
+
+            {/* Light/Dark Mode Toggle */}
+            {/* <div className='flex items-center gap-1 border rounded-md p-1'>
+                <Button
+                    variant={themeMode === 'light' ? 'default' : 'ghost'}
+                    size='sm'
+                    onClick={() => setTheme(themeName, 'light')}
+                    className='px-2 h-7'
+                >
+                    <Sun className='w-4 h-4' />
+                </Button>
+                <Button
+                    variant={themeMode === 'dark' ? 'default' : 'ghost'}
+                    size='sm'
+                    onClick={() => setTheme(themeName, 'dark')}
+                    className='px-2 h-7'
+                >
+                    <Moon className='w-4 h-4' />
+                </Button>
+            </div> */}
         </div>
     );
 }
