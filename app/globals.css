@@ -165,3 +165,5 @@
 *::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+/* Theme variables are injected at runtime by ActiveThemeProvider (tweakcn-style) */

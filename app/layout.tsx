@@ -7,6 +7,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Analytics } from "@vercel/analytics/next"
+import Providers from "@/components/layout/providers";
+import { cookies } from 'next/headers'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,6 +22,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession(authOptions);
+  const cookieStore = await cookies();
+  const activeThemeValue = cookieStore.get('active_theme')?.value ?? undefined;
 
   return (
     <html lang="en" suppressHydrationWarning={true}>
@@ -32,7 +36,9 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
 
-            {children}
+            <Providers activeThemeValue={activeThemeValue}>
+              {children}
+            </Providers>
           </ThemeProvider>
         </AuthProvider>
         <Analytics />
