@@ -72,7 +72,7 @@ export function UserNav() {
                 <DropdownMenuSeparator />
 
                 <DropdownMenuItem
-                    onClick={() => signOut({ callbackUrl: '/auth/sign-in' })}
+                    onClick={() => signOut({ callbackUrl: '/signin' })}
                     className="text-red-600 focus:text-red-600"
                 >
                     Sign out

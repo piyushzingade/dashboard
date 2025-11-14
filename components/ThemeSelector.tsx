@@ -79,25 +79,6 @@ export function ThemeSelector() {
                 </SelectContent>
             </Select>
 
-            {/* Light/Dark Mode Toggle */}
-            {/* <div className='flex items-center gap-1 border rounded-md p-1'>
-                <Button
-                    variant={themeMode === 'light' ? 'default' : 'ghost'}
-                    size='sm'
-                    onClick={() => setTheme(themeName, 'light')}
-                    className='px-2 h-7'
-                >
-                    <Sun className='w-4 h-4' />
-                </Button>
-                <Button
-                    variant={themeMode === 'dark' ? 'default' : 'ghost'}
-                    size='sm'
-                    onClick={() => setTheme(themeName, 'dark')}
-                    className='px-2 h-7'
-                >
-                    <Moon className='w-4 h-4' />
-                </Button>
-            </div> */}
         </div>
     );
 }
