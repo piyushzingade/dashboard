@@ -5,9 +5,9 @@ import { DataTableColumnHeader } from '@/components/ui/table/data-table-column-h
 import { Product } from '@/constants/mock-api';
 import { Column, ColumnDef } from '@tanstack/react-table';
 import { CheckCircle2, Text, XCircle } from 'lucide-react';
-import Image from 'next/image';
 import { CellAction } from './cell-actions';
 import { CATEGORY_OPTIONS } from './options';
+import Image from 'next/image';
 
 
 export const columns: ColumnDef<Product>[] = [
@@ -18,14 +18,13 @@ export const columns: ColumnDef<Product>[] = [
         ),
         cell: ({ row }) => {
             return (
-                <div className='relative w-12 h-12'>
-                    <Image
-                        src={row.getValue('photo_url')}
-                        alt={row.getValue('name')}
-                        fill
-                        className='rounded-lg object-cover'
-                    />
-                </div>
+                <Image
+                    src={row.original.photo_url}
+                    alt={row.original.name}
+                    width={120}
+                    height={120}
+                    className='w-12 h-12 rounded-lg object-cover'
+                />
             );
         }
     },
@@ -35,7 +34,7 @@ export const columns: ColumnDef<Product>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Name' />
         ),
-        cell: ({ cell }) => <div className="font-medium">{cell.getValue<string>()}</div>,
+        cell: ({ row }) => <div className="font-medium">{row.original.name}</div>,
         meta: {
             label: 'Name',
             placeholder: 'Search products...',
@@ -50,8 +49,8 @@ export const columns: ColumnDef<Product>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Category' />
         ),
-        cell: ({ cell }) => {
-            const category = cell.getValue<string>();
+        cell: ({ row }) => {
+            const category = row.original.category;
             return (
                 <Badge variant='outline' className='capitalize'>
                     {category}
@@ -70,8 +69,8 @@ export const columns: ColumnDef<Product>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Price' />
         ),
-        cell: ({ cell }) => {
-            const price = cell.getValue<number>();
+        cell: ({ row }) => {
+            const price = row.original.price;
             return <div className="font-medium">₹{price.toLocaleString()}</div>;
         }
     },
@@ -80,8 +79,8 @@ export const columns: ColumnDef<Product>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title='Description' />
         ),
-        cell: ({ cell }) => {
-            const description = cell.getValue<string>();
+        cell: ({ row }) => {
+            const description = row.original.description;
             return <div className="line-clamp-2 text-sm text-muted-foreground">{description}</div>;
         }
     },
