@@ -9,62 +9,61 @@ import {
 
 const salesData = [
     {
-        name: 'Olivia Martin',
-        email: 'olivia.martin@email.com',
+        name: 'Emma Johnson',
+        email: 'emma.johnson@email.com',
         avatar: 'https://api.slingacademy.com/public/sample-users/1.png',
-        fallback: 'OM',
-        amount: '+$1,999.00'
+        fallback: 'EJ',
+        amount: '+$2,500.00'
     },
     {
-        name: 'Jackson Lee',
-        email: 'jackson.lee@email.com',
+        name: 'Liam Smith',
+        email: 'liam.smith@email.com',
         avatar: 'https://api.slingacademy.com/public/sample-users/2.png',
-        fallback: 'JL',
-        amount: '+$39.00'
+        fallback: 'LS',
+        amount: '+$150.00'
     },
     {
-        name: 'Isabella Nguyen',
-        email: 'isabella.nguyen@email.com',
+        name: 'Ava Brown',
+        email: 'ava.brown@email.com',
         avatar: 'https://api.slingacademy.com/public/sample-users/3.png',
-        fallback: 'IN',
-        amount: '+$299.00'
+        fallback: 'AB',
+        amount: '+$450.00'
     },
     {
-        name: 'William Kim',
-        email: 'will@email.com',
+        name: 'Noah Wilson',
+        email: 'noah.wilson@email.com',
         avatar: 'https://api.slingacademy.com/public/sample-users/4.png',
-        fallback: 'WK',
-        amount: '+$99.00'
+        fallback: 'NW',
+        amount: '+$75.00'
     },
     {
-        name: 'Sofia Davis',
-        email: 'sofia.davis@email.com',
+        name: 'Sophia Taylor',
+        email: 'sophia.taylor@email.com',
         avatar: 'https://api.slingacademy.com/public/sample-users/5.png',
-        fallback: 'SD',
-        amount: '+$39.00'
+        fallback: 'ST',
+        amount: '+$320.00'
     },
     {
-        name: 'William Kim',
-        email: 'will@email.com',
-        avatar: 'https://api.slingacademy.com/public/sample-users/4.png',
-        fallback: 'WK',
-        amount: '+$99.00'
+        name: 'Mason Anderson',
+        email: 'mason.anderson@email.com',
+        avatar: 'https://api.slingacademy.com/public/sample-users/6.png',
+        fallback: 'MA',
+        amount: '+$180.00'
     },
     {
-        name: 'Sofia Davis',
-        email: 'sofia.davis@email.com',
-        avatar: 'https://api.slingacademy.com/public/sample-users/5.png',
-        fallback: 'SD',
-        amount: '+$39.00'
+        name: 'Isabella Thomas',
+        email: 'isabella.thomas@email.com',
+        avatar: 'https://api.slingacademy.com/public/sample-users/7.png',
+        fallback: 'IT',
+        amount: '+$90.00'
     },
     {
-        name: 'Sofia Davis',
-        email: 'sofia.davis@email.com',
-        avatar: 'https://api.slingacademy.com/public/sample-users/5.png',
-        fallback: 'SD',
-        amount: '+$39.00'
+        name: 'Ethan Garcia',
+        email: 'ethan.garcia@email.com',
+        avatar: 'https://api.slingacademy.com/public/sample-users/8.png',
+        fallback: 'EG',
+        amount: '+$600.00'
     },
-
 ];
 
 export function RecentSales() {

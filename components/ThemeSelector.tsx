@@ -11,8 +11,6 @@ import {
     SelectValue
 } from '@/components/ui/select';
 import { useThemeConfig } from './active-theme';
-import { Button } from '@/components/ui/button';
-import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 type Theme = {
@@ -51,6 +49,7 @@ export function ThemeSelector() {
     }
 
     const themeNames = Object.keys(themes);
+    const selectedDisplay = themes[themeName]?.displayName || 'Select Theme';
 
     return (
         <div className='flex items-center gap-3'>
@@ -60,12 +59,11 @@ export function ThemeSelector() {
             <Select value={themeName} onValueChange={(value) => setTheme(value, themeMode)}>
                 <SelectTrigger
                     id='theme-selector'
-                    className='justify-start w-40'
+                    className='justify-between w-40'
                 >
-                    <span className='text-muted-foreground hidden sm:inline-block text-sm'>
-                        {themes[themeName]?.displayName || 'Select Theme'}
+                    <span className='text-muted-foreground text-sm'>
+                        Theme: {selectedDisplay}
                     </span>
-                    <SelectValue placeholder='Select a theme' />
                 </SelectTrigger>
                 <SelectContent align='end'>
                     <SelectGroup>

@@ -5,7 +5,6 @@ import { ArrowRight } from "lucide-react";
 export function SidebarCard() {
     return (
         <div className="w-[226px] flex flex-col gap-2 justify-between bg-background/10 p-4 rounded-lg border border-border/90 shadow-sm mb-6 hover:scale-105 transition-transform duration-200 ease-in-out">
-            {/* <div className="bg-linear-to-r  "></div> */}
             <div className="">
                 <ThunderIcon />
             </div>
@@ -13,9 +12,9 @@ export function SidebarCard() {
             <div className="font-semibold text-lg text-foreground">
                 <h2 className="">Free Trial Version</h2>
             </div>
-
-            <div className=" relative w-full rounded-4xl border border-background/80 h-2 bg-white">
-                <div className="absolute left-0 top-0 bottom-0 w-[60%] rounded-4xl bg-linear-to-r from-foreground/50 to-muted-foreground"></div>
+            {/* Graph */}
+            <div className="relative w-full h-2 bg-muted rounded-full">
+                <div className="absolute left-0 top-0 bottom-0 w-[60%] bg-primary rounded-full"></div>
             </div>
 
             <div className="text-sm text-muted-foreground/80">
