@@ -22,7 +22,7 @@ export function SidebarCard() {
                 <p>Upgrade to continue</p>
             </div>
 
-            <div className="text-muted-foreground/80 text-md flex gap-2 items-center justify-between cursor-pointer hover:underline">
+            <div className="text-muted-foreground/80 text-md flex gap-2 items-center justify-between cursor-pointer hover:underline w-full">
                 Select Plan <ArrowRight className="size-4 " />
             </div>
         </div>
@@ -39,7 +39,6 @@ const ThunderIcon = () => {
             height="40"
             className="fill-primary"
         >
-            {/* Sharp lightning bolt */}
             <path d="M13.5 2L4 13h5.5L8 22l9.5-11H12l1.5-9z" />
         </svg>
     );

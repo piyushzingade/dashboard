@@ -108,8 +108,8 @@
             "shadow-2xl": "0 1px 3px 0px hsl(0 0% 0% / 0.25)"
         }
     },
-    "mauve": {
-        "displayName": "Mauve",
+    "t3 chat": {
+        "displayName": "T3 chat",
         "light": {
             "background": "#faf5fa",
             "foreground": "#501854",

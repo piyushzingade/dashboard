@@ -36,7 +36,7 @@ const chartData = [
 const chartConfig = {
     desktop: {
         label: "Desktop",
-        color: "var(--secondary-foreground)",
+        color: "var(--chart-1)",
     },
     mobile: {
         label: "Mobile",

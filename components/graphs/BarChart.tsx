@@ -53,7 +53,7 @@ const chartData = [
 const chartConfig = {
     desktop: {
         label: "Desktop",
-        color: "var(--secondary-foreground)",
+        color: "var(--primary)",
     },
 } satisfies ChartConfig;
 
@@ -138,7 +138,7 @@ export function ValueLineBarChart() {
                             <ReferenceLine
                                 opacity={0.4}
                                 y={springyValue}
-                                stroke="var(--secondary-foreground)"
+                                stroke="var(--foreground)"
                                 strokeWidth={1}
                                 strokeDasharray="3 3"
                                 label={<CustomReferenceLabel value={maxValueIndex.value} />}
@@ -178,14 +178,14 @@ const CustomReferenceLabel: React.FC<CustomReferenceLabelProps> = (props) => {
                 y={y - 9}
                 width={width}
                 height={18}
-                fill="var(--secondary-foreground)"
+                fill="var(--background)"
                 rx={4}
             />
             <text
                 fontWeight={600}
                 x={x - CHART_MARGIN + 6}
                 y={y + 4}
-                fill="var(--primary-foreground)"
+                fill="var(--foreground)"
             >
                 {value}
             </text>

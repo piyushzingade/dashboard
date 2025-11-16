@@ -2,10 +2,10 @@ import { UpdateSoon } from "@/components/UpdateSoon"
 
 
 export const metadata = {
-    title: "Dashboard : Reports"
+    title: "Dashboard : Billing"
 }
 
-export default function ReportsPage() {
+export default function BillingPage() {
     return (
         <div className="h-full">
             <UpdateSoon />

@@ -49,7 +49,7 @@ export const navItems: NavItem[] = [
     {
         title: 'Account',
         url: '#', // Placeholder as there is no direct link for the parent
-        icon: 'billing',
+        icon: 'user2',
         isActive: true,
 
         items: [
@@ -60,10 +60,10 @@ export const navItems: NavItem[] = [
                 shortcut: ['m', 'm']
             },
             {
-                title: 'Login',
+                title: 'Billing',
                 shortcut: ['l', 'l'],
                 url: '/',
-                icon: 'login'
+                icon: 'billing'
             }
         ]
     }, {
