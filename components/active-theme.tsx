@@ -10,7 +10,6 @@ import {
 
 const COOKIE_NAME = "active_theme";
 
-/** Change these to your desired fallback names */
 const FALLBACK_THEME = "default";
 const FALLBACK_MODE: "light" | "dark" = "light";
 
@@ -93,21 +92,18 @@ function readThemeFromDOM(): { themeName: string; mode: "light" | "dark" } {
         return { themeName: attrTheme, mode: inferredMode };
     }
 
-    // 3) Try to infer theme name from a CSS var (example: --background) — optional / fallback
-    // You can adapt this to detect some unique variable you set in globals.css per theme.
+
     try {
         const computed = getComputedStyle(root);
-        // e.g., if you set --theme-name in global.css, prefer that:
         const cssThemeName = computed.getPropertyValue("--theme-name").trim();
         if (cssThemeName) {
             const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
             return { themeName: cssThemeName, mode: prefersDark ? "dark" : "light" };
         }
     } catch {
-        // ignore
+        alert("Failed to read theme name from CSS variables. Falling back to default theme.");
     }
 
-    // 4) Fallback to prefers-color-scheme only for mode, and FALLBACK_THEME for theme name
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     return { themeName: FALLBACK_THEME, mode: prefersDark ? "dark" : "light" };
 }
@@ -119,21 +115,33 @@ export function ActiveThemeProvider({
     children: ReactNode;
     initialTheme?: string;
 }) {
-    // Start with fallback — we'll overwrite from DOM on mount
-    const [themeName, setThemeName] = useState<string>(FALLBACK_THEME);
-    const [themeMode, setThemeMode] = useState<"light" | "dark">(FALLBACK_MODE);
+    let initialName = FALLBACK_THEME;
+    let initialMode: "light" | "dark" = FALLBACK_MODE;
+    let initialIsDefault = true;
+    if (initialTheme) {
+        const parts = initialTheme.split("-");
+        initialName = parts[0];
+        if (parts.length === 2 && (parts[1] === "light" || parts[1] === "dark")) {
+            initialMode = parts[1] as "light" | "dark";
+        }
+        initialIsDefault = false;
+    }
+
+    const [themeName, setThemeName] = useState<string>(initialName);
+    const [themeMode, setThemeMode] = useState<"light" | "dark">(initialMode);
     const [themesData, setThemesData] = useState<any>(null);
 
-    // If the user hasn't explicitly chosen a theme (cookie or prop), we treat the DOM/global CSS as the default.
-    const [isUsingDefaultTheme, setIsUsingDefaultTheme] = useState<boolean>(true);
+    const [isUsingDefaultTheme, setIsUsingDefaultTheme] = useState<boolean>(initialIsDefault);
 
-    // 1) On mount: read DOM (globals.css) and set the initial state immediately
+    // 1) On mount: read DOM (globals.css) and set the initial state immediately, but only if no initialTheme
     useEffect(() => {
-        const dom = readThemeFromDOM();
-        setThemeName(dom.themeName);
-        setThemeMode(dom.mode);
-        setIsUsingDefaultTheme(true);
-    }, []);
+        if (!initialTheme) {
+            const dom = readThemeFromDOM();
+            setThemeName(dom.themeName);
+            setThemeMode(dom.mode);
+            setIsUsingDefaultTheme(true);
+        }
+    }, [initialTheme]);
 
     // 2) Load themes.json asynchronously (but don't override DOM variables)
     useEffect(() => {

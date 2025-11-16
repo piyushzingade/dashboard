@@ -166,3 +166,8 @@
 *::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+:root:not([data-theme-ready]) *,
+:root:not([data-theme-ready]) {
+  transition: none !important;
+}

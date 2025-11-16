@@ -37,7 +37,7 @@ const ThunderIcon = () => {
             viewBox="0 0 24 24"
             width="40"
             height="40"
-            className="fill-foreground"
+            className="fill-primary"
         >
             {/* Sharp lightning bolt */}
             <path d="M13.5 2L4 13h5.5L8 22l9.5-11H12l1.5-9z" />
