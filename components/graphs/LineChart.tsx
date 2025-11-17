@@ -65,7 +65,7 @@ export function PartialLineChart() {
                 <CardDescription>January - June 2025</CardDescription>
             </CardHeader>
             <CardContent>
-                <ChartContainer className="h-54 w-full" config={chartConfig}>
+                <ChartContainer className="h-32 sm:h-54 w-full" config={chartConfig}>
                     <LineChart
                         accessibilityLayer
                         data={chartData}

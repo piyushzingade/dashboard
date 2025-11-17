@@ -16,9 +16,9 @@ export default function OverviewPage() {
             <TopCard />
 
             {/* Main Content Area */}
-            <div className="flex flex-col md:flex-row gap-4 mt-2">
+            <div className="flex flex-col sm:flex-row gap-4 mt-2">
                 {/* Left Section - Charts */}
-                <div className="flex-1 md:w-2/3">
+                <div className="flex-1 sm:w-2/3">
                     <div className="grid auto-rows-[minmax(180px,auto)] gap-4">
                         <div>
                             <ValueLineBarChart />
@@ -30,7 +30,7 @@ export default function OverviewPage() {
                 </div>
 
                 {/* Right Section - Stats */}
-                <div className="md:w-1/3">
+                <div className="sm:w-1/3">
                     <div className="grid auto-rows-[minmax(180px,auto)] gap-4">
                         <div>
                             <GlowingMultipleStrokeRadarChart />

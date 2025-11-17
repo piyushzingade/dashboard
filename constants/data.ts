@@ -62,7 +62,7 @@ export const navItems: NavItem[] = [
             {
                 title: 'Billing',
                 shortcut: ['l', 'l'],
-                url: '/',
+                url: '/dashboard/billing',
                 icon: 'billing'
             }
         ]
@@ -82,13 +82,13 @@ export const navItems: NavItem[] = [
             {
                 title: 'Help Center',
                 shortcut: ['l', 'l'],
-                url: '/',
+                url: '/dashboard/help-center',
                 icon: 'help'
             },
             {
                 title: 'Feedback',
                 shortcut: ['l', 'l'],
-                url: '/',
+                url: '/dashboard/feedback',
                 icon: 'feedback'
             }
         ]

@@ -8,7 +8,7 @@ A modern, customizable dashboard application built with Next.js, featuring multi
 
 ## ✨ Features
 
-- **Multiple Custom Themes** - Mauve, Amber, Lilac, Candy, Sky, and Default themes
+- **Multiple Custom Themes** - T3 chat, Amber, Lilac, Candy, Sky, and Default theme
 - **Interactive Data Visualizations** - Bar charts, line charts, radar charts, and sales graphs
 - **Kanban Board** - Drag-and-drop task management with smooth animations
 - **Product Management** - Server-side table with filtering, sorting, and pagination
@@ -249,4 +249,4 @@ MIT License - see LICENSE file for details.
 
 ---
 
-Built with ❤️ using Next.js and modern web technologies
+Built by ❤️ Piyush
