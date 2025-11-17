@@ -27,7 +27,7 @@ export function DataTablePagination<TData>({
     return (
         <div
             className={cn(
-                'flex w-full flex-col-reverse items-center justify-between gap-4 overflow-auto p-1 sm:flex-row sm:gap-8',
+                'flex w-full flex-col items-center justify-between gap-4 overflow-auto p-1 sm:flex-row sm:gap-8',
                 className
             )}
             {...props}

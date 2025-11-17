@@ -23,7 +23,7 @@ export const columns: ColumnDef<Product>[] = [
                     alt={row.original.name}
                     width={120}
                     height={120}
-                    className='w-12 h-12 rounded-lg object-cover'
+                    className='w-8 h-8 sm:w-12 sm:h-12 rounded-lg object-cover'
                 />
             );
         }
@@ -81,7 +81,7 @@ export const columns: ColumnDef<Product>[] = [
         ),
         cell: ({ row }) => {
             const description = row.original.description;
-            return <div className="line-clamp-2 text-sm text-muted-foreground">{description}</div>;
+            return <div className="line-clamp-2 text-sm text-muted-foreground hidden sm:block">{description}</div>;
         }
     },
     {

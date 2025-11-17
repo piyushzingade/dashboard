@@ -22,10 +22,10 @@ export default async function Page(props: pageProps) {
 
     return (
         <div className='flex flex-1 flex-col space-y-4'>
-            <div className='flex items-center justify-between'>
+            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2'>
                 <Heading title='Product' description='Manage products (Server side table functionalities.)' />
-                <div className="">
-                    <Link href='/dashboard/product/add' className="bg-foreground text-background px-3 py-2 flex items-center gap-3 rounded-md"><Plus className="size-4 " /> Add</Link>
+                <div className="ml-auto">
+                    <Link href='/dashboard/product/add' className="bg-foreground text-background px-3 py-2 flex items-center gap-3 rounded-md w-full sm:w-auto justify-center"><Plus className="size-4 " /> Add</Link>
                 </div>
             </div>
             <Separator />

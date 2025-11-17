@@ -10,7 +10,9 @@ export default function ProductLayout({
     return (
         <PageContainer scrollable={true}>
             <NuqsAdapter>
-                {children}
+                <div className='flex flex-col overflow-x-auto w-full'>
+                    {children}
+                </div>
             </NuqsAdapter>
         </PageContainer>
     );
