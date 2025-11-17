@@ -1,8 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Custom Theme Dashboard 🎨
 
-## Getting Started
+A modern, customizable dashboard application built with Next.js, featuring multiple beautiful themes, interactive charts, and a comprehensive UI system.
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-15+-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5+-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3+-38bdf8?style=flat-square&logo=tailwindcss)
+
+## ✨ Features
+
+- **Multiple Custom Themes** - Mauve, Amber, Lilac, Candy, Sky, and Default themes
+- **Interactive Data Visualizations** - Bar charts, line charts, radar charts, and sales graphs
+- **Kanban Board** - Drag-and-drop task management with smooth animations
+- **Product Management** - Server-side table with filtering, sorting, and pagination
+- **Theme Selector** - Dynamic theme switching with persistence
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **Smooth Animations** - Powered by Motion (Framer Motion)
+- **TypeScript First** - Full type safety throughout
+- **Modern UI Components** - Built with shadcn/ui
+- **Authentication Ready** - NextAuth.js integration
+- **Database Integration** - Prisma ORM with PostgreSQL support
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- npm, yarn, pnpm, or bun
+- PostgreSQL (optional, for full features)
+
+### Installation
+
+```bash
+git clone <repository-url>
+cd dashboard
+npm install
+```
+
+### Environment Setup
+
+Create a `.env.local` file in the root directory:
+
+```env
+# NextAuth (optional)
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="your-secret-key-here"
+
+# Database (optional)
+DATABASE_URL="postgresql://user:password@localhost:5432/dashboard"
+```
+
+### Database Setup (Optional)
+
+```bash
+# Generate Prisma Client
+npx prisma generate
+
+# Run migrations
+npx prisma migrate dev
+
+# Seed database
+npx prisma db seed
+```
+
+### Run Development Server
 
 ```bash
 npm run dev
@@ -14,23 +74,179 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Technology | Purpose |
+|------------|---------|
+| **Next.js 14+** | React framework with App Router |
+| **TypeScript** | Type-safe development |
+| **Tailwind CSS** | Utility-first styling |
+| **shadcn/ui** | Beautiful UI components |
+| **Recharts** | Data visualization library |
+| **Motion** | Animation library |
+| **NextAuth.js** | Authentication solution |
+| **Prisma** | Next-generation ORM |
+| **PostgreSQL** | Relational database |
+| **Lucide React** | Icon library |
+| **Tabler Icons** | Additional icons |
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+dashboard/
+├── app/
+│   ├── api/
+│   │   └── auth/          # NextAuth API routes
+│   │   └── verify-captcha/
+│   ├── dashboard/         # Dashboard pages
+│   │   ├── (account)/     # Account settings
+│   │   ├── (general)/     # General pages
+│   │   ├── calendar/      # Calendar page
+│   │   ├── kanban/        # Kanban board
+│   │   ├── overview/      # Main dashboard
+│   │   ├── product/       # Product management
+│   │   ├── reports/       # Reports page
+│   │   └── transactions/  # Transactions page
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Home page
+├── components/
+│   ├── graphs/            # Chart components
+│   │   ├── BarChart.tsx
+│   │   ├── LineChart.tsx
+│   │   ├── RadarChart.tsx
+│   │   ├── Sales.tsx
+│   │   └── TopCard.tsx
+│   ├── kanban/            # Kanban components
+│   ├── products/          # Product table components
+│   ├── ui/                # shadcn/ui components
+│   ├── active-theme.tsx   # Theme provider
+│   ├── ThemeSelector.tsx  # Theme selector
+│   ├── UpdateSoon.tsx     # Coming soon component
+│   └── ...                 # Other components
+├── constants/
+│   └── mock-api.ts        # Mock data and API
+├── hooks/                 # Custom hooks
+├── lib/                   # Utility libraries
+├── prisma/                # Database schema and migrations
+├── public/
+│   ├── theme.json         # Theme configurations
+│   └── ...                # Static assets
+├── types/                 # TypeScript types
+└── ...
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Theme System
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The dashboard features a comprehensive theme system with 6 built-in themes:
 
-## Deploy on Vercel
+- **Default**: Clean, neutral theme
+- **T3 chat**: Warm purple tones
+- **Amber**: Golden yellow theme
+- **Lilac**: Soft purple and pink
+- **Candy**: Bright, playful colors
+- **Sky**: Twitter-inspired blue theme
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Adding Custom Themes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Add your theme configuration to `public/theme.json`
+2. Include `light` and `dark` variants
+3. The theme selector will automatically pick up new themes
+
+Example theme structure:
+
+```json
+{
+  "your-theme": {
+    "displayName": "Your Theme",
+    "light": {
+      "background": "#ffffff",
+      "foreground": "#000000",
+      // ... more color variables
+    },
+    "dark": {
+      // ... dark mode colors
+    }
+  }
+}
+```
+
+## 📊 Charts & Visualizations
+
+Pre-built chart components:
+
+- **BarChart**: Animated bar chart with hover effects
+- **LineChart**: Partial line chart with dash patterns
+- **RadarChart**: Radar chart for multi-dimensional data
+- **Sales**: Recent sales component with avatars
+- **TopCard**: Animated KPI cards with trend indicators
+
+## 🔧 Customization
+
+### Adding New Components
+
+Use shadcn/ui CLI:
+
+```bash
+npx shadcn-ui@latest add [component-name]
+```
+
+### Modifying Themes
+
+Edit theme variables in `public/theme.json` or add new themes.
+
+### Database Models
+
+Update `prisma/schema.prisma` and run:
+
+```bash
+npx prisma migrate dev --name your-migration
+```
+
+## 📝 Scripts
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+npm run type-check   # TypeScript type checking
+```
+
+## 🚢 Deployment
+
+### Vercel
+
+```bash
+npm run build
+vercel --prod
+```
+
+### Other Platforms
+
+Ensure environment variables are set for your deployment platform.
+
+## 🤝 Contributing
+1. Star the repository
+2. Fork the repository
+3. Create a feature branch
+4. Make your changes
+5. Test thoroughly
+6.  Submit a pull request 
+
+## 📄 License
+
+MIT License - see LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- [shadcn/ui](https://ui.shadcn.com/) for beautiful components
+- [Evil charts](https://evilcharts.com/) for charting library
+- [Motion](https://motion.dev/) for animations
+- [Next.js](https://nextjs.org/) team
+- All open-source contributors
+
+---
+
+Built with ❤️ using Next.js and modern web technologies

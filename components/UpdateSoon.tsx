@@ -1,7 +1,7 @@
 "use client";
 import { Rocket } from "lucide-react";
 import { motion } from "motion/react";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 
 export function UpdateSoon() {
     return (
@@ -27,7 +27,7 @@ export function UpdateSoon() {
                     transition={{ delay: 0.3, duration: 0.6 }}
                     className="space-y-2"
                 >
-                    <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    <h2 className="text-2xl font-bold bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                         Coming Soon
                     </h2>
                     <p className="text-muted-foreground">
