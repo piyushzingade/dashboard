@@ -6,6 +6,10 @@ A modern, customizable dashboard application built with Next.js, featuring multi
 ![TypeScript](https://img.shields.io/badge/TypeScript-5+-blue?style=flat-square&logo=typescript)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-3+-38bdf8?style=flat-square&logo=tailwindcss)
 
+## 🌐 Live Preview
+
+Check out the live demo: [https://zingify-six.vercel.app/](https://zingify-six.vercel.app/)
+
 ## ✨ Features
 
 - **Multiple Custom Themes** - T3 chat, Amber, Lilac, Candy, Sky, and Default theme
@@ -250,3 +254,5 @@ MIT License - see LICENSE file for details.
 ---
 
 Built by ❤️ Piyush
+
+
