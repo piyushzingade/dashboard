@@ -1,10 +1,10 @@
 {
-    "name": "nexui-dashboard-cli",
-    "version": "1.2.0",
+    "name": "nexui-dashboard",
+    "version": "1.0.1",
     "description": "CLI to scaffold the NexUI Dashboard",
     "main": "bin/index.js",
     "bin": {
-        "nexui-dashboard-cli": "./bin/index.js"
+        "nexui-dashboard": "./bin/index.js"
     },
     "files": [
         "bin",

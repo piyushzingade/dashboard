@@ -117,12 +117,17 @@ program
             const gitignorePath = path.join(fullPath, '_gitignore');
             if (await fs.pathExists(gitignorePath)) {
                 const realGitignorePath = path.join(fullPath, '.gitignore');
+
                 if (await fs.pathExists(realGitignorePath)) {
-                    await fs.move(gitignorePath, realGitignorePath, { overwrite: false });
-                    if (await fs.pathExists(gitignorePath)) {
+                    if (shouldOverwrite) {
+                        // Overwrite existing .gitignore
+                        await fs.move(gitignorePath, realGitignorePath, { overwrite: true });
+                    } else {
+                        // Keep existing .gitignore, remove the temp one
                         await fs.remove(gitignorePath);
                     }
                 } else {
+                    // No .gitignore exists, just rename
                     await fs.move(gitignorePath, realGitignorePath);
                 }
             }

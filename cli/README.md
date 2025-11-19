@@ -7,21 +7,21 @@ A CLI tool to scaffold the NexUI Dashboard.
 You can use this CLI directly with `npx`:
 
 ```bash
-npx nexui-dashboard-cli [project-name]
+npx nexui-dashboard [project-name]
 ```
 
 Or install it globally:
 
 ```bash
-npm install -g nexui-dashboard-cli
-nexui-dashboard-cli [project-name]
+npm install -g nexui-dashboard
+nexui-dashboard [project-name]
 ```
 
 ## Usage
 
 1.  Run the CLI:
     ```bash
-    npx nexui-dashboard-cli my-dashboard
+    npx nexui-dashboard my-dashboard
     ```
 2.  Navigate to the project:
     ```bash
