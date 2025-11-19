@@ -3,7 +3,7 @@
 import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, Cell, XAxis, ReferenceLine } from "recharts";
 import React from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 import {
     Card,
     CardContent,
@@ -15,7 +15,7 @@ import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { JetBrains_Mono } from "next/font/google";
-import { useMotionValueEvent, useSpring } from "framer-motion";
+import { useMotionValueEvent, useSpring } from "motion/react";
 
 const jetBrainsMono = JetBrains_Mono({
     subsets: ["latin"],

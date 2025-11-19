@@ -18,7 +18,7 @@ Check out the live demo: [https://zingify-six.vercel.app/](https://zingify-six.v
 - **Product Management** - Server-side table with filtering, sorting, and pagination
 - **Theme Selector** - Dynamic theme switching with persistence
 - **Responsive Design** - Mobile-first approach with Tailwind CSS
-- **Smooth Animations** - Powered by Motion (Framer Motion)
+- **Smooth Animations** - Powered by Motion (Motion react)
 - **TypeScript First** - Full type safety throughout
 - **Modern UI Components** - Built with shadcn/ui
 - **Authentication Ready** - NextAuth.js integration
@@ -237,7 +237,26 @@ Ensure environment variables are set for your deployment platform.
 3. Create a feature branch
 4. Make your changes
 5. Test thoroughly
-6.  Submit a pull request 
+6. Submit a pull request
+
+### For Contributors: Syncing Template Changes
+
+If you make changes to the main dashboard files (outside the `cli/` directory), you need to sync these changes to the CLI templates so they're included when users scaffold new projects.
+
+**The CLI uses two separate templates:**
+- `template-with-auth`: Includes NextAuth + Prisma authentication
+- `template-without-auth`: Dashboard without authentication features
+
+**Run this command after making changes:**
+
+```bash
+cd cli
+npm run sync
+```
+
+This will automatically generate both templates from the main dashboard source.
+
+> **Note**: When users run the CLI, they are asked upfront if they want to include authentication. The CLI then copies from the appropriate pre-built template based on their choice.
 
 ## 📄 License
 
