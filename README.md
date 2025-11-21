@@ -8,7 +8,7 @@ A modern, customizable dashboard application built with Next.js, featuring multi
 
 ## 🌐 Live Preview
 
-Check out the live demo: [https://zingify-six.vercel.app/](https://zingify-six.vercel.app/)
+Check out the live demo: [https://dashboard.nexui.xyz/](https://dashboard.nexui.xyz/)
 
 ## ✨ Features
 
