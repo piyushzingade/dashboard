@@ -44,7 +44,7 @@ export default function NotFound() {
             >
                 <Link
                     href="/dashboard/overview"
-                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-white font-medium shadow-md hover:bg-primary/90 transition"
+                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-background/30 border border-border text-foreground font-medium shadow-md hover:bg-background/90 transition"
                 >
                     <ArrowLeft size={18} />
                     Return Home

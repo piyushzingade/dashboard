@@ -2,13 +2,14 @@
 import { Button } from '@/components/ui/button';
 import { useGithubStars } from '@/hooks/use-github-star';
 import { IconBrandGithub } from '@tabler/icons-react';
+import Link from 'next/link';
 
 
 export default function CtaGithub() {
     const star = useGithubStars("piyushzingade", "dashboard")
     return (
         <Button variant='ghost' asChild size='sm' className='hidden sm:flex gap-2 '>
-            <a
+            <Link
                 href='https://github.com/piyushzingade/dashboard'
                 rel='noopener noreferrer'
                 target='_blank'
@@ -16,7 +17,7 @@ export default function CtaGithub() {
             >
                 <IconBrandGithub />
                 <span className=' text-foreground'>{star.stargazersCount}</span>
-            </a>
+            </Link>
 
         </Button>
     );
