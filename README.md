@@ -8,7 +8,7 @@ A modern, customizable dashboard application built with Next.js, featuring multi
 
 ## 🌐 Live Preview
 
-Check out the live demo: [https://zingify-six.vercel.app/](https://zingify-six.vercel.app/)
+Check out the live demo: [https://dashboard.nexui.xyz/](https://dashboard.nexui.xyz/)
 
 ## ✨ Features
 
@@ -24,7 +24,17 @@ Check out the live demo: [https://zingify-six.vercel.app/](https://zingify-six.v
 - **Authentication Ready** - NextAuth.js integration
 - **Database Integration** - Prisma ORM with PostgreSQL support
 
-## 🚀 Quick Start
+## 🚀 Quick Start with CLI
+
+The fastest way to get started is using our CLI tool:
+
+```bash
+npx nexui-dashboard my-dashboard
+```
+
+This will scaffold a complete dashboard with all themes and features in seconds!
+
+## 📦 Manual Installation
 
 ### Prerequisites
 
@@ -241,11 +251,7 @@ Ensure environment variables are set for your deployment platform.
 
 ### For Contributors: Syncing Template Changes
 
-If you make changes to the main dashboard files (outside the `cli/` directory), you need to sync these changes to the CLI templates so they're included when users scaffold new projects.
-
-**The CLI uses two separate templates:**
-- `template-with-auth`: Includes NextAuth + Prisma authentication
-- `template-without-auth`: Dashboard without authentication features
+If you make changes to the main dashboard files (outside the `cli/` directory), you need to sync these changes to the CLI template so they're included when users scaffold new projects.
 
 **Run this command after making changes:**
 
@@ -254,9 +260,9 @@ cd cli
 npm run sync
 ```
 
-This will automatically generate both templates from the main dashboard source.
+This will sync your latest changes to the template that gets distributed via npm.
 
-> **Note**: When users run the CLI, they are asked upfront if they want to include authentication. The CLI then copies from the appropriate pre-built template based on their choice.
+> **Note**: The template includes all dashboard features with authentication. Users can run `npx nexui-dashboard [project-name]` to instantly scaffold a new project.
 
 ## 📄 License
 
