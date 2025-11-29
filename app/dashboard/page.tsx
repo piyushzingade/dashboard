@@ -7,7 +7,7 @@ export default async function Dashboard() {
     const userId = session?.user
 
     if (!userId) {
-        return redirect('/auth/sign-in');
+        return redirect('/signin');
     } else {
         redirect('/dashboard/overview');
     }
