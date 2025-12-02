@@ -6,6 +6,8 @@ import Link from "next/link"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useGithubStars } from "@/hooks/use-github-star"
 import { IconBrandGithub, IconStarFilled } from "@tabler/icons-react"
+import { ModeToggle } from "@/components/theme/theme-toggle"
+import { useThemeConfig } from "@/components/active-theme"
 
 export const XIcon = ({ className }: { className?: string }) => (
     <svg
@@ -24,6 +26,7 @@ export function Navbar() {
     const { scrollY } = useScroll()
     const blur = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(8px)"])
     const star = useGithubStars("piyushzingade", "dashboard")
+    const { themeMode } = useThemeConfig()
 
     return (
         <motion.header
@@ -44,10 +47,8 @@ export function Navbar() {
                     className="flex items-center gap-3"
                 >
                     <Link href="/" className="flex items-center space-x-2">
-                        <div className="rounded-md bg-linear-to-r from-primary to-accent p-1">
-                            <div className="h-6 w-6 rounded-sm bg-background" />
-                        </div>
-                        <span className="font-bold text-xl hidden sm:inline-block text-gray-100">
+                        {/* <LogoReverseN variant={themeMode === 'dark' ? 'light' : 'dark'} /> */}
+                        <span className="font-bold text-xl hidden sm:inline-block text-foreground">
                             NexUI
                         </span>
                     </Link>
@@ -64,7 +65,10 @@ export function Navbar() {
                         asChild
                         variant="ghost"
                         size="sm"
-                        className="group hover:bg-neutral-800/60 hover:text-neutral-100 transition-colors border border-neutral-800"
+                        className={`group transition-colors border ${themeMode === 'dark'
+                            ? 'hover:bg-neutral-800/60 hover:text-neutral-100 border-neutral-800'
+                            : 'hover:bg-neutral-200/60 hover:text-neutral-900 border-neutral-300'
+                            }`}
                     >
                         <Link
                             href="https://github.com/piyushzingade/dashboard"
@@ -75,20 +79,25 @@ export function Navbar() {
                             <IconStarFilled className="h-4 w-4 text-[#e2b241] group-hover:scale-105 transition-transform" />
 
                             <span className="font-medium">
-                                Star Project {" "}
-                                <span className="ml-1 text-neutral-200 font-medium group-hover:text-neutral-300">
+                                Give a Star {" "}
+                                <span className={`ml-1 font-medium ${themeMode === 'dark'
+                                    ? 'text-neutral-200 group-hover:text-neutral-300'
+                                    : 'text-neutral-700 group-hover:text-neutral-900'
+                                    }`}>
                                     {star.stargazersCount}
                                 </span>
                             </span>
                         </Link>
                     </Button>
 
-
                     <Button
                         variant="ghost"
                         size="sm"
                         asChild
-                        className="hover:text-neutral-200 hover:bg-neutral-800"
+                        className={themeMode === 'dark'
+                            ? 'hover:text-neutral-200 hover:bg-neutral-800'
+                            : 'hover:text-neutral-700 hover:bg-neutral-200'
+                        }
                     >
                         <Link
                             href="https://x.com/Zingadepiyush"
@@ -96,12 +105,61 @@ export function Navbar() {
                             rel="noreferrer"
                             className="flex items-center"
                         >
-                            <XIcon className="h-4 w-4 text-gray-200" />
+                            <XIcon className={`h-4 w-4 ${themeMode === 'dark' ? 'text-gray-200' : 'text-gray-700'}`} />
                             <span className="sr-only">X</span>
                         </Link>
                     </Button>
+
+                    {/* Theme Toggle Button */}
+                    <ModeToggle />
                 </motion.nav>
             </div>
         </motion.header>
     )
 }
+
+
+interface LogoReverseNProps {
+    variant: "light" | "dark"
+    size?: number
+}
+
+// export default function LogoReverseN({ variant, size = 128 }: LogoReverseNProps) {
+//     const color = variant === "light" ? "#ffffff" : "#1a1a1a"
+//     const accentColor = variant === "light" ? "#e0e0e0" : "#333333"
+
+//     return (
+//         <svg width={size} height={size} viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+//             {/* Background circle */}
+//             <circle
+//                 cx="64"
+//                 cy="64"
+//                 r="62"
+//                 fill={variant === "light" ? "#ffffff" : "#0f0f0f"}
+//                 stroke={accentColor}
+//                 strokeWidth="2"
+//             />
+
+//             {/* Reversed "N" shape - mirrored horizontally */}
+//             <g fill={color} stroke={color} strokeLinecap="round" strokeLinejoin="round">
+//                 {/* Left vertical bar */}
+//                 <rect x="32" y="36" width="12" height="56" rx="2" />
+
+//                 {/* Right vertical bar */}
+//                 <rect x="84" y="36" width="12" height="56" rx="2" />
+
+//                 {/* Diagonal connection - reversed direction */}
+//                 <path d="M 44 36 L 84 92" stroke={color} strokeWidth="12" strokeLinecap="round" opacity="0.8" />
+
+//                 {/* Small accent element */}
+//                 <circle cx="64" cy="64" r="4" fill={accentColor} opacity="0.6" />
+//             </g>
+
+//             {/* Decorative dots */}
+//             <g fill={accentColor} opacity="0.5">
+//                 <circle cx="48" cy="80" r="2" />
+//                 <circle cx="80" cy="48" r="2" />
+//             </g>
+//         </svg>
+//     )
+// }
