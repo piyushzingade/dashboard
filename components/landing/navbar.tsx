@@ -3,7 +3,7 @@
 import { Github } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import { useGithubStars } from "@/hooks/use-github-star"
 import { IconBrandGithub, IconStarFilled } from "@tabler/icons-react"
 import { ModeToggle } from "@/components/theme/theme-toggle"
@@ -23,8 +23,6 @@ export const XIcon = ({ className }: { className?: string }) => (
 )
 
 export function Navbar() {
-    const { scrollY } = useScroll()
-    const blur = useTransform(scrollY, [0, 100], ["blur(0px)", "blur(8px)"])
     const star = useGithubStars("piyushzingade", "dashboard")
     const { themeMode } = useThemeConfig()
 
@@ -33,9 +31,6 @@ export function Navbar() {
             initial={{ y: -80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            style={{
-                backdropFilter: blur.get(),
-            }}
             className="sticky top-3 z-50 w-full rounded-xl"
         >
             <div className="container mx-auto px-4 flex h-14 max-w-screen-2xl items-center justify-between">
