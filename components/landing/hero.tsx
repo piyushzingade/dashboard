@@ -3,8 +3,9 @@
 import { useState, useRef, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Copy, Check, ArrowRight, Terminal, Github, Twitter } from "lucide-react"
+import { Copy, Check, ArrowRight, Terminal } from "lucide-react"
 import { Navbar } from "./navbar"
+import { motion } from "motion/react"
 
 const CLI_COMMAND = "npx nexui-dashboard [project-name]"
 
@@ -33,27 +34,47 @@ export function Hero() {
                 <div className="mx-auto flex max-w-7xl flex-col items-center gap-16 px-4 py-16 sm:px-6 lg:py-24">
                     {/* TEXT */}
                     <div className="max-w-3xl text-center space-y-8">
-                        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-balance">
+                        <motion.h1
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-balance"
+                        >
                             Launch your dashboard in one command
-                        </h1>
+                        </motion.h1>
 
-                        <p className="text-muted-foreground text-base sm:text-lg leading-relaxed text-pretty">
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                            className="text-muted-foreground text-base sm:text-lg leading-relaxed text-pretty"
+                        >
                             A clean, production-ready dashboard generated instantly.
                             No setup, no boilerplate — just run the command and start building.
-                        </p>
+                        </motion.p>
 
                         {/* CTA */}
-                        <div className="flex justify-center">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                            className="flex justify-center"
+                        >
                             <Button asChild size="lg" className="gap-2">
                                 <Link href="/dashboard/overview">
                                     Open Dashboard
                                     <ArrowRight className="h-4 w-4" />
                                 </Link>
                             </Button>
-                        </div>
+                        </motion.div>
 
                         {/* CLI BOX */}
-                        <div className="mx-auto max-w-lg space-y-2">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, delay: 0.5 }}
+                            className="mx-auto max-w-lg space-y-2"
+                        >
                             <div className="flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3">
                                 <div className="flex flex-1 items-center gap-3">
                                     <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary">
@@ -75,11 +96,16 @@ export function Hero() {
                             <p className="text-xs text-muted-foreground text-center">
                                 Copy the command to generate your dashboard instantly.
                             </p>
-                        </div>
+                        </motion.div>
                     </div>
 
                     {/* VIDEO */}
-                    <div className="relative flex justify-center w-full pb-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.6 }}
+                        className="relative flex justify-center w-full pb-10"
+                    >
                         <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-xl max-w-5xl w-full">
                             {/* top bar */}
                             <div className="flex items-center justify-between border-b border-border px-4 py-3">
@@ -108,7 +134,7 @@ export function Hero() {
                                 </video>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
