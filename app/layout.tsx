@@ -18,25 +18,25 @@ export const metadata: Metadata = {
 
 /**
  * Load theme.json from public/theme.json (server-side).
- * We load it at module initialization so we don't read it repeatedly per-request.
- * If your theme.json is in a different place, adjust themePath accordingly.
+ * Loaded once at module init to avoid per-request fs reads.
  */
 let themes: Record<string, any> | null = null;
 try {
   const themePath = path.join(process.cwd(), "public", "theme.json");
   const raw = fs.readFileSync(themePath, "utf8");
   themes = JSON.parse(raw);
-} catch (e) {
-  // If theme.json is not available, themes remains null — handle gracefully.
-  // console.warn("Could not load theme.json:", e);
+} catch {
   themes = null;
 }
 
 function parseActiveTheme(cookieValue?: string) {
-  if (!cookieValue) return { name: undefined, mode: undefined as undefined | "light" | "dark" };
+  if (!cookieValue)
+    return { name: undefined, mode: undefined as undefined | "light" | "dark" };
+
   const parts = cookieValue.split("-");
   const name = parts[0] || undefined;
   const mode = parts[1] === "dark" ? "dark" : "light";
+
   return { name, mode };
 }
 
@@ -46,8 +46,10 @@ function buildInlineVars(name?: string, mode?: "light" | "dark") {
   if (!themeObj) return "";
   const vars = themeObj[mode];
   if (!vars) return "";
-  // Only inline a reasonable set to keep HTML small; adjust as needed.
-  return `:root{${Object.entries(vars).map(([k, v]) => `--${k}:${v};`).join("")}}`;
+
+  return `:root{${Object.entries(vars)
+    .map(([k, v]) => `--${k}:${v};`)
+    .join("")}}`;
 }
 
 export default async function RootLayout({
@@ -58,26 +60,116 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   const cookieStore = await cookies();
   const activeThemeCookie = cookieStore.get("active_theme")?.value;
-  const { name: htmlThemeName, mode: htmlThemeMode } = parseActiveTheme(activeThemeCookie);
 
-  // Inline CSS variables for the chosen theme (applies at first paint)
-  const inlineVars = buildInlineVars(htmlThemeName, htmlThemeMode as "light" | "dark");
+  const {
+    name: htmlThemeName,
+    mode: htmlThemeMode,
+  } = parseActiveTheme(activeThemeCookie);
+
+  const inlineVars = buildInlineVars(
+    htmlThemeName,
+    htmlThemeMode as "light" | "dark"
+  );
+
+  // FOUC FIX #1: inline background color based on SSR theme
+  const initialBg =
+    htmlThemeMode === "dark"
+      ? "#020617" // e.g. slate-950 / your dark bg
+      : "#f9fafb"; // e.g. zinc-50 / your light bg
 
   return (
     <html
       lang="en"
+      className={htmlThemeMode === "dark" ? "dark" : ""}
       data-theme={htmlThemeName ?? undefined}
       data-theme-mode={htmlThemeMode ?? undefined}
+      data-theme-ready={htmlThemeMode ? "true" : undefined}
       suppressHydrationWarning
     >
       <head>
-        {/* Inline the critical CSS variables for this theme so they exist at first paint */}
-        {inlineVars ? <style dangerouslySetInnerHTML={{ __html: inlineVars }} /> : null}
+        {/* FOUC FIX #2: meta helps some browsers pick dark UI chrome */}
+        <meta name="color-scheme" content="dark light" />
+
+        {/* Blocking script – but now it *respects* SSR and only falls back if needed */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var d = document.documentElement;
+                  
+                  // If SSR already set a theme mode, just ensure class + flag and bail.
+                  var ssrMode = d.getAttribute('data-theme-mode');
+                  var ssrName = d.getAttribute('data-theme');
+                  if (ssrMode) {
+                    if (ssrMode === 'dark') {
+                      d.classList.add('dark');
+                    } else {
+                      d.classList.remove('dark');
+                    }
+                    if (ssrName) d.setAttribute('data-theme', ssrName);
+                    d.setAttribute('data-theme-ready', 'true');
+                    return;
+                  }
+
+                  // --- Fallback path (no SSR theme) ---
+                  var cookieTheme = document.cookie
+                    .split('; ')
+                    .find(function(row){ return row.startsWith('active_theme='); })
+                    ?.split('=')[1];
+
+                  var localTheme = null;
+                  try {
+                    localTheme = window.localStorage.getItem('theme');
+                  } catch (_) {}
+
+                  var themeMode = null;
+                  var themeName = null;
+
+                  if (cookieTheme) {
+                    var parts = cookieTheme.split('-');
+                    themeName = parts[0];
+                    themeMode = parts[1];
+                  } else if (localTheme) {
+                    themeMode = localTheme;
+                  }
+
+                  if (themeMode === 'dark') {
+                    d.classList.add('dark');
+                  } else {
+                    d.classList.remove('dark');
+                  }
+
+                  if (themeName) {
+                    d.setAttribute('data-theme', themeName);
+                  }
+                  if (themeMode) {
+                    d.setAttribute('data-theme-mode', themeMode);
+                  }
+
+                  d.setAttribute('data-theme-ready', 'true');
+                } catch (e) {
+                  console.error('Theme init error:', e);
+                }
+              })();
+            `,
+          }}
+        />
+
+        {/* Inline critical CSS vars for this theme so they exist at first paint */}
+        {inlineVars ? (
+          <style dangerouslySetInnerHTML={{ __html: inlineVars }} />
+        ) : null}
       </head>
-      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
+      <body
+        className={`${inter.className} antialiased`}
+        style={{ backgroundColor: initialBg }} // <- hard stop against white flash
+        suppressHydrationWarning
+      >
         <AuthProvider session={session}>
-          {/* pass activeThemeValue down so client provider can reuse it */}
-          <Providers activeThemeValue={activeThemeCookie}>{children}</Providers>
+          <Providers activeThemeValue={activeThemeCookie}>
+            {children}
+          </Providers>
         </AuthProvider>
       </body>
     </html>

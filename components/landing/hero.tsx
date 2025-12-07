@@ -102,7 +102,7 @@ export function Hero() {
                                     playsInline
                                 >
                                     <source
-                                        src="https://res.cloudinary.com/dbvotc5ja/video/upload/v1764160295/dashboard_yopesg.mp4"
+                                        src="https://res.cloudinary.com/dbvotc5ja/video/upload/v1765101753/dashboard_w0olwl.mp4"
                                         type="video/mp4"
                                     />
                                 </video>
