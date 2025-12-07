@@ -14,12 +14,26 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "A modern dashboard application",
+  openGraph: {
+    title: "Dashboard",
+    description: "A modern dashboard application",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Dashboard Preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dashboard",
+    description: "A modern dashboard application",
+    images: ["/og.png"],
+  },
 };
 
-/**
- * Load theme.json from public/theme.json (server-side).
- * Loaded once at module init to avoid per-request fs reads.
- */
 let themes: Record<string, any> | null = null;
 try {
   const themePath = path.join(process.cwd(), "public", "theme.json");
@@ -71,11 +85,10 @@ export default async function RootLayout({
     htmlThemeMode as "light" | "dark"
   );
 
-  // FOUC FIX #1: inline background color based on SSR theme
   const initialBg =
     htmlThemeMode === "dark"
-      ? "#020617" // e.g. slate-950 / your dark bg
-      : "#f9fafb"; // e.g. zinc-50 / your light bg
+      ? "#020617"
+      : "#f9fafb";
 
   return (
     <html
@@ -87,10 +100,8 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* FOUC FIX #2: meta helps some browsers pick dark UI chrome */}
         <meta name="color-scheme" content="dark light" />
 
-        {/* Blocking script – but now it *respects* SSR and only falls back if needed */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -156,14 +167,13 @@ export default async function RootLayout({
           }}
         />
 
-        {/* Inline critical CSS vars for this theme so they exist at first paint */}
         {inlineVars ? (
           <style dangerouslySetInnerHTML={{ __html: inlineVars }} />
         ) : null}
       </head>
       <body
         className={`${inter.className} antialiased`}
-        style={{ backgroundColor: initialBg }} // <- hard stop against white flash
+        style={{ backgroundColor: initialBg }}
         suppressHydrationWarning
       >
         <AuthProvider session={session}>

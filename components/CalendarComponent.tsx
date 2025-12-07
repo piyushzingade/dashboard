@@ -38,7 +38,7 @@ const latestYear =
     exampleFeatures.map((f) => f.endAt.getFullYear()).sort((a, b) => a - b).slice(-1)[0] ??
     new Date().getFullYear();
 
-export default function CalendarComponent(): JSX.Element {
+export default function CalendarComponent(): React.JSX.Element {
     return (
         <CalendarProvider>
             <CalendarDate>
