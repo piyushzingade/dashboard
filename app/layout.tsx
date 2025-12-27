@@ -12,11 +12,14 @@ import path from "path";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dashboard.nexui.xyz"),
   title: "Dashboard",
   description: "A modern dashboard application",
   openGraph: {
     title: "Dashboard",
     description: "A modern dashboard application",
+    url: "https://dashboard.nexui.xyz",
+    siteName: "NexUI Dashboard",
     images: [
       {
         url: "/og.png",
@@ -25,6 +28,8 @@ export const metadata: Metadata = {
         alt: "Dashboard Preview",
       },
     ],
+    locale: "en_US",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",

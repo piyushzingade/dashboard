@@ -26,7 +26,10 @@ export function Hero() {
     }, [])
 
     return (
-        <div className="min-h-screen w-full bg-background text-foreground flex flex-col">
+        <div className="min-h-screen w-full bg-background text-foreground flex flex-col relative z-10">
+            <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none " />
+
+
             <Navbar />
 
             {/* MAIN CONTENT */}
