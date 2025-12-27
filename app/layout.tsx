@@ -11,8 +11,12 @@ import path from "path";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const baseUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "https://dashboard.nexui.xyz";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://dashboard.nexui.xyz"),
+  metadataBase: new URL(baseUrl),
   title: "Dashboard",
   description: "A modern dashboard application",
   openGraph: {
@@ -20,14 +24,6 @@ export const metadata: Metadata = {
     description: "A modern dashboard application",
     url: "https://dashboard.nexui.xyz",
     siteName: "NexUI Dashboard",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Dashboard Preview",
-      },
-    ],
     locale: "en_US",
     type: "website",
   },
@@ -35,7 +31,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Dashboard",
     description: "A modern dashboard application",
-    images: ["/og.png"],
   },
 };
 
