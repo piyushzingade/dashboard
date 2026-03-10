@@ -162,7 +162,7 @@ export default function FeedbackPage() {
     };
 
     return (
-        <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}

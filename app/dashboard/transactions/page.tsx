@@ -82,7 +82,7 @@ export default function TransactionsPage() {
     const totalExpense = transactions.filter((t) => t.type === "expense").reduce((s, t) => s + t.amount, 0);
 
     return (
-        <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}
