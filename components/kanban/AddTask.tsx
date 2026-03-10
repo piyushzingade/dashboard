@@ -1,13 +1,16 @@
 "use client";
+
 import { Plus } from "lucide-react";
 import { Button } from "../ui/button";
 
 export function AddTask() {
-
     return (
-        <div className="flex items-center justify-between ">
-            <Button
-                className="flex items-center justify-center gap-3"><Plus className="size-4 " /> Add Todo</Button>
-        </div>
-    )
+        <Button
+            size="sm"
+            className="gap-2 active:scale-[0.97] transition-transform duration-150"
+        >
+            <Plus className="size-4" />
+            Add task
+        </Button>
+    );
 }
