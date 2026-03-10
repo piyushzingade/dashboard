@@ -13,44 +13,56 @@ export function Preview() {
     }, [])
 
     return (
-        <section className="px-4 pb-24 sm:pb-32">
+        <section className="px-6 pb-28 sm:pb-36">
             <div className="mx-auto max-w-5xl">
-                {/* Section heading */}
+                {/* Heading */}
                 <motion.div
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-80px" }}
-                    transition={{ duration: 0.6, ease }}
-                    className="mb-12 text-center"
+                    transition={{ duration: 0.5, ease }}
+                    className="mb-4"
                 >
-                    <h2 className="font-serif text-3xl italic tracking-tight sm:text-4xl md:text-5xl">
-                        See it in action.
-                    </h2>
+                    <p className="text-sm font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+                        Preview
+                    </p>
                 </motion.div>
+
+                <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.5, delay: 0.06, ease }}
+                    className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
+                >
+                    See it in action.
+                </motion.h2>
 
                 {/* Browser chrome */}
                 <motion.div
-                    initial={{ opacity: 0, y: 40, scale: 0.97 }}
+                    initial={{ opacity: 0, y: 32, scale: 0.97 }}
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                    viewport={{ once: true, margin: "-60px" }}
-                    transition={{ duration: 0.7, ease }}
-                    className="overflow-hidden rounded-2xl border border-border/40 bg-card/60 shadow-2xl shadow-black/[0.06] backdrop-blur-sm dark:shadow-black/[0.2] sm:rounded-3xl"
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.6, delay: 0.1, ease }}
+                    className="mt-12 overflow-hidden rounded-xl border border-border/30 bg-card/50 shadow-xl shadow-black/[0.04] dark:shadow-black/[0.15] sm:rounded-2xl"
                 >
                     {/* Title bar */}
-                    <div className="flex items-center justify-between border-b border-border/30 px-4 py-3">
+                    <div className="flex items-center justify-between border-b border-border/20 px-4 py-2.5">
                         <div className="flex items-center gap-1.5">
-                            <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-                            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/80" />
-                            <span className="h-2.5 w-2.5 rounded-full bg-green-500/80" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-foreground/10" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-foreground/10" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-foreground/10" />
                         </div>
-                        <span className="text-xs text-muted-foreground/60">
-                            dashboard.nexui.xyz
-                        </span>
+                        <div className="rounded-md bg-secondary/60 px-3 py-0.5">
+                            <span className="text-[11px] text-muted-foreground/50 font-mono">
+                                dashboard.nexui.xyz
+                            </span>
+                        </div>
                         <div className="w-12" />
                     </div>
 
                     {/* Video */}
-                    <div className="bg-secondary/30">
+                    <div className="bg-secondary/20">
                         <video
                             ref={videoRef}
                             className="aspect-video w-full object-cover"

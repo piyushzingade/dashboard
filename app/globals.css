@@ -7,7 +7,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  --font-serif: var(--font-instrument), 'Georgia', serif;
+  --font-heading: var(--font-bricolage), system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', 'Source Code Pro', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Liberation Mono', 'Courier New', monospace;
   --font-jersey10: var(--font-jersey10);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -174,102 +174,97 @@
 
 /* ─── Landing Page ─── */
 
-@keyframes orb-drift-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(60px, -40px) scale(1.05); }
-  50% { transform: translate(-30px, 50px) scale(0.97); }
-  75% { transform: translate(40px, 20px) scale(1.02); }
+/* Dot grid background */
+.dot-grid {
+  background-image: radial-gradient(circle, oklch(0.4 0 0 / 0.07) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-@keyframes orb-drift-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  25% { transform: translate(-50px, 30px) scale(1.08); }
-  50% { transform: translate(40px, -60px) scale(0.95); }
-  75% { transform: translate(-20px, -30px) scale(1.03); }
+.dark .dot-grid {
+  background-image: radial-gradient(circle, oklch(1 0 0 / 0.04) 1px, transparent 1px);
 }
 
-@keyframes orb-drift-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(30px, 40px) scale(1.04); }
-  66% { transform: translate(-40px, -20px) scale(0.96); }
+/* Blinking cursor for typing animation */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
-.landing-orb-1 {
-  animation: orb-drift-1 22s ease-in-out infinite;
+.typing-cursor {
+  animation: cursor-blink 1s step-end infinite;
+}
+
+/* Tilt card interaction */
+.tilt-card {
+  transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
   will-change: transform;
 }
 
-.landing-orb-2 {
-  animation: orb-drift-2 28s ease-in-out infinite;
+/* Magnetic button */
+.magnetic-wrap {
+  transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
   will-change: transform;
 }
 
-.landing-orb-3 {
-  animation: orb-drift-3 18s ease-in-out infinite;
-  will-change: transform;
-}
-
-@keyframes glow-breathe {
-  0%, 100% {
-    box-shadow:
-      0 0 0 1px oklch(0.75 0.12 75 / 15%),
-      0 0 20px -5px oklch(0.75 0.12 75 / 8%);
-  }
-  50% {
-    box-shadow:
-      0 0 0 1px oklch(0.75 0.12 75 / 25%),
-      0 0 40px -5px oklch(0.75 0.12 75 / 15%);
-  }
-}
-
-.cli-glow {
-  animation: glow-breathe 4s ease-in-out infinite;
-}
-
-@keyframes shine-slide {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-.badge-shine {
+/* Nav link underline animation */
+.nav-underline {
   position: relative;
-  overflow: hidden;
 }
 
-.badge-shine::after {
+.nav-underline::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    oklch(1 0 0 / 6%) 50%,
-    transparent 100%
-  );
-  animation: shine-slide 4s ease-in-out infinite;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 200ms ease;
 }
 
-.dark .badge-shine::after {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    oklch(1 0 0 / 8%) 50%,
-    transparent 100%
-  );
+@media (hover: hover) and (pointer: fine) {
+  .nav-underline:hover::after {
+    width: 100%;
+  }
 }
 
+/* Step connector line */
+@keyframes draw-line {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+.step-line {
+  transform-origin: left;
+  animation: draw-line 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation-play-state: paused;
+}
+
+.step-line.animate {
+  animation-play-state: running;
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .landing-orb-1,
-  .landing-orb-2,
-  .landing-orb-3 {
+  .typing-cursor {
     animation: none;
+    opacity: 1;
   }
 
-  .cli-glow {
-    animation: none;
+  .tilt-card {
+    transition: none;
   }
 
-  .badge-shine::after {
+  .magnetic-wrap {
+    transition: none;
+  }
+
+  .nav-underline::after {
+    transition: none;
+  }
+
+  .step-line {
     animation: none;
+    transform: scaleX(1);
   }
 }

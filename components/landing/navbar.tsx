@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useRef } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { motion } from "motion/react"
@@ -24,41 +25,57 @@ export const XIcon = ({ className }: { className?: string }) => (
 
 export function Navbar() {
     const star = useGithubStars("piyushzingade", "dashboard")
+    const headerRef = useRef<HTMLElement>(null)
+
+    useEffect(() => {
+        const el = headerRef.current
+        if (!el) return
+
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                el.setAttribute("data-scrolled", "true")
+            } else {
+                el.removeAttribute("data-scrolled")
+            }
+        }
+
+        window.addEventListener("scroll", handleScroll, { passive: true })
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
     return (
         <motion.header
-            initial={{ y: -40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6, ease }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-screen-lg"
+            ref={headerRef}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, ease }}
+            className="fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-300 ease border-b border-transparent data-[scrolled]:border-border/30 data-[scrolled]:bg-background/80 data-[scrolled]:backdrop-blur-lg"
         >
-            <nav className="flex h-14 items-center justify-between rounded-2xl border border-border/40 bg-background/60 px-4 shadow-sm backdrop-blur-xl sm:px-6">
+            <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
                 {/* Logo */}
                 <Link
                     href="/"
-                    className="font-serif text-xl italic tracking-tight text-foreground transition-opacity hover:opacity-70"
+                    className="font-heading text-lg font-bold tracking-tight text-foreground transition-opacity duration-150 hover:opacity-70 active:scale-[0.97]"
                 >
                     NexUI
                 </Link>
 
-                {/* Right actions */}
-                <div className="flex items-center gap-1.5 sm:gap-2">
+                {/* Right */}
+                <div className="flex items-center gap-1">
                     <Button
                         asChild
                         variant="ghost"
                         size="sm"
-                        className="group gap-2 rounded-xl border border-border/50 text-foreground transition-all hover:border-amber-500/30 hover:bg-amber-500/5"
+                        className="nav-underline group gap-1.5 rounded-lg text-muted-foreground transition-colors duration-150 hover:text-foreground hover:bg-transparent"
                     >
                         <Link
                             href="https://github.com/piyushzingade/dashboard"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <IconStarFilled className="h-3.5 w-3.5 text-amber-500 transition-transform group-hover:scale-110" />
-                            <span className="hidden font-medium sm:inline">
-                                Star
-                            </span>
-                            <span className="text-muted-foreground tabular-nums">
+                            <IconStarFilled className="h-3.5 w-3.5 text-emerald-500" />
+                            <span className="hidden text-sm sm:inline">Star</span>
+                            <span className="text-xs tabular-nums text-muted-foreground">
                                 {star.stargazersCount}
                             </span>
                         </Link>
@@ -68,7 +85,7 @@ export function Navbar() {
                         variant="ghost"
                         size="icon"
                         asChild
-                        className="h-9 w-9 rounded-xl text-muted-foreground transition-colors hover:text-foreground"
+                        className="h-9 w-9 rounded-lg text-muted-foreground transition-colors duration-150 hover:text-foreground hover:bg-transparent"
                     >
                         <Link
                             href="https://x.com/Zingadepiyush"
@@ -82,7 +99,7 @@ export function Navbar() {
 
                     <ModeToggle />
                 </div>
-            </nav>
+            </div>
         </motion.header>
     )
 }

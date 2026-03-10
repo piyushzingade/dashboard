@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Inter, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/providers/session-provider";
 import { getServerSession } from "next-auth";
@@ -11,11 +11,10 @@ import path from "path";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const instrumentSerif = Instrument_Serif({
-  weight: "400",
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
-  variable: "--font-instrument",
-  style: ["normal", "italic"],
+  variable: "--font-bricolage",
+  weight: ["400", "600", "700", "800"],
   display: "swap",
 });
 
@@ -180,7 +179,7 @@ export default async function RootLayout({
         ) : null}
       </head>
       <body
-        className={`${inter.className} ${instrumentSerif.variable} antialiased`}
+        className={`${inter.className} ${bricolage.variable} antialiased`}
         style={{ backgroundColor: initialBg }}
         suppressHydrationWarning
       >
