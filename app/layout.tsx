@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/providers/session-provider";
 import { getServerSession } from "next-auth";
@@ -10,6 +10,14 @@ import fs from "fs";
 import path from "path";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  style: ["normal", "italic"],
+  display: "swap",
+});
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -172,7 +180,7 @@ export default async function RootLayout({
         ) : null}
       </head>
       <body
-        className={`${inter.className} antialiased`}
+        className={`${inter.className} ${instrumentSerif.variable} antialiased`}
         style={{ backgroundColor: initialBg }}
         suppressHydrationWarning
       >
