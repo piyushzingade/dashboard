@@ -181,7 +181,7 @@ type OutOfBoundsDayProps = {
 };
 
 const OutOfBoundsDay = ({ day }: OutOfBoundsDayProps) => (
-  <div className="relative h-full w-full bg-secondary p-1 text-muted-foreground text-xs">
+  <div className="relative h-full w-full bg-secondary/40 p-1.5 text-muted-foreground/40 text-xs">
     {day}
   </div>
 );
@@ -263,15 +263,20 @@ export const CalendarBody = ({ features, children }: CalendarBodyProps) => {
 
     days.push(
       <div
-        className="relative flex h-full w-full flex-col gap-1 p-1 text-muted-foreground text-xs"
+        className="group/day relative flex h-full w-full flex-col gap-1 p-1.5 text-xs transition-colors duration-150 hover:bg-secondary/30"
         key={day}
       >
-        {day}
-        <div>
+        <span className={cn(
+          "mb-0.5 text-muted-foreground tabular-nums",
+          isSameDay(new Date(year, month, day), new Date()) && "flex h-5 w-5 items-center justify-center rounded-full bg-foreground text-background font-medium"
+        )}>
+          {day}
+        </span>
+        <div className="flex flex-col gap-0.5">
           {featuresForDay.slice(0, 3).map((feature) => children({ feature }))}
         </div>
         {featuresForDay.length > 3 && (
-          <span className="block text-muted-foreground text-xs">
+          <span className="block text-muted-foreground/60 text-[10px]">
             +{featuresForDay.length - 3} more
           </span>
         )}
@@ -430,7 +435,7 @@ export type CalendarDateProps = {
 };
 
 export const CalendarDate = ({ children }: CalendarDateProps) => (
-  <div className="flex items-center justify-between p-3">{children}</div>
+  <div className="flex items-center justify-between px-4 py-3">{children}</div>
 );
 
 export type CalendarHeaderProps = {
@@ -446,9 +451,9 @@ export const CalendarHeader = ({ className }: CalendarHeaderProps) => {
   }, [locale, startDay]);
 
   return (
-    <div className={cn("grid grow grid-cols-7", className)}>
+    <div className={cn("grid grow grid-cols-7 border-b", className)}>
       {daysData.map((day) => (
-        <div className="p-3 text-right text-muted-foreground text-xs" key={day}>
+        <div className="p-2.5 text-right text-muted-foreground/70 text-xs font-medium uppercase tracking-wider" key={day}>
           {day}
         </div>
       ))}
@@ -463,14 +468,19 @@ export type CalendarItemProps = {
 
 export const CalendarItem = memo(
   ({ feature, className }: CalendarItemProps) => (
-    <div className={cn("flex items-center gap-2", className)}>
+    <div
+      className={cn(
+        "flex items-center gap-1.5 rounded-md px-1.5 py-0.5 transition-colors duration-100 hover:bg-secondary/60",
+        className
+      )}
+    >
       <div
-        className="h-2 w-2 shrink-0 rounded-full"
-        style={{
-          backgroundColor: feature.status.color,
-        }}
+        className="h-1.5 w-1.5 shrink-0 rounded-full"
+        style={{ backgroundColor: feature.status.color }}
       />
-      <span className="truncate">{feature.name}</span>
+      <span className="truncate text-[11px] leading-tight">
+        {feature.name}
+      </span>
     </div>
   )
 );
