@@ -50,13 +50,13 @@ export function PartialLineChart() {
     });
 
     return (
-        <Card className="p-6.5" >
+        <Card className="group p-6.5 transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md dark:hover:border-foreground/10">
             <CardHeader>
                 <CardTitle>
                     Partial Line Chart
                     <Badge
                         variant="outline"
-                        className="text-green-500 bg-green-500/10 border-none ml-2"
+                        className="text-green-500 bg-green-500/10 border-none ml-2 transition-transform duration-200 group-hover:scale-105"
                     >
                         <TrendingUp className="h-4 w-4" />
                         <span>5.2%</span>

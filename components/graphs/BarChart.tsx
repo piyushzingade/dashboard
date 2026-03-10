@@ -92,7 +92,7 @@ export function ValueLineBarChart() {
     }, [maxValueIndex.value, maxValueIndexSpring]);
 
     return (
-        <Card>
+        <Card className="group transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md dark:hover:border-foreground/10">
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <span
@@ -100,7 +100,7 @@ export function ValueLineBarChart() {
                     >
                         ${maxValueIndex.value}
                     </span>
-                    <Badge variant="secondary">
+                    <Badge variant="secondary" className="transition-transform duration-200 group-hover:scale-105">
                         <TrendingUp className="h-4 w-4" />
                         <span>5.2%</span>
                     </Badge>

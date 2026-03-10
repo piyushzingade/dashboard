@@ -45,13 +45,13 @@ const chartConfig = {
 
 export function GlowingMultipleStrokeRadarChart() {
     return (
-        <Card>
+        <Card className="group transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md dark:hover:border-foreground/10">
             <CardHeader className="items-center pb-4">
                 <CardTitle>
                     Glowing Multiple Stroke
                     <Badge
                         variant="outline"
-                        className="text-red-500 bg-red-500/10 border-none ml-2"
+                        className="text-red-500 bg-red-500/10 border-none ml-2 transition-transform duration-200 group-hover:scale-105"
                     >
                         <TrendingDown className="h-4 w-4" />
                         <span>5.2%</span>
