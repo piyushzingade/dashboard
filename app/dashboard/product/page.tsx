@@ -1,10 +1,8 @@
-import { Heading } from '@/components/Heading';
 import ProductListingPage from '@/components/products/product-listing';
-import { Separator } from '@/components/ui/separator';
 import { DataTableSkeleton } from '@/components/ui/table/data-table-skeleton';
 import { searchParamsCache } from '@/lib/searchparams';
 import Link from 'next/link';
-import { Plus } from 'lucide-react';
+import { Plus, Package } from 'lucide-react';
 import { SearchParams } from 'nuqs/server';
 import { Suspense } from 'react';
 
@@ -21,14 +19,32 @@ export default async function Page(props: pageProps) {
     searchParamsCache.parse(searchParams);
 
     return (
-        <div className='flex flex-1 flex-col space-y-4'>
-            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2'>
-                <Heading title='Product' description='Manage products (Server side table functionalities.)' />
-                <div className="ml-auto">
-                    <Link href='/dashboard/product/add' className="bg-foreground text-background px-3 py-2 flex items-center gap-3 rounded-md w-full sm:w-auto justify-center"><Plus className="size-4 " /> Add</Link>
+        <div className='flex flex-1 flex-col gap-6'>
+            {/* Header */}
+            <div className='flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between'>
+                <div className='flex items-center gap-3'>
+                    <div className='flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80'>
+                        <Package className='h-5 w-5 text-muted-foreground' />
+                    </div>
+                    <div>
+                        <h1 className='font-heading text-2xl font-bold tracking-tight'>
+                            Products
+                        </h1>
+                        <p className='text-sm text-muted-foreground'>
+                            Manage your product catalog and inventory.
+                        </p>
+                    </div>
                 </div>
+                <Link
+                    href='/dashboard/product/add'
+                    className="mt-3 sm:mt-0 inline-flex items-center justify-center gap-2 rounded-lg bg-foreground px-4 py-2.5 text-sm font-medium text-background transition-all duration-200 hover:opacity-90 active:scale-[0.97]"
+                >
+                    <Plus className="size-4" />
+                    Add product
+                </Link>
             </div>
-            <Separator />
+
+            {/* Table */}
             <Suspense
                 fallback={
                     <DataTableSkeleton columnCount={5} rowCount={8} filterCount={2} />
