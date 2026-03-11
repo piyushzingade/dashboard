@@ -7,14 +7,11 @@ import {
     ArrowUpRight,
     ArrowRightLeft,
     Search,
-    Filter,
+    Wallet,
 } from "lucide-react";
 import {
     Card,
     CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -77,9 +74,25 @@ export default function TransactionsPage() {
         return matchesTab && matchesSearch;
     });
 
-    // Quick stats
-    const totalIncome = transactions.filter((t) => t.type === "income").reduce((s, t) => s + t.amount, 0);
-    const totalExpense = transactions.filter((t) => t.type === "expense").reduce((s, t) => s + t.amount, 0);
+    const totalIncome = transactions
+        .filter((t) => t.type === "income")
+        .reduce((s, t) => s + t.amount, 0);
+    const totalExpense = transactions
+        .filter((t) => t.type === "expense")
+        .reduce((s, t) => s + t.amount, 0);
+    const netBalance = totalIncome - totalExpense;
+    const total = totalIncome + totalExpense;
+    const incomePct = Math.round((totalIncome / total) * 100);
+    const expensePct = 100 - incomePct;
+
+    const incomeCount = transactions.filter((t) => t.type === "income").length;
+    const expenseCount = transactions.filter((t) => t.type === "expense").length;
+
+    const tabCounts: Record<string, number> = {
+        all: transactions.length,
+        income: incomeCount,
+        expense: expenseCount,
+    };
 
     return (
         <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
@@ -104,41 +117,123 @@ export default function TransactionsPage() {
                 </div>
             </motion.div>
 
-            {/* Quick Stats */}
+            {/* Financial Summary — unified card */}
             <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.45, delay: 0.06, ease }}
-                className="grid grid-cols-1 gap-4 sm:grid-cols-3"
+                transition={{ duration: 0.5, delay: 0.06, ease }}
             >
-                <Card className="transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
+                <Card className="relative overflow-hidden transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
+                    {/* Gradient top accent — green to red ratio */}
+                    <div className="flex h-1">
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${incomePct}%` }}
+                            transition={{ duration: 0.8, delay: 0.2, ease }}
+                            className="bg-emerald-500/60"
+                        />
+                        <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${expensePct}%` }}
+                            transition={{ duration: 0.8, delay: 0.3, ease }}
+                            className="bg-red-500/40"
+                        />
+                    </div>
+
                     <CardContent className="pt-5">
-                        <p className="text-xs text-muted-foreground">Total transactions</p>
-                        <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight">
-                            {transactions.length}
-                        </p>
-                    </CardContent>
-                </Card>
-                <Card className="transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
-                    <CardContent className="pt-5">
-                        <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <ArrowDownLeft className="h-3 w-3 text-emerald-500" />
-                            Income
-                        </p>
-                        <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight text-emerald-600 dark:text-emerald-400">
-                            ${totalIncome.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                        </p>
-                    </CardContent>
-                </Card>
-                <Card className="transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
-                    <CardContent className="pt-5">
-                        <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                            <ArrowUpRight className="h-3 w-3 text-red-500" />
-                            Expenses
-                        </p>
-                        <p className="mt-1 text-2xl font-semibold tabular-nums tracking-tight text-red-500">
-                            ${totalExpense.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                        </p>
+                        {/* Three metrics in columns */}
+                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-border/30">
+                            {/* Transactions count */}
+                            <div className="sm:pr-6">
+                                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
+                                    Transactions
+                                </p>
+                                <p className="mt-1.5 text-3xl font-bold tabular-nums tracking-tight">
+                                    {transactions.length}
+                                </p>
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    {incomeCount} received
+                                    <span className="mx-1.5 text-border">
+                                        /
+                                    </span>
+                                    {expenseCount} sent
+                                </p>
+                            </div>
+
+                            {/* Income */}
+                            <div className="sm:px-6">
+                                <p className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
+                                    <ArrowDownLeft className="h-3 w-3 text-emerald-500" />
+                                    Income
+                                </p>
+                                <p className="mt-1.5 text-3xl font-bold tabular-nums tracking-tight text-emerald-600 dark:text-emerald-400">
+                                    $
+                                    {totalIncome.toLocaleString(undefined, {
+                                        minimumFractionDigits: 2,
+                                    })}
+                                </p>
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    {incomePct}% of total volume
+                                </p>
+                            </div>
+
+                            {/* Expenses */}
+                            <div className="sm:pl-6">
+                                <p className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
+                                    <ArrowUpRight className="h-3 w-3 text-red-500" />
+                                    Expenses
+                                </p>
+                                <p className="mt-1.5 text-3xl font-bold tabular-nums tracking-tight text-red-500">
+                                    $
+                                    {totalExpense.toLocaleString(undefined, {
+                                        minimumFractionDigits: 2,
+                                    })}
+                                </p>
+                                <p className="mt-1 text-xs text-muted-foreground">
+                                    {expensePct}% of total volume
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Ratio bar */}
+                        <div className="mt-5 flex h-2 overflow-hidden rounded-full bg-secondary/50">
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${incomePct}%` }}
+                                transition={{
+                                    duration: 0.8,
+                                    delay: 0.3,
+                                    ease,
+                                }}
+                                className="rounded-l-full bg-emerald-500/50"
+                            />
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${expensePct}%` }}
+                                transition={{
+                                    duration: 0.8,
+                                    delay: 0.4,
+                                    ease,
+                                }}
+                                className="rounded-r-full bg-red-500/40"
+                            />
+                        </div>
+
+                        {/* Net balance */}
+                        <div className="mt-3 flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Wallet className="h-3.5 w-3.5 text-muted-foreground" />
+                                <span className="text-xs text-muted-foreground">
+                                    Net balance
+                                </span>
+                            </div>
+                            <span className="font-mono text-sm font-semibold tabular-nums text-emerald-600 dark:text-emerald-400">
+                                +$
+                                {netBalance.toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                })}
+                            </span>
+                        </div>
                     </CardContent>
                 </Card>
             </motion.div>
@@ -150,19 +245,28 @@ export default function TransactionsPage() {
                 transition={{ duration: 0.45, delay: 0.12, ease }}
                 className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
             >
-                {/* Tabs */}
+                {/* Tabs with counts */}
                 <div className="flex gap-1 rounded-lg bg-secondary/50 p-1">
                     {tabs.map((tab) => (
                         <button
                             key={tab.key}
                             onClick={() => setActiveTab(tab.key)}
-                            className={`rounded-md px-3.5 py-1.5 text-xs font-medium transition-all duration-200 ${
+                            className={`flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-xs font-medium transition-all duration-200 ${
                                 activeTab === tab.key
                                     ? "bg-background text-foreground shadow-sm"
                                     : "text-muted-foreground hover:text-foreground"
                             }`}
                         >
                             {tab.label}
+                            <span
+                                className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-medium tabular-nums ${
+                                    activeTab === tab.key
+                                        ? "bg-foreground/10 text-foreground"
+                                        : "bg-secondary text-muted-foreground"
+                                }`}
+                            >
+                                {tabCounts[tab.key]}
+                            </span>
                         </button>
                     ))}
                 </div>
