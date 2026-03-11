@@ -64,7 +64,7 @@ const usage = [
 
 export default function BillingPage() {
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -157,7 +157,7 @@ export default function BillingPage() {
             </motion.div>
 
             {/* Usage + Payment */}
-            <div className="grid gap-4 lg:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
                 {/* Usage */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

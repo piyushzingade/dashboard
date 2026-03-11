@@ -128,7 +128,7 @@ const channelConfig = {
 
 export default function ReportsPage() {
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -158,7 +158,7 @@ export default function ReportsPage() {
             </motion.div>
 
             {/* Stats Row */}
-            <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                 {stats.map((stat, i) => (
                     <motion.div
                         key={stat.label}
@@ -203,7 +203,7 @@ export default function ReportsPage() {
             </div>
 
             {/* Charts Row */}
-            <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
+            <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
                 {/* Revenue Area Chart */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -383,7 +383,7 @@ export default function ReportsPage() {
             </div>
 
             {/* Bottom Row */}
-            <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
+            <div className="grid gap-4 md:grid-cols-2">
                 {/* Traffic Sources */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

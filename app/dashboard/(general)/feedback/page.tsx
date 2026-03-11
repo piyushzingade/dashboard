@@ -162,7 +162,7 @@ export default function FeedbackPage() {
     };
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -183,7 +183,7 @@ export default function FeedbackPage() {
                 </div>
             </motion.div>
 
-            <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
+            <div className="grid gap-4 md:grid-cols-2">
                 {/* Left — Submit Feedback */}
                 <div className="flex flex-col gap-4">
                     {/* Feedback Type */}

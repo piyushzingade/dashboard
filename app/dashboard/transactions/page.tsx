@@ -82,7 +82,7 @@ export default function TransactionsPage() {
     const totalExpense = transactions.filter((t) => t.type === "expense").reduce((s, t) => s + t.amount, 0);
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -109,7 +109,7 @@ export default function TransactionsPage() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.45, delay: 0.06, ease }}
-                className="grid grid-cols-3 gap-3"
+                className="grid grid-cols-1 gap-4 sm:grid-cols-3"
             >
                 <Card className="transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
                     <CardContent className="pt-5">

@@ -43,7 +43,7 @@ export default function OverviewPage() {
             </motion.div>
 
             {/* Charts Grid */}
-            <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
+            <div className="grid gap-4 md:grid-cols-[2fr_1fr]">
                 {/* Left — Main Charts */}
                 <div className="flex flex-col gap-4">
                     <motion.div

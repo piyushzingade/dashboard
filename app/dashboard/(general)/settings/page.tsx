@@ -76,7 +76,7 @@ export default function SettingsPage() {
     };
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -116,7 +116,7 @@ export default function SettingsPage() {
                 </Button>
             </motion.div>
 
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
                 {/* General */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}

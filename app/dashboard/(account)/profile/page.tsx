@@ -64,7 +64,7 @@ const recentActivity = [
 
 export default function ProfilePage() {
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 md:p-6">
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
             {/* Header */}
             <motion.div
                 initial={{ opacity: 0, y: 12 }}
@@ -85,7 +85,7 @@ export default function ProfilePage() {
                 </div>
             </motion.div>
 
-            <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+            <div className="grid gap-6 md:grid-cols-[1fr_2fr]">
                 {/* Left — Profile Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
