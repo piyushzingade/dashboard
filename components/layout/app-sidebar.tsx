@@ -50,9 +50,9 @@ import { SidebarCard } from '../sidebar-card';
 
 
 export const company = {
-    name: 'Acme Inc',
+    name: 'Efferd LLC',
     logo: IconPhotoUp,
-    plan: 'Enterprise'
+    plan: 'Workspace'
 };
 
 const tenants = [
@@ -82,7 +82,7 @@ export default function AppSidebar() {
             </SidebarHeader>
             <SidebarContent className='overflow-x-hidden py-2'>
                 <SidebarGroup className="px-2.5">
-                    <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+                    <SidebarGroupLabel className="px-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-sidebar-foreground/45">Platform</SidebarGroupLabel>
                     <SidebarMenu>
                         {navItems.map((item) => {
                             const Icon = item.icon ? Icons[item.icon] : Icons.logo;

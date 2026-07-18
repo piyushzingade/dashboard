@@ -1,170 +1,94 @@
 "use client";
 
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
-import { Badge } from "../ui/badge";
-import {
-    Card,
-    CardAction,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "../ui/card";
-import { DollarSign, Users, Activity, TrendingUp } from "lucide-react";
+import { IconCalendar, IconChartBar, IconChartDots3, IconSpeakerphone, IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
 
-/* ─── Tiny sparkline SVG ─── */
+type Metric = {
+    title: string;
+    value: string;
+    trend: string;
+    trendUp: boolean;
+    icon: typeof IconCalendar;
+    bars: readonly number[];
+};
 
-function Sparkline({
-    data,
-    color,
-}: {
-    data: readonly number[];
-    color: string;
-}) {
-    const max = Math.max(...data);
-    const min = Math.min(...data);
-    const range = max - min || 1;
-    const w = 80;
-    const h = 28;
-    const pad = 2;
-
-    const coords = data.map((v, i) => ({
-        x: pad + (i / (data.length - 1)) * (w - pad * 2),
-        y: h - pad - ((v - min) / range) * (h - pad * 2),
-    }));
-
-    const points = coords.map((c) => `${c.x},${c.y}`).join(" ");
-    const last = coords[coords.length - 1];
-
-    return (
-        <svg
-            width={w}
-            height={h}
-            viewBox={`0 0 ${w} ${h}`}
-            fill="none"
-            className="shrink-0 opacity-70"
-            role="img"
-            aria-label="Recent trend sparkline"
-        >
-            <polyline
-                points={points}
-                stroke={color}
-                strokeWidth={1.5}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill="none"
-            />
-            {last && <circle cx={last.x} cy={last.y} r={2} fill={color} />}
-        </svg>
-    );
-}
-
-/* ─── Card data ─── */
-
-const cards = [
+const metrics: readonly Metric[] = [
     {
-        title: "Total Revenue",
-        value: 1250,
-        prefix: "$",
-        suffix: ".00",
-        trend: "+12.5%",
+        title: "Active campaigns",
+        value: "24",
+        trend: "12.4%",
         trendUp: true,
-        description: "vs. previous 30 days",
-        icon: DollarSign,
-        sparkData: [400, 500, 450, 680, 600, 750, 800, 920, 880, 1050, 1100, 1250],
-        sparkColor: "oklch(0.65 0.19 145)",
+        icon: IconSpeakerphone,
+        bars: [3, 5, 4, 6, 8, 7, 10, 9, 12, 14, 12, 16],
     },
     {
-        title: "New Customers",
-        value: 1234,
-        prefix: "",
-        suffix: "",
-        trend: "-20%",
+        title: "Posts published",
+        value: "147",
+        trend: "7.8%",
+        trendUp: true,
+        icon: IconCalendar,
+        bars: [4, 6, 5, 9, 7, 8, 11, 10, 12, 14, 13, 16],
+    },
+    {
+        title: "Total reach",
+        value: "412.8K",
+        trend: "4.3%",
+        trendUp: true,
+        icon: IconChartDots3,
+        bars: [5, 6, 8, 7, 9, 11, 10, 13, 12, 14, 13, 16],
+    },
+    {
+        title: "Avg. engagement",
+        value: "4.18%",
+        trend: "0.6%",
         trendUp: false,
-        description: "vs. previous 30 days",
-        icon: Users,
-        sparkData: [1500, 1400, 1350, 1300, 1280, 1260, 1250, 1240, 1235, 1234],
-        sparkColor: "oklch(0.65 0.19 25)",
-    },
-    {
-        title: "Active Accounts",
-        value: 45678,
-        prefix: "",
-        suffix: "",
-        trend: "+12.5%",
-        trendUp: true,
-        description: "vs. previous 30 days",
-        icon: Activity,
-        sparkData: [30000, 32000, 35000, 36500, 38000, 40000, 41500, 43000, 44200, 45678],
-        sparkColor: "oklch(0.65 0.19 145)",
-    },
-    {
-        title: "Growth Rate",
-        value: 4.5,
-        prefix: "",
-        suffix: "%",
-        trend: "+4.5%",
-        trendUp: true,
-        description: "vs. previous 30 days",
-        icon: TrendingUp,
-        sparkData: [2.1, 2.5, 2.8, 3.0, 3.2, 3.5, 3.8, 4.0, 4.2, 4.5],
-        sparkColor: "oklch(0.65 0.19 145)",
+        icon: IconChartBar,
+        bars: [16, 14, 15, 13, 12, 14, 11, 10, 8, 9, 7, 6],
     },
 ] as const;
 
-/* ─── Component ─── */
+function SparkBars({ bars }: { bars: readonly number[] }) {
+    return (
+        <div className="flex h-9 items-end gap-0.5" aria-hidden="true">
+            {bars.map((height, index) => (
+                <span
+                    key={`${height}-${index}`}
+                    className="w-1 rounded-[1px] bg-muted-foreground/35"
+                    style={{ height: `${height * 2}px`, opacity: 0.35 + index / (bars.length * 2) }}
+                />
+            ))}
+        </div>
+    );
+}
 
 export function TopCard() {
     return (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {cards.map((card) => (
-                <div key={card.title}>
-                    <Card className="@container/card h-full overflow-hidden">
-                        <CardHeader>
-                            <CardDescription className="flex items-center gap-2">
-                                <span className="inline-flex size-7 items-center justify-center rounded-md bg-secondary">
-                                    <card.icon className="size-3.5 text-muted-foreground" aria-hidden="true" />
-                                </span>
-                                {card.title}
+        <section aria-label="Workspace metrics" className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {metrics.map((metric) => {
+                const Icon = metric.icon;
+                return (
+                    <Card key={metric.title} className="gap-0 overflow-hidden p-0">
+                        <CardHeader className="gap-3 border-b border-border/70 bg-secondary/35 px-4 py-3">
+                            <CardDescription className="flex items-center gap-2 text-xs">
+                                <Icon className="size-3.5" aria-hidden="true" />
+                                {metric.title}
                             </CardDescription>
-                            <CardTitle className="mt-1 text-2xl font-semibold tabular-nums tracking-[-0.03em] @[250px]/card:text-3xl">
-                                {card.prefix}
-                                {card.value.toLocaleString()}
-                                {card.suffix}
-                            </CardTitle>
-                            <CardAction>
-                                <Badge
-                                    variant="outline"
-                                    className={`border-none ${
-                                        card.trendUp
-                                            ? "bg-positive/10 text-positive"
-                                            : "bg-destructive/10 text-destructive"
-                                    }`}
-                                >
-                                    {card.trendUp ? (
-                                        <IconTrendingUp className="h-3.5 w-3.5" />
-                                    ) : (
-                                        <IconTrendingDown className="h-3.5 w-3.5" />
-                                    )}
-                                    {card.trend}
-                                </Badge>
-                            </CardAction>
                         </CardHeader>
-
-                        <CardFooter className="flex-col items-start gap-1.5 text-sm">
-                            <div className="flex w-full items-end justify-between gap-4">
-                                <div className="min-w-0">
-                                    <div className="line-clamp-1 text-xs text-muted-foreground">{card.description}</div>
-                                </div>
-                                <Sparkline
-                                    data={card.sparkData}
-                                    color={card.sparkColor}
-                                />
+                        <CardFooter className="flex min-h-24 items-end justify-between gap-4 px-4 py-4">
+                            <div className="min-w-0">
+                                <CardTitle className="text-[1.75rem] font-semibold leading-none tracking-[-0.045em] tabular-nums">
+                                    {metric.value}
+                                </CardTitle>
+                                <p className={`mt-3 flex items-center gap-1.5 text-xs font-medium ${metric.trendUp ? "text-positive" : "text-destructive"}`}>
+                                    {metric.trendUp ? <IconTrendingUp className="size-3.5" aria-hidden="true" /> : <IconTrendingDown className="size-3.5" aria-hidden="true" />}
+                                    {metric.trend} <span className="font-normal text-muted-foreground">since last month</span>
+                                </p>
                             </div>
+                            <SparkBars bars={metric.bars} />
                         </CardFooter>
                     </Card>
-                </div>
-            ))}
-        </div>
+                );
+            })}
+        </section>
     );
 }

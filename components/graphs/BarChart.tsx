@@ -12,7 +12,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-import { Badge } from "@/components/ui/badge";
 import { useMotionValueEvent, useSpring } from "motion/react";
 
 const CHART_MARGIN = 35;
@@ -85,25 +84,23 @@ export function ValueLineBarChart() {
     }, [maxValueIndex.value, maxValueIndexSpring]);
 
     return (
-        <Card>
-            <CardHeader>
+        <Card className="gap-0 overflow-hidden p-0">
+            <CardHeader className="border-b border-border/70 px-5 py-4">
                 <div className="flex items-start justify-between gap-4">
                     <div>
-                        <CardDescription>Gross revenue</CardDescription>
-                        <CardTitle className="mt-2 flex items-center gap-2">
-                    <span className="text-2xl font-semibold tabular-nums tracking-[-0.03em]">
-                        ${maxValueIndex.value}
-                    </span>
-                    <Badge variant="outline" className="border-positive/25 bg-positive/10 text-positive">
-                        <TrendingUp className="h-4 w-4" />
-                        <span>5.2%</span>
-                    </Badge>
-                        </CardTitle>
+                        <CardTitle className="text-base">Monthly recurring revenue</CardTitle>
+                        <CardDescription className="mt-1">Total sales in the last 30 days</CardDescription>
+                        <div className="mt-3 flex items-center gap-2">
+                            <span className="text-2xl font-semibold tabular-nums tracking-[-0.04em]">$413K</span>
+                            <span className="flex items-center gap-1 text-xs font-medium text-positive"><TrendingUp className="size-3.5" aria-hidden="true" />1.5% <span className="font-normal text-muted-foreground">vs last 30 days</span></span>
+                        </div>
                     </div>
-                    <span className="text-xs text-muted-foreground">Last 12 months</span>
+                    <div className="hidden items-center gap-0.5 rounded-lg border border-border/80 p-0.5 sm:flex" role="group" aria-label="Revenue range">
+                        {['14D', '1M', '3M', '6M'].map((range, index) => <button key={range} type="button" aria-pressed={index === 1} className={`min-h-8 rounded-md px-2.5 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${index === 1 ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:bg-secondary/60'}`}>{range}</button>)}
+                    </div>
                 </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="px-5 py-5">
                 <AnimatePresence mode="wait">
                     <ChartContainer config={chartConfig}>
                         <BarChart

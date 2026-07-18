@@ -7,6 +7,8 @@ import { Separator } from "./ui/separator";
 import { SidebarTrigger } from "./ui/sidebar";
 import { UserNav } from "./use-nav";
 import { cn } from "@/lib/utils";
+import { Bell } from "lucide-react";
+import { Button } from "./ui/button";
 
 type HeaderProps = {
     className?: string;
@@ -17,8 +19,7 @@ export default function Header({ className }: HeaderProps) {
         <header
             role="banner"
             className={cn(
-                "sticky top-0 z-40 h-16 w-full shrink-0 border-b border-border bg-background/95",
-                "transition-[height] duration-200 ease-out",
+                "sticky top-0 z-40 h-16 w-full shrink-0 border-b border-border bg-background",
                 className
             )}
         >
@@ -33,9 +34,15 @@ export default function Header({ className }: HeaderProps) {
                     <div className="hidden md:flex">
                         <SearchInput />
                     </div>
+                    <Button variant="ghost" size="icon" className="relative text-muted-foreground" aria-label="Open notifications">
+                        <Bell className="size-4" />
+                        <span className="absolute right-2.5 top-2.5 size-1.5 rounded-full bg-positive" aria-hidden="true" />
+                    </Button>
                     <UserNav />
-                    <ModeToggle />
-                    <ThemeSelector />
+                    <div className="hidden">
+                        <ModeToggle />
+                        <ThemeSelector />
+                    </div>
                 </div>
             </div>
         </header>

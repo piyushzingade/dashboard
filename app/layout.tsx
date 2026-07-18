@@ -96,7 +96,7 @@ export default async function RootLayout({
 
   const initialBg =
     htmlThemeMode === "dark"
-      ? "#020617"
+      ? "#0f1011"
       : "#f9fafb";
 
   return (

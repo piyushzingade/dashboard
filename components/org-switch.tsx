@@ -52,11 +52,11 @@ export function OrgSwitcher({
                             size='lg'
                             className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
                         >
-                            <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
-                                <PanelsTopLeft className='size-4' />
+                            <div className='flex aspect-square size-8 items-center justify-center rounded-full bg-[linear-gradient(135deg,#8ee63f,#12d7d7_52%,#486cff)] text-sidebar-primary-foreground shadow-[0_0_18px_-8px_rgba(55,220,180,0.8)]'>
+                                <PanelsTopLeft className='size-4 text-white' />
                             </div>
                             <div className='flex min-w-0 flex-col gap-1 leading-none'>
-                                <span className='truncate font-semibold tracking-[-0.01em]'>NexUI</span>
+                                <span className='truncate font-semibold tracking-[-0.01em]'>Efferd</span>
                                 <span className='truncate text-xs text-sidebar-foreground/65'>{selectedTenant.name}</span>
                             </div>
                             <ChevronsUpDown className='ml-auto' />
