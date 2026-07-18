@@ -66,23 +66,23 @@ export default function AppSidebar() {
     const { data: session } = useSession();
     const router = useRouter();
 
-    const handleSwitchTenant = (_tenantId: string) => {
+    const handleSwitchTenant = () => {
         // Tenant switching functionality would be implemented here
     };
     const activeTenant = tenants[0];
 
     return (
-        <Sidebar collapsible='icon'>
-            <SidebarHeader>
+        <Sidebar collapsible='icon' className="border-r border-sidebar-border">
+            <SidebarHeader className="border-b border-sidebar-border p-2.5">
                 <OrgSwitcher
                     tenants={tenants}
                     defaultTenant={activeTenant}
                     onTenantSwitch={handleSwitchTenant}
                 />
             </SidebarHeader>
-            <SidebarContent className='overflow-x-hidden'>
-                <SidebarGroup>
-                    <SidebarGroupLabel>Overview</SidebarGroupLabel>
+            <SidebarContent className='overflow-x-hidden py-2'>
+                <SidebarGroup className="px-2.5">
+                    <SidebarGroupLabel>Workspace</SidebarGroupLabel>
                     <SidebarMenu>
                         {navItems.map((item) => {
                             const Icon = item.icon ? Icons[item.icon] : Icons.logo;
@@ -141,10 +141,8 @@ export default function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
 
-            <div className="mx-auto">
-                <SidebarCard />
-            </div>
-            <SidebarFooter>
+            <SidebarCard />
+            <SidebarFooter className="border-t border-sidebar-border p-2.5">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <DropdownMenu>
@@ -153,13 +151,18 @@ export default function AppSidebar() {
                                     size='lg'
                                     className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
                                 >
-                                    {session?.user && (
-                                        <div className="flex items-center gap-2">
+                                    {session?.user ? (
+                                        <div className="flex min-w-0 items-center gap-2">
                                             <Avatar className="h-8 w-8">
                                                 <AvatarImage src={session.user.image ?? ''} alt={session.user.name ?? ''} />
                                                 <AvatarFallback>{session.user.name?.[0] ?? '?'}</AvatarFallback>
                                             </Avatar>
-                                            <span className="text-sm font-medium">{session.user.name}</span>
+                                            <span className="truncate text-sm font-medium">{session.user.name}</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex min-w-0 items-center gap-2">
+                                            <Avatar className="size-8"><AvatarFallback>NU</AvatarFallback></Avatar>
+                                            <span className="truncate text-sm font-medium">NexUI workspace</span>
                                         </div>
                                     )}
                                     <IconChevronsDown className="ml-auto size-4" />
@@ -190,16 +193,16 @@ export default function AppSidebar() {
                                 <DropdownMenuSeparator />
                                 <DropdownMenuGroup>
                                     <DropdownMenuItem
-                                        onClick={() => router.push('/profile')}
+                                        onClick={() => router.push('/dashboard/profile')}
                                     >
                                         <IconUserCircle className="mr-2 h-4 w-4" />
                                         Profile
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => router.push('/dashboard/billing')}>
                                         <IconCreditCard className="mr-2 h-4 w-4" />
                                         Billing
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => router.push('/dashboard/settings')}>
                                         <IconBell className="mr-2 h-4 w-4" />
                                         Notifications
                                     </DropdownMenuItem>

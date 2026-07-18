@@ -73,7 +73,7 @@ export function Navbar() {
                             target="_blank"
                             rel="noopener noreferrer"
                         >
-                            <IconStarFilled className="h-3.5 w-3.5 text-emerald-500" />
+                            <IconStarFilled className="h-3.5 w-3.5 text-warning" />
                             <span className="hidden text-sm sm:inline">Star</span>
                             <span className="text-xs tabular-nums text-muted-foreground">
                                 {star.stargazersCount}
@@ -85,7 +85,8 @@ export function Navbar() {
                         variant="ghost"
                         size="icon"
                         asChild
-                        className="h-9 w-9 rounded-lg text-muted-foreground transition-colors duration-150 hover:text-foreground hover:bg-transparent"
+                        className="text-muted-foreground hover:bg-transparent hover:text-foreground"
+                        aria-label="Open NexUI on X"
                     >
                         <Link
                             href="https://x.com/Zingadepiyush"

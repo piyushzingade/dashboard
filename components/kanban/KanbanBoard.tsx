@@ -27,20 +27,20 @@ const COLUMNS: Record<
     inProgress: {
         title: "In Progress",
         icon: Loader2,
-        color: "text-amber-500",
-        dot: "bg-amber-500",
+        color: "text-warning",
+        dot: "bg-warning",
     },
     done: {
         title: "Done",
         icon: CheckCircle2,
-        color: "text-emerald-500",
-        dot: "bg-emerald-500",
+        color: "text-positive",
+        dot: "bg-positive",
     },
 };
 
 const PRIORITY_STYLES: Record<string, string> = {
-    high: "bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20",
-    medium: "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20",
+    high: "bg-destructive/10 text-destructive border-destructive/25",
+    medium: "bg-warning/10 text-warning border-warning/25",
     low: "bg-muted text-muted-foreground border-border/50",
 };
 
@@ -52,21 +52,21 @@ export function KanbanBoard() {
                 title: "Add authentication",
                 priority: "high",
                 assignee: "John Doe",
-                dueDate: "2024-04-01",
+                dueDate: "2026-07-21",
             },
             {
                 id: "2",
                 title: "Create API endpoints",
                 priority: "medium",
                 assignee: "Jane Smith",
-                dueDate: "2024-04-05",
+                dueDate: "2026-07-24",
             },
             {
                 id: "3",
                 title: "Write documentation",
                 priority: "low",
                 assignee: "Bob Johnson",
-                dueDate: "2024-04-10",
+                dueDate: "2026-07-28",
             },
         ],
         inProgress: [
@@ -75,14 +75,14 @@ export function KanbanBoard() {
                 title: "Design system updates",
                 priority: "high",
                 assignee: "Alice Brown",
-                dueDate: "2024-03-28",
+                dueDate: "2026-07-19",
             },
             {
                 id: "5",
                 title: "Implement dark mode",
                 priority: "medium",
                 assignee: "Charlie Wilson",
-                dueDate: "2024-04-02",
+                dueDate: "2026-07-22",
             },
         ],
         done: [
@@ -91,14 +91,14 @@ export function KanbanBoard() {
                 title: "Setup project",
                 priority: "high",
                 assignee: "Eve Davis",
-                dueDate: "2024-03-25",
+                dueDate: "2026-07-17",
             },
             {
                 id: "8",
                 title: "Initial commit",
                 priority: "low",
                 assignee: "Frank White",
-                dueDate: "2024-03-24",
+                dueDate: "2026-07-16",
             },
         ],
     });
@@ -113,13 +113,11 @@ export function KanbanBoard() {
                 {Object.entries(columns).map(([columnValue, tasks]) => {
                     const col = COLUMNS[columnValue];
                     if (!col) return null;
-                    const Icon = col.icon;
-
                     return (
                         <Kanban.Column
                             key={columnValue}
                             value={columnValue}
-                            className="rounded-xl border-border/40 bg-secondary/30"
+                            className="rounded-xl border-border bg-secondary/35"
                         >
                             {/* Column header */}
                             <div className="flex items-center justify-between">
@@ -139,7 +137,8 @@ export function KanbanBoard() {
                                     <Button
                                         variant="ghost"
                                         size="icon"
-                                        className="h-7 w-7 text-muted-foreground/50 hover:text-muted-foreground"
+                                        className="text-muted-foreground hover:text-foreground"
+                                        aria-label={`Move ${col.title} column`}
                                     >
                                         <GripVertical className="h-3.5 w-3.5" />
                                     </Button>
@@ -155,7 +154,7 @@ export function KanbanBoard() {
                                         asHandle
                                         asChild
                                     >
-                                        <div className="group/card rounded-lg border border-border/40 bg-card p-3 shadow-xs transition-[border-color,box-shadow] duration-150 hover:border-border/70 hover:shadow-sm">
+                                        <div className="group/card rounded-lg border border-border bg-card p-3 transition-colors duration-150 hover:bg-accent/35">
                                             <div className="flex flex-col gap-2.5">
                                                 {/* Title + priority */}
                                                 <div className="flex items-start justify-between gap-2">
@@ -200,7 +199,7 @@ export function KanbanBoard() {
             </Kanban.Board>
 
             <Kanban.Overlay>
-                <div className="size-full rounded-lg border border-primary/20 bg-primary/5 shadow-lg" />
+                <div className="size-full rounded-lg border border-primary/30 bg-primary/10" />
             </Kanban.Overlay>
         </Kanban.Root>
     );

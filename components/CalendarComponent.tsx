@@ -14,14 +14,15 @@ import {
     CalendarProvider,
     CalendarYearPicker,
 } from "@/components/calendarComp";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 const capitalize = (str: string) =>
     str.charAt(0).toUpperCase() + str.slice(1);
 
 const statuses = [
-    { id: faker.string.uuid(), name: "Planned", color: "#6366f1" },
-    { id: faker.string.uuid(), name: "In Progress", color: "#f59e0b" },
-    { id: faker.string.uuid(), name: "Done", color: "#10b981" },
+    { id: faker.string.uuid(), name: "Planned", color: "var(--muted-foreground)" },
+    { id: faker.string.uuid(), name: "In progress", color: "var(--warning)" },
+    { id: faker.string.uuid(), name: "Done", color: "var(--positive)" },
 ];
 
 const exampleFeatures = Array.from({ length: 20 }).map(() => ({
@@ -46,23 +47,10 @@ const latestYear =
 export default function CalendarComponent(): React.JSX.Element {
     return (
         <div className="flex flex-col gap-5">
-            {/* Header */}
-            <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                    <CalendarDays className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <div>
-                    <h1 className="font-heading text-2xl font-bold tracking-tight">
-                        Calendar
-                    </h1>
-                    <p className="text-sm text-muted-foreground">
-                        Track deadlines, events, and feature schedules.
-                    </p>
-                </div>
-            </div>
+            <PageHeader title="Calendar" description="Track deadlines, releases, and feature delivery windows." icon={CalendarDays} />
 
             {/* Calendar */}
-            <div className="rounded-xl border border-border/50 bg-card/30 shadow-sm transition-[border-color] duration-200 hover:border-border/80">
+            <div className="overflow-hidden rounded-xl border border-border bg-card">
                 <CalendarProvider>
                     <CalendarDate>
                         <CalendarDatePicker>

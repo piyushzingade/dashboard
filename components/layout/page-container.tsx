@@ -10,11 +10,11 @@ export default function PageContainer({
     return (
         <>
             {scrollable ? (
-                <div className='h-full overflow-y-auto overflow-x-hidden scrollbar-thin'>
-                    <div className='flex flex-1 p-4 md:px-6'>{children}</div>
+                <div className='h-full overflow-y-auto overflow-x-hidden'>
+                    <div className='flex flex-1 p-4 md:p-6 xl:p-8'>{children}</div>
                 </div>
             ) : (
-                <div className='flex flex-1 p-4 md:px-6'>{children}</div>
+                <div className='flex flex-1 p-4 md:p-6 xl:p-8'>{children}</div>
             )}
         </>
     );

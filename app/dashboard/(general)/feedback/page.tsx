@@ -22,7 +22,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/dashboard/page-header";
 import {
     Select,
     SelectContent,
@@ -96,11 +98,11 @@ const recentFeedback = [
 ];
 
 const statusStyles: Record<string, string> = {
-    "Under review": "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-    "In progress": "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-    Acknowledged: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    Planned: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-    Fixed: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    "Under review": "bg-warning/10 text-warning",
+    "In progress": "bg-secondary text-foreground",
+    Acknowledged: "bg-positive/10 text-positive",
+    Planned: "bg-secondary text-muted-foreground",
+    Fixed: "bg-positive/10 text-positive",
 };
 
 const typeIcons: Record<string, typeof Bug> = {
@@ -122,7 +124,7 @@ function StarRating({
     const [hovered, setHovered] = useState(0);
 
     return (
-        <div className="flex gap-1">
+        <div className="flex gap-1" role="radiogroup" aria-label="Overall experience">
             {[1, 2, 3, 4, 5].map((star) => (
                 <button
                     key={star}
@@ -130,12 +132,15 @@ function StarRating({
                     onMouseEnter={() => setHovered(star)}
                     onMouseLeave={() => setHovered(0)}
                     onClick={() => onChange(star)}
-                    className="rounded-md p-0.5 transition-transform duration-150 hover:scale-110 active:scale-95"
+                    role="radio"
+                    aria-checked={value === star}
+                    aria-label={`${star} star${star === 1 ? "" : "s"}`}
+                    className="flex size-11 items-center justify-center rounded-lg outline-none transition-colors duration-150 hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring"
                 >
                     <Star
                         className={`h-6 w-6 transition-colors duration-150 ${
                             star <= (hovered || value)
-                                ? "fill-amber-400 text-amber-400"
+                                ? "fill-warning text-warning"
                                 : "text-border"
                         }`}
                     />
@@ -162,26 +167,8 @@ export default function FeedbackPage() {
     };
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease }}
-                className="flex items-center gap-3"
-            >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                    <MessageSquareHeart className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <div>
-                    <h1 className="font-heading text-2xl font-bold tracking-tight">
-                        Feedback
-                    </h1>
-                    <p className="text-sm text-muted-foreground">
-                        Help us improve by sharing your thoughts.
-                    </p>
-                </div>
-            </motion.div>
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10 xl:p-8 xl:pb-12">
+            <PageHeader title="Feedback" description="Share product ideas, report issues, and help shape the next release." icon={MessageSquareHeart} />
 
             <div className="grid gap-4 md:grid-cols-2">
                 {/* Left — Submit Feedback */}
@@ -209,9 +196,11 @@ export default function FeedbackPage() {
                                             onClick={() =>
                                                 setSelectedType(ft.key)
                                             }
-                                            className={`flex items-start gap-2.5 rounded-lg border p-3 text-left transition-all duration-200 ${
+                                            type="button"
+                                            aria-pressed={selectedType === ft.key}
+                                            className={`flex min-h-20 items-start gap-2.5 rounded-lg border p-3 text-left outline-none transition-[background-color,border-color] duration-150 focus-visible:ring-2 focus-visible:ring-ring ${
                                                 selectedType === ft.key
-                                                    ? "border-foreground/20 bg-secondary/60 shadow-sm"
+                                                    ? "border-foreground/25 bg-secondary/70"
                                                     : "border-border/50 hover:border-foreground/10 hover:bg-secondary/30"
                                             }`}
                                         >
@@ -245,7 +234,8 @@ export default function FeedbackPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.45, delay: 0.12, ease }}
                     >
-                        <Card className="transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
+                        <form onSubmit={(event) => { event.preventDefault(); handleSubmit(); }}>
+                        <Card>
                             <CardHeader>
                                 <CardTitle className="text-base">
                                     Details
@@ -262,7 +252,6 @@ export default function FeedbackPage() {
                                     <Input
                                         id="subject"
                                         placeholder="Brief summary of your feedback"
-                                        className="h-9"
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -272,7 +261,6 @@ export default function FeedbackPage() {
                                     <Select>
                                         <SelectTrigger
                                             id="page"
-                                            className="h-9"
                                         >
                                             <SelectValue placeholder="Select a page (optional)" />
                                         </SelectTrigger>
@@ -311,11 +299,10 @@ export default function FeedbackPage() {
                                     >
                                         Description
                                     </Label>
-                                    <textarea
+                                    <Textarea
                                         id="description"
                                         rows={4}
-                                        placeholder="Tell us more about your feedback..."
-                                        className="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                                        placeholder="Tell us more about your feedback…"
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -330,8 +317,8 @@ export default function FeedbackPage() {
 
                                 <Button
                                     size="sm"
-                                    className="w-full gap-2 transition-transform duration-150 active:scale-[0.97]"
-                                    onClick={handleSubmit}
+                                    type="submit"
+                                    className="w-full gap-2"
                                     disabled={submitted}
                                 >
                                     {submitted ? (
@@ -348,6 +335,7 @@ export default function FeedbackPage() {
                                 </Button>
                             </CardContent>
                         </Card>
+                        </form>
                     </motion.div>
                 </div>
 

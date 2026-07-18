@@ -36,7 +36,7 @@ export function UpdateSoon() {
                     transition={{ duration: 0.45, delay: 0.15, ease }}
                     className="space-y-2"
                 >
-                    <h2 className="font-heading text-xl font-bold tracking-tight">
+                    <h2 className="font-heading text-xl font-semibold tracking-[-0.02em]">
                         Coming soon
                     </h2>
                     <p className="text-sm leading-relaxed text-muted-foreground">
@@ -52,10 +52,7 @@ export function UpdateSoon() {
                     transition={{ duration: 0.4, delay: 0.3, ease }}
                     className="inline-flex items-center gap-2 rounded-full border border-border/50 bg-secondary/50 px-3 py-1.5 text-xs text-muted-foreground"
                 >
-                    <span className="relative flex h-2 w-2">
-                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                    </span>
+                    <span className="size-2 rounded-full bg-positive" aria-hidden="true" />
                     In development
                 </motion.div>
             </div>

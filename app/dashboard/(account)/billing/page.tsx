@@ -19,6 +19,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
@@ -64,26 +65,8 @@ const usage = [
 
 export default function BillingPage() {
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease }}
-                className="flex items-center gap-3"
-            >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                    <CreditCard className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <div>
-                    <h1 className="font-heading text-2xl font-bold tracking-tight">
-                        Billing
-                    </h1>
-                    <p className="text-sm text-muted-foreground">
-                        Manage your subscription, usage, and invoices.
-                    </p>
-                </div>
-            </motion.div>
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10 xl:p-8 xl:pb-12">
+            <PageHeader title="Billing" description="Manage your subscription, usage limits, payment method, and invoices." icon={CreditCard} />
 
             {/* Plans */}
             <motion.div
@@ -95,9 +78,9 @@ export default function BillingPage() {
                     {plans.map((plan) => (
                         <Card
                             key={plan.name}
-                            className={`group relative overflow-hidden transition-[border-color,box-shadow] duration-200 hover:shadow-md ${
+                            className={`relative overflow-hidden ${
                                 plan.current
-                                    ? "border-foreground/15 shadow-sm"
+                                    ? "border-foreground/25"
                                     : "hover:border-foreground/10"
                             }`}
                         >
@@ -227,7 +210,7 @@ export default function BillingPage() {
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-center gap-4 rounded-lg border border-border/50 bg-secondary/30 p-4">
-                                <div className="flex h-10 w-14 items-center justify-center rounded-md bg-gradient-to-br from-foreground/80 to-foreground text-background">
+                                <div className="flex h-10 w-14 items-center justify-center rounded-md bg-foreground text-background">
                                     <CreditCard className="h-5 w-5" />
                                 </div>
                                 <div className="min-w-0">

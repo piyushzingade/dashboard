@@ -29,8 +29,8 @@ export function UserNav() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                    <Avatar className="h-8 w-8">
+                <Button variant="ghost" size="icon" className="rounded-full" aria-label="Open account menu">
+                    <Avatar className="size-8 ring-1 ring-border">
                         <AvatarImage src={image || undefined} alt={name || 'User avatar'} />
                         <AvatarFallback>
                             {name ? name.charAt(0).toUpperCase() : '?'}
@@ -73,7 +73,7 @@ export function UserNav() {
 
                 <DropdownMenuItem
                     onClick={() => signOut({ callbackUrl: '/signin' })}
-                    className="text-red-600 focus:text-red-600"
+                    className="text-destructive focus:text-destructive"
                 >
                     Sign out
                 </DropdownMenuItem>

@@ -11,18 +11,18 @@ import Image from 'next/image';
 
 // Category → color map
 const categoryColors: Record<string, string> = {
-    Electronics: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20',
-    Furniture: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
-    Clothing: 'bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20',
-    Toys: 'bg-pink-500/10 text-pink-600 dark:text-pink-400 border-pink-500/20',
-    Groceries: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-    Books: 'bg-orange-500/10 text-orange-600 dark:text-orange-400 border-orange-500/20',
-    Jewelry: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
-    'Beauty Products': 'bg-fuchsia-500/10 text-fuchsia-600 dark:text-fuchsia-400 border-fuchsia-500/20',
-    Sports: 'bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/20',
-    Accessories: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20',
-    Appliances: 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20',
-    Health: 'bg-lime-500/10 text-lime-600 dark:text-lime-400 border-lime-500/20',
+    Electronics: 'bg-secondary text-secondary-foreground border-border',
+    Furniture: 'bg-secondary text-secondary-foreground border-border',
+    Clothing: 'bg-secondary text-secondary-foreground border-border',
+    Toys: 'bg-secondary text-secondary-foreground border-border',
+    Groceries: 'bg-secondary text-secondary-foreground border-border',
+    Books: 'bg-secondary text-secondary-foreground border-border',
+    Jewelry: 'bg-secondary text-secondary-foreground border-border',
+    'Beauty Products': 'bg-secondary text-secondary-foreground border-border',
+    Sports: 'bg-secondary text-secondary-foreground border-border',
+    Accessories: 'bg-secondary text-secondary-foreground border-border',
+    Appliances: 'bg-secondary text-secondary-foreground border-border',
+    Health: 'bg-secondary text-secondary-foreground border-border',
 };
 
 const fallbackColor = 'bg-secondary text-muted-foreground border-border/50';

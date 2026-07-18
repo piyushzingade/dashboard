@@ -1,55 +1,18 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "motion/react";
 import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
     return (
-        <div className="h-[80vh] flex flex-col items-center justify-center text-center px-4">
-
-            {/* Glow Circle */}
-            <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.6 }}
-                className="relative"
-            >
-                <div className="absolute -inset-10 bg-primary/20 blur-3xl rounded-full" />
-                <motion.h1
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-7xl font-bold text-primary drop-shadow-sm"
-                >
+        <main className="flex min-h-svh flex-col items-center justify-center px-5 text-center">
+                <p className="mb-4 text-sm font-medium text-muted-foreground">Page not found</p>
+                <h1 className="text-7xl font-semibold tracking-[-0.04em] text-foreground tabular-nums">
                     404
-                </motion.h1>
-            </motion.div>
-
-            {/* Subtitle */}
-            <motion.p
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.35 }}
-                className="mt-4 text-xl text-muted-foreground max-w-md"
-            >
-                Oops! The page you’re looking for doesn’t exist or has been moved.
-            </motion.p>
-
-            {/* Button */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-            >
-                <Link
-                    href="/dashboard/overview"
-                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-background/30 border border-border text-foreground font-medium shadow-md hover:bg-background/90 transition"
-                >
-                    <ArrowLeft size={18} />
-                    Return Home
-                </Link>
-            </motion.div>
-        </div>
+                </h1>
+                <p className="mt-4 max-w-md text-base leading-6 text-muted-foreground">The page you’re looking for doesn’t exist or may have moved.</p>
+                <Button asChild variant="outline" className="mt-8">
+                    <Link href="/dashboard/overview"><ArrowLeft className="size-4" />Return to dashboard</Link>
+                </Button>
+        </main>
     );
 }

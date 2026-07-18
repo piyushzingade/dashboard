@@ -12,14 +12,12 @@ import {
 import { Product } from '@/constants/mock-api';
 import { IconEdit, IconDotsVertical, IconTrash, IconEye } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 interface CellActionProps {
     data: Product;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({ data }) => {
-    const [open, setOpen] = useState(false);
     const router = useRouter();
 
     return (
@@ -27,7 +25,9 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <DropdownMenuTrigger asChild>
                 <Button
                     variant='ghost'
-                    className='h-8 w-8 p-0 transition-colors duration-150 hover:bg-secondary'
+                    size='icon'
+                    aria-label={`Open actions for ${data.name}`}
+                    className='hover:bg-secondary'
                 >
                     <span className='sr-only'>Open menu</span>
                     <IconDotsVertical className='h-4 w-4' />
@@ -58,11 +58,11 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                    onClick={() => setOpen(true)}
+                    disabled
                     className='gap-2 text-destructive focus:text-destructive'
                 >
                     <IconTrash className='h-4 w-4' />
-                    Delete
+                    Delete unavailable
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

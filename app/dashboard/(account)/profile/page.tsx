@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import {
     User,
-    Mail,
     MapPin,
     Globe,
     Calendar,
@@ -26,6 +25,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
@@ -64,26 +64,8 @@ const recentActivity = [
 
 export default function ProfilePage() {
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease }}
-                className="flex items-center gap-3"
-            >
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                    <User className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <div>
-                    <h1 className="font-heading text-2xl font-bold tracking-tight">
-                        Profile
-                    </h1>
-                    <p className="text-sm text-muted-foreground">
-                        Manage your account information and preferences.
-                    </p>
-                </div>
-            </motion.div>
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10 xl:p-8 xl:pb-12">
+            <PageHeader title="Profile" description="Manage your identity, account details, and recent activity." icon={User} />
 
             <div className="grid gap-6 md:grid-cols-[1fr_2fr]">
                 {/* Left — Profile Card */}
@@ -93,11 +75,11 @@ export default function ProfilePage() {
                     transition={{ duration: 0.5, delay: 0.08, ease }}
                     className="flex flex-col gap-4"
                 >
-                    <Card className="group overflow-hidden transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
+                    <Card className="overflow-hidden">
                         {/* Banner */}
-                        <div className="relative h-24 bg-gradient-to-br from-secondary via-secondary/80 to-secondary/40">
+                        <div className="relative h-24 border-b border-border bg-secondary">
                             <div className="absolute -bottom-10 left-5">
-                                <Avatar className="h-20 w-20 border-4 border-background shadow-lg">
+                                <Avatar className="h-20 w-20 border-4 border-background">
                                     <AvatarImage src={profile.avatar} />
                                     <AvatarFallback className="bg-foreground text-background text-xl font-bold">
                                         {profile.initials}
@@ -221,7 +203,7 @@ export default function ProfilePage() {
                                         { label: "Website", value: profile.website },
                                     ].map((field) => (
                                         <div key={field.label}>
-                                            <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground/70">
+                                            <p className="text-xs font-medium text-muted-foreground">
                                                 {field.label}
                                             </p>
                                             <p className="mt-1 text-sm font-medium">

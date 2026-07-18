@@ -259,6 +259,8 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
         [debouncedSetFilterValues, filterableColumns, enableAdvancedFilter]
     );
 
+    // TanStack Table intentionally returns non-memoizable functions.
+    // eslint-disable-next-line react-hooks/incompatible-library
     const table = useReactTable({
         ...tableProps,
         columns,

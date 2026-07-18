@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { ActiveThemeProvider } from '../active-theme';
+import { MotionProvider } from '../motion-provider';
 
 export default function Providers({
     activeThemeValue,
@@ -13,8 +14,7 @@ export default function Providers({
     return (
         <>
             <ActiveThemeProvider initialTheme={activeThemeValue}>
-
-                {children}
+                <MotionProvider>{children}</MotionProvider>
             </ActiveThemeProvider>
         </>
     );

@@ -21,7 +21,7 @@ export function DataTable<TData>({
     return (
         <div className='flex flex-1 flex-col space-y-4'>
             {children}
-            <div className='flex-1 rounded-lg border '>
+            <div className='flex-1 overflow-hidden rounded-lg border border-border'>
                 <Table>
                     <TableHeader className='bg-muted sticky top-0 z-10'>
                         {table.getHeaderGroups().map((headerGroup) => (
@@ -73,7 +73,7 @@ export function DataTable<TData>({
                                     colSpan={table.getAllColumns().length}
                                     className='h-24 text-center'
                                 >
-                                    No results.
+                                    No products match the current filters.
                                 </TableCell>
                             </TableRow>
                         )}

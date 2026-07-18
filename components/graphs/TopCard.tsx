@@ -10,30 +10,7 @@ import {
     CardHeader,
     CardTitle,
 } from "../ui/card";
-import { motion, useMotionValueEvent, useSpring } from "motion/react";
-import { useEffect, useState } from "react";
 import { DollarSign, Users, Activity, TrendingUp } from "lucide-react";
-
-const ease = [0.23, 1, 0.32, 1] as const;
-
-/* ─── Animated spring number ─── */
-
-function AnimatedNumber({ value }: { value: number }) {
-    const [displayValue, setDisplayValue] = useState(0);
-    const springValue = useSpring(0, { stiffness: 100, damping: 20 });
-
-    useMotionValueEvent(springValue, "change", (latest) => {
-        setDisplayValue(
-            value % 1 === 0 ? Math.floor(latest) : Number(latest.toFixed(1))
-        );
-    });
-
-    useEffect(() => {
-        springValue.set(value);
-    }, [value, springValue]);
-
-    return <motion.span>{displayValue.toLocaleString()}</motion.span>;
-}
 
 /* ─── Tiny sparkline SVG ─── */
 
@@ -65,7 +42,9 @@ function Sparkline({
             height={h}
             viewBox={`0 0 ${w} ${h}`}
             fill="none"
-            className="shrink-0 opacity-40 transition-opacity duration-200 group-hover:opacity-100"
+            className="shrink-0 opacity-70"
+            role="img"
+            aria-label="Recent trend sparkline"
         >
             <polyline
                 points={points}
@@ -90,8 +69,7 @@ const cards = [
         suffix: ".00",
         trend: "+12.5%",
         trendUp: true,
-        description: "Trending up this month",
-        subtitle: "Visitors for the last 6 months",
+        description: "vs. previous 30 days",
         icon: DollarSign,
         sparkData: [400, 500, 450, 680, 600, 750, 800, 920, 880, 1050, 1100, 1250],
         sparkColor: "oklch(0.65 0.19 145)",
@@ -103,8 +81,7 @@ const cards = [
         suffix: "",
         trend: "-20%",
         trendUp: false,
-        description: "Down 20% this period",
-        subtitle: "Acquisition needs attention",
+        description: "vs. previous 30 days",
         icon: Users,
         sparkData: [1500, 1400, 1350, 1300, 1280, 1260, 1250, 1240, 1235, 1234],
         sparkColor: "oklch(0.65 0.19 25)",
@@ -116,8 +93,7 @@ const cards = [
         suffix: "",
         trend: "+12.5%",
         trendUp: true,
-        description: "Strong user retention",
-        subtitle: "Engagement exceeds targets",
+        description: "vs. previous 30 days",
         icon: Activity,
         sparkData: [30000, 32000, 35000, 36500, 38000, 40000, 41500, 43000, 44200, 45678],
         sparkColor: "oklch(0.65 0.19 145)",
@@ -129,8 +105,7 @@ const cards = [
         suffix: "%",
         trend: "+4.5%",
         trendUp: true,
-        description: "Steady performance increase",
-        subtitle: "Meets growth projections",
+        description: "vs. previous 30 days",
         icon: TrendingUp,
         sparkData: [2.1, 2.5, 2.8, 3.0, 3.2, 3.5, 3.8, 4.0, 4.2, 4.5],
         sparkColor: "oklch(0.65 0.19 145)",
@@ -142,40 +117,28 @@ const cards = [
 export function TopCard() {
     return (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {cards.map((card, i) => (
-                <motion.div
-                    key={card.title}
-                    initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{
-                        duration: 0.45,
-                        delay: i * 0.06,
-                        ease,
-                    }}
-                >
-                    <Card className="@container/card group relative overflow-hidden transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md dark:hover:border-foreground/10">
-                        {/* Subtle hover glow */}
-                        <div className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-primary/[0.03] blur-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
+            {cards.map((card) => (
+                <div key={card.title}>
+                    <Card className="@container/card h-full overflow-hidden">
                         <CardHeader>
                             <CardDescription className="flex items-center gap-2">
-                                <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-secondary/80 transition-colors duration-200 group-hover:bg-secondary">
-                                    <card.icon className="h-3.5 w-3.5 text-muted-foreground transition-colors duration-200 group-hover:text-foreground" />
+                                <span className="inline-flex size-7 items-center justify-center rounded-md bg-secondary">
+                                    <card.icon className="size-3.5 text-muted-foreground" aria-hidden="true" />
                                 </span>
                                 {card.title}
                             </CardDescription>
-                            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                            <CardTitle className="mt-1 text-2xl font-semibold tabular-nums tracking-[-0.03em] @[250px]/card:text-3xl">
                                 {card.prefix}
-                                <AnimatedNumber value={card.value} />
+                                {card.value.toLocaleString()}
                                 {card.suffix}
                             </CardTitle>
                             <CardAction>
                                 <Badge
                                     variant="outline"
-                                    className={`border-none transition-transform duration-200 group-hover:scale-105 ${
+                                    className={`border-none ${
                                         card.trendUp
-                                            ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                                            : "bg-red-500/10 text-red-500"
+                                            ? "bg-positive/10 text-positive"
+                                            : "bg-destructive/10 text-destructive"
                                     }`}
                                 >
                                     {card.trendUp ? (
@@ -191,17 +154,7 @@ export function TopCard() {
                         <CardFooter className="flex-col items-start gap-1.5 text-sm">
                             <div className="flex w-full items-end justify-between gap-4">
                                 <div className="min-w-0">
-                                    <div className="line-clamp-1 flex gap-2 font-medium">
-                                        {card.description}
-                                        {card.trendUp ? (
-                                            <IconTrendingUp className="size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
-                                        ) : (
-                                            <IconTrendingDown className="size-4 shrink-0 text-red-500" />
-                                        )}
-                                    </div>
-                                    <div className="text-muted-foreground">
-                                        {card.subtitle}
-                                    </div>
+                                    <div className="line-clamp-1 text-xs text-muted-foreground">{card.description}</div>
                                 </div>
                                 <Sparkline
                                     data={card.sparkData}
@@ -210,7 +163,7 @@ export function TopCard() {
                             </div>
                         </CardFooter>
                     </Card>
-                </motion.div>
+                </div>
             ))}
         </div>
     );

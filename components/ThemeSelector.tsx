@@ -7,8 +7,7 @@ import {
     SelectGroup,
     SelectItem,
     SelectLabel,
-    SelectTrigger,
-    SelectValue
+    SelectTrigger
 } from '@/components/ui/select';
 import { useThemeConfig } from './active-theme';
 import { useEffect, useState } from 'react';
@@ -43,7 +42,7 @@ export function ThemeSelector() {
                 <Label htmlFor='theme-selector' className='sr-only'>
                     Theme
                 </Label>
-                <div className='h-9 w-32 bg-muted animate-pulse rounded-md' />
+                <div className='h-11 w-28 animate-pulse rounded-lg bg-muted md:w-36' />
             </div>
         );
     }
@@ -52,17 +51,17 @@ export function ThemeSelector() {
     const selectedDisplay = themes[themeName]?.displayName || 'Select Theme';
 
     return (
-        <div className='flex items-center gap-3'>
+        <div className='hidden items-center gap-3 sm:flex'>
             <Label htmlFor='theme-selector' className='sr-only'>
                 Theme
             </Label>
             <Select value={themeName} onValueChange={(value) => setTheme(value, themeMode)}>
                 <SelectTrigger
                     id='theme-selector'
-                    className='justify-between w-40'
+                    className='w-36 justify-between lg:w-40'
                 >
-                    <span className='text-muted-foreground text-sm'>
-                        Theme: {selectedDisplay}
+                    <span className='truncate text-sm text-muted-foreground'>
+                        {selectedDisplay}
                     </span>
                 </SelectTrigger>
                 <SelectContent align='end'>

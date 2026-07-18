@@ -73,7 +73,7 @@ const salesData = [
 
 export function RecentSales() {
     return (
-        <Card className="group transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md dark:hover:border-foreground/10">
+        <Card>
             <CardHeader>
                 <CardTitle>Recent Sales</CardTitle>
                 <CardDescription>
@@ -92,7 +92,7 @@ export function RecentSales() {
                                 delay: 0.3 + index * 0.04,
                                 ease,
                             }}
-                            className="group/row -mx-2 flex items-center rounded-lg px-2 py-2.5 transition-colors duration-150 hover:bg-secondary/50"
+                            className="group/row -mx-2 flex min-h-12 items-center rounded-lg px-2 py-2.5 transition-colors duration-150 hover:bg-secondary/60"
                         >
                             <Avatar className="h-8 w-8 ring-2 ring-transparent transition-[ring-color] duration-200 group-hover/row:ring-border/50">
                                 <AvatarImage src={sale.avatar} alt={sale.name} />
@@ -106,7 +106,7 @@ export function RecentSales() {
                                     {sale.email}
                                 </p>
                             </div>
-                            <div className="ml-auto pl-2 font-mono text-sm font-medium tabular-nums text-emerald-600 dark:text-emerald-400">
+                            <div className="ml-auto pl-2 text-sm font-semibold tabular-nums text-positive">
                                 {sale.amount}
                             </div>
                         </motion.div>

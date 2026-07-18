@@ -16,8 +16,8 @@ function StatCard({
     sub?: string;
 }) {
     return (
-        <div className='flex items-center gap-3 rounded-xl border border-border/50 bg-card/50 px-4 py-3 transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-sm'>
-            <div className='flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-secondary/80'>
+        <div className='flex min-h-24 items-center gap-3 px-4 py-3 lg:px-5'>
+            <div className='flex size-8 shrink-0 items-center justify-center rounded-md bg-secondary'>
                 <Icon className='h-4 w-4 text-muted-foreground' />
             </div>
             <div className='min-w-0'>
@@ -33,9 +33,7 @@ function StatCard({
     );
 }
 
-type ProductListingPage = {};
-
-export default async function ProductListingPage({}: ProductListingPage) {
+export default async function ProductListingPage() {
     const page = searchParamsCache.get('page');
     const search = searchParamsCache.get('name');
     const pageLimit = searchParamsCache.get('perPage');
@@ -60,7 +58,7 @@ export default async function ProductListingPage({}: ProductListingPage) {
     return (
         <div className='flex flex-col gap-5'>
             {/* Summary Stats */}
-            <div className='grid grid-cols-2 gap-3 lg:grid-cols-4'>
+            <div className='grid grid-cols-2 overflow-hidden rounded-xl border border-border bg-card divide-x divide-y divide-border lg:grid-cols-4 lg:divide-y-0'>
                 <StatCard
                     icon={Package}
                     label='Total products'

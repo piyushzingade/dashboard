@@ -33,7 +33,7 @@ export function ProductTable<TData, TValue>({
     });
 
     return (
-        <div className='rounded-xl border border-border/50 bg-card/30 p-4 transition-[border-color] duration-200 hover:border-border/80'>
+        <div className='rounded-xl border border-border bg-card p-3 sm:p-4'>
             <DataTable table={table}>
                 <DataTableToolbar table={table} />
             </DataTable>

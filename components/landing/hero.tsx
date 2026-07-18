@@ -110,7 +110,7 @@ export function HeroSection() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, ease }}
-                    className="mb-6 text-sm font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400"
+                    className="mb-6 text-sm font-medium text-muted-foreground"
                 >
                     Open-source dashboard kit
                 </motion.p>
@@ -147,16 +147,17 @@ export function HeroSection() {
                 >
                     <button
                         onClick={copyToClipboard}
-                        className="group flex w-full items-center gap-3 rounded-xl border border-border/50 bg-card/80 px-5 py-3.5 font-mono text-sm transition-all duration-200 ease hover:border-emerald-500/30 hover:shadow-[0_0_24px_-6px_oklch(0.72_0.17_162/0.12)] active:scale-[0.98]"
+                        className="group flex min-h-12 w-full items-center gap-3 rounded-xl border border-border bg-card px-5 py-3.5 font-mono text-sm outline-none transition-[background-color,border-color,transform] duration-150 hover:bg-accent/30 focus-visible:ring-2 focus-visible:ring-ring active:scale-[0.98]"
+                        aria-label="Copy NexUI installation command"
                     >
-                        <span className="select-none text-emerald-500">$</span>
+                        <span className="select-none text-muted-foreground">$</span>
                         <span className="flex-1 truncate text-left text-foreground/90">
                             <span ref={typingRef} />
-                            <span className="typing-cursor ml-px text-emerald-500/70">|</span>
+                            <span className="typing-cursor ml-px text-muted-foreground">|</span>
                         </span>
                         <span className="flex-shrink-0 text-muted-foreground transition-colors duration-150 group-hover:text-foreground">
                             {copied ? (
-                                <Check className="h-4 w-4 text-emerald-500" />
+                                <Check className="h-4 w-4 text-positive" />
                             ) : (
                                 <Copy className="h-4 w-4" />
                             )}
@@ -178,7 +179,7 @@ export function HeroSection() {
                         <Button
                             asChild
                             size="lg"
-                            className="gap-2 rounded-xl bg-emerald-600 px-6 text-white hover:bg-emerald-700 active:scale-[0.97] dark:bg-emerald-500 dark:hover:bg-emerald-600"
+                            className="gap-2 px-6"
                         >
                             <Link href="/dashboard/overview">
                                 Live Demo

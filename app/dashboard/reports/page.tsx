@@ -23,6 +23,7 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
@@ -77,10 +78,10 @@ const stats = [
 ];
 
 const categorySegments = [
-    { label: "Electronics", value: 35, color: "oklch(0.68 0.16 250)" },
-    { label: "Clothing", value: 25, color: "oklch(0.68 0.16 300)" },
-    { label: "Furniture", value: 20, color: "oklch(0.68 0.16 150)" },
-    { label: "Other", value: 20, color: "oklch(0.5 0.02 250)" },
+    { label: "Electronics", value: 35, color: "var(--chart-1)" },
+    { label: "Clothing", value: 25, color: "var(--chart-2)" },
+    { label: "Furniture", value: 20, color: "var(--chart-3)" },
+    { label: "Other", value: 20, color: "var(--chart-4)" },
 ];
 
 const channelData = [
@@ -101,8 +102,8 @@ const topProducts = [
 ];
 
 const revenueConfig = {
-    revenue: { label: "Revenue", color: "oklch(0.65 0.19 145)" },
-    expenses: { label: "Expenses", color: "oklch(0.55 0 0)" },
+    revenue: { label: "Revenue", color: "var(--positive)" },
+    expenses: { label: "Expenses", color: "var(--chart-3)" },
 } satisfies ChartConfig;
 
 /* ─── Sparkline ─── */
@@ -168,7 +169,6 @@ function DonutRing({
     const r = (size - 24) / 2;
     const circumference = 2 * Math.PI * r;
     const gapSize = 4;
-    let cumulative = 0;
 
     return (
         <div className="relative inline-flex items-center justify-center">
@@ -176,8 +176,10 @@ function DonutRing({
                 {segments.map((seg, i) => {
                     const segLength =
                         (seg.value / total) * circumference - gapSize;
+                    const cumulative = segments
+                        .slice(0, i)
+                        .reduce((sum, item) => sum + (item.value / total) * circumference, 0);
                     const offset = -(cumulative + gapSize / 2);
-                    cumulative += (seg.value / total) * circumference;
                     return (
                         <motion.circle
                             key={seg.label}
@@ -308,8 +310,8 @@ function ProductRow({
                     <span
                         className={`inline-flex items-center gap-0.5 text-xs font-medium ${
                             isPositive
-                                ? "text-emerald-600 dark:text-emerald-400"
-                                : "text-red-500"
+                                ? "text-positive"
+                                : "text-destructive"
                         }`}
                     >
                         {isPositive ? (
@@ -344,36 +346,21 @@ export default function ReportsPage() {
     const [period, setPeriod] = useState<(typeof periods)[number]>("12M");
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease }}
-                className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
-            >
-                <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                        <BarChart3 className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <div>
-                        <h1 className="font-heading text-2xl font-bold tracking-tight">
-                            Reports
-                        </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Business analytics overview
-                        </p>
-                    </div>
-                </div>
-                {/* Period Tabs */}
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10 xl:p-8 xl:pb-12">
+            <PageHeader
+                title="Reports"
+                description="Business performance, channel health, and product movement over time."
+                icon={BarChart3}
+                actions={
                 <div className="flex gap-1 rounded-lg bg-secondary/50 p-1">
                     {periods.map((p) => (
                         <button
                             key={p}
                             onClick={() => setPeriod(p)}
-                            className={`rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
+                            aria-pressed={period === p}
+                            className={`min-h-11 rounded-md px-3 text-xs font-semibold outline-none transition-[background-color,color] duration-150 focus-visible:ring-2 focus-visible:ring-ring ${
                                 period === p
-                                    ? "bg-background text-foreground shadow-sm"
+                                    ? "bg-background text-foreground"
                                     : "text-muted-foreground hover:text-foreground"
                             }`}
                         >
@@ -381,7 +368,8 @@ export default function ReportsPage() {
                         </button>
                     ))}
                 </div>
-            </motion.div>
+                }
+            />
 
             {/* Stat Tiles with Sparklines */}
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -396,11 +384,9 @@ export default function ReportsPage() {
                             ease,
                         }}
                     >
-                        <Card className="group relative overflow-hidden transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
-                            {/* Gradient top accent */}
-                            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-foreground/15 to-transparent" />
+                        <Card className="relative overflow-hidden">
                             <CardContent className="pb-0 pt-5">
-                                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
+                                <p className="text-xs font-medium text-muted-foreground">
                                     {stat.label}
                                 </p>
                                 <div className="mt-1.5 flex items-end justify-between">
@@ -410,8 +396,8 @@ export default function ReportsPage() {
                                     <span
                                         className={`inline-flex items-center gap-0.5 text-xs font-medium ${
                                             stat.up
-                                                ? "text-emerald-600 dark:text-emerald-400"
-                                                : "text-red-500"
+                                                ? "text-positive"
+                                                : "text-destructive"
                                         }`}
                                     >
                                         {stat.up ? (
@@ -443,13 +429,13 @@ export default function ReportsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2, ease }}
                 >
-                    <Card className="group transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
+                    <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2 text-base">
                                 Revenue vs Expenses
                                 <Badge
                                     variant="outline"
-                                    className="border-none bg-emerald-500/10 text-emerald-600 transition-transform duration-200 group-hover:scale-105 dark:text-emerald-400"
+                                    className="border-positive/25 bg-positive/10 text-positive"
                                 >
                                     <TrendingUp className="h-3 w-3" />
                                     +14.2%

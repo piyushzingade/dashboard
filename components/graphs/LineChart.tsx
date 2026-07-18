@@ -50,19 +50,19 @@ export function PartialLineChart() {
     });
 
     return (
-        <Card className="group p-6.5 transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md dark:hover:border-foreground/10">
+        <Card>
             <CardHeader>
-                <CardTitle>
-                    Partial Line Chart
+                <CardTitle className="flex items-center gap-2">
+                    Audience by device
                     <Badge
                         variant="outline"
-                        className="text-green-500 bg-green-500/10 border-none ml-2 transition-transform duration-200 group-hover:scale-105"
+                        className="ml-2 border-positive/25 bg-positive/10 text-positive"
                     >
                         <TrendingUp className="h-4 w-4" />
                         <span>5.2%</span>
                     </Badge>
                 </CardTitle>
-                <CardDescription>January - June 2025</CardDescription>
+                <CardDescription>Actual traffic with a projected December segment</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer className="h-32 sm:h-54 w-full" config={chartConfig}>

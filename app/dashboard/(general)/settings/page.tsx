@@ -28,7 +28,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
@@ -37,22 +37,28 @@ const ease = [0.23, 1, 0.32, 1] as const;
 function Toggle({
     checked,
     onChange,
+    label,
 }: {
     checked: boolean;
     onChange: (v: boolean) => void;
+    label: string;
 }) {
     return (
         <button
             role="switch"
             aria-checked={checked}
+            aria-label={label}
             onClick={() => onChange(!checked)}
-            className={`relative inline-flex h-5 w-9 shrink-0 items-center rounded-full transition-colors duration-200 ${
-                checked ? "bg-foreground" : "bg-border"
-            }`}
+            className="relative inline-flex size-11 shrink-0 items-center rounded-lg bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-ring"
         >
             <span
-                className={`inline-block h-3.5 w-3.5 rounded-full bg-background shadow-sm transition-transform duration-200 ${
-                    checked ? "translate-x-[18px]" : "translate-x-[3px]"
+                aria-hidden="true"
+                className={`absolute left-1 top-1/2 h-5 w-9 -translate-y-1/2 rounded-full transition-colors duration-200 ${checked ? "bg-foreground" : "bg-border"}`}
+            />
+            <span
+                aria-hidden="true"
+                className={`absolute left-1 top-1/2 size-4 -translate-y-1/2 rounded-full bg-background transition-transform duration-200 ${
+                    checked ? "translate-x-5" : "translate-x-0.5"
                 }`}
             />
         </button>
@@ -76,30 +82,15 @@ export default function SettingsPage() {
     };
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease }}
-                className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between"
-            >
-                <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                        <Settings2 className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <div>
-                        <h1 className="font-heading text-2xl font-bold tracking-tight">
-                            Settings
-                        </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Customize your dashboard experience.
-                        </p>
-                    </div>
-                </div>
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10 xl:p-8 xl:pb-12">
+            <PageHeader
+                title="Settings"
+                description="Configure workspace behavior, notifications, appearance, and security."
+                icon={Settings2}
+                actions={
                 <Button
                     size="sm"
-                    className="mt-3 gap-2 transition-transform duration-150 active:scale-[0.97] sm:mt-0"
+                    className="gap-2"
                     onClick={handleSave}
                 >
                     {saved ? (
@@ -114,7 +105,8 @@ export default function SettingsPage() {
                         </>
                     )}
                 </Button>
-            </motion.div>
+                }
+            />
 
             <div className="grid gap-4 md:grid-cols-2">
                 {/* General */}
@@ -234,6 +226,7 @@ export default function SettingsPage() {
                                         </p>
                                     </div>
                                     <Toggle
+                                        label={item.label}
                                         checked={notifications[item.key]}
                                         onChange={(v) =>
                                             setNotifications((prev) => ({

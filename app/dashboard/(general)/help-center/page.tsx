@@ -26,6 +26,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
@@ -111,7 +112,10 @@ function AccordionItem({ item, index }: { item: FAQItem; index: number }) {
         >
             <button
                 onClick={() => setOpen(!open)}
-                className="flex w-full items-center justify-between rounded-lg px-4 py-3.5 text-left transition-colors duration-150 hover:bg-secondary/50"
+                aria-expanded={open}
+                aria-controls={`faq-panel-${index}`}
+                id={`faq-trigger-${index}`}
+                className="flex min-h-12 w-full items-center justify-between rounded-lg px-4 py-3.5 text-left outline-none transition-colors duration-150 hover:bg-secondary/50 focus-visible:ring-2 focus-visible:ring-ring"
             >
                 <span className="pr-4 text-sm font-medium">
                     {item.question}
@@ -123,6 +127,9 @@ function AccordionItem({ item, index }: { item: FAQItem; index: number }) {
                 />
             </button>
             <div
+                id={`faq-panel-${index}`}
+                role="region"
+                aria-labelledby={`faq-trigger-${index}`}
                 className={`grid transition-all duration-200 ease-out ${
                     open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                 }`}
@@ -157,39 +164,25 @@ export default function HelpCenterPage() {
     );
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease }}
-                className="flex flex-col gap-4"
-            >
-                <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                        <HelpCircle className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <div>
-                        <h1 className="font-heading text-2xl font-bold tracking-tight">
-                            Help Center
-                        </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Find answers, browse guides, and get support.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Search */}
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10 xl:p-8 xl:pb-12">
+            <PageHeader
+                title="Help center"
+                description="Find answers, browse guides, and get support from the NexUI team."
+                icon={HelpCircle}
+                actions={
                 <div className="relative w-full max-w-md">
                     <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                     <Input
-                        placeholder="Search help articles..."
+                        type="search"
+                        aria-label="Search help articles"
+                        placeholder="Search help articles…"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="h-10 pl-10 text-sm"
+                        className="w-full pl-10 text-sm sm:w-72"
                     />
                 </div>
-            </motion.div>
+                }
+            />
 
             {/* Categories Grid */}
             <motion.div
@@ -209,7 +202,7 @@ export default function HelpCenterPage() {
                                 ease,
                             }}
                         >
-                            <Card className="group cursor-pointer transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
+                            <Card>
                                 <CardContent className="flex items-start gap-3 pt-5">
                                     <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-secondary/80 transition-colors duration-200 group-hover:bg-secondary">
                                         <cat.icon className="h-4 w-4 text-muted-foreground" />

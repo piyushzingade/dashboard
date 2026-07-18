@@ -45,20 +45,20 @@ const chartConfig = {
 
 export function GlowingMultipleStrokeRadarChart() {
     return (
-        <Card className="group transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md dark:hover:border-foreground/10">
-            <CardHeader className="items-center pb-4">
-                <CardTitle>
-                    Glowing Multiple Stroke
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    Channel mix
                     <Badge
                         variant="outline"
-                        className="text-red-500 bg-red-500/10 border-none ml-2 transition-transform duration-200 group-hover:scale-105"
+                        className="ml-2 border-destructive/25 bg-destructive/10 text-destructive"
                     >
                         <TrendingDown className="h-4 w-4" />
                         <span>5.2%</span>
                     </Badge>
                 </CardTitle>
                 <CardDescription>
-                    Showing total visitors for the last 6 months
+                    Desktop and mobile acquisition across the last year
                 </CardDescription>
             </CardHeader>
             <CardContent className="pb-0">
@@ -74,26 +74,15 @@ export function GlowingMultipleStrokeRadarChart() {
                             stroke="var(--color-desktop)"
                             dataKey="desktop"
                             fill="none"
-                            filter="url(#multi-stroke-line-glow)"
+                            strokeWidth={1.5}
                         />
                         <Radar
                             stroke="var(--color-mobile)"
                             dataKey="mobile"
                             fill="none"
-                            filter="url(#multi-stroke-line-glow)"
+                            strokeWidth={1.5}
+                            strokeDasharray="5 4"
                         />
-                        <defs>
-                            <filter
-                                id="multi-stroke-line-glow"
-                                x="-20%"
-                                y="-20%"
-                                width="140%"
-                                height="140%"
-                            >
-                                <feGaussianBlur stdDeviation="10" result="blur" />
-                                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                            </filter>
-                        </defs>
                     </RadarChart>
                 </ChartContainer>
             </CardContent>

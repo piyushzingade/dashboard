@@ -7,7 +7,7 @@ export function AddTask() {
     return (
         <Button
             size="sm"
-            className="gap-2 active:scale-[0.97] transition-transform duration-150"
+            className="gap-2"
         >
             <Plus className="size-4" />
             Add task

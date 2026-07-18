@@ -27,11 +27,13 @@ export default function SignInPage() {
     try {
       const { data } = await axios.post("/api/verify-captcha", { token });
       return data.success;
-    } catch (error: any) {
-      if (error?.response?.data?.error) {
-        console.error("Captcha verification error:", error.response.data.error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError<{ error?: string }>(error)) {
+        console.error("Captcha verification error:", error.response?.data?.error ?? error.message);
+      } else if (error instanceof Error) {
+        console.error("Captcha verification error:", error.message);
       } else {
-        console.error("Captcha verification error:", error.message || 'Unknown error');
+        console.error("Captcha verification error: Unknown error");
       }
       return false;
     }
@@ -72,23 +74,24 @@ export default function SignInPage() {
 
   if (status === "loading") {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-          <p className="mt-4 text-muted-foreground">Loading...</p>
+      <div className="flex min-h-svh items-center justify-center bg-background px-5">
+        <div className="text-center" role="status" aria-live="polite">
+          <div className="mx-auto size-8 animate-spin rounded-full border-2 border-muted border-t-foreground" aria-hidden="true" />
+          <p className="mt-4 text-sm text-muted-foreground">Loading account…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-background">
-      <div className="w-full max-w-sm p-8 space-y-6 bg-card rounded-xl shadow-lg dark:border dark:border-border">
+    <main className="flex min-h-svh items-center justify-center bg-background px-5 py-12">
+      <section className="w-full max-w-sm space-y-6 rounded-xl border border-border bg-card p-6 sm:p-8" aria-labelledby="signin-title">
         <div className="text-center space-y-2">
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Welcome Back</h1>
-          <p className="text-muted-foreground">Sign in to your account to continue</p>
+          <div className="mx-auto mb-5 flex size-10 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground" aria-hidden="true">N</div>
+          <h1 id="signin-title" className="text-2xl font-semibold tracking-[-0.03em] text-foreground">Welcome back</h1>
+          <p className="text-sm text-muted-foreground">Sign in to continue to your NexUI workspace.</p>
           {(error || verificationError) && (
-            <p className="text-sm text-destructive">
+            <p className="rounded-lg bg-destructive/10 px-3 py-2 text-left text-sm text-destructive" role="alert">
               {error === "AccessDenied"
                 ? "Access denied. Please try again."
                 : verificationError || "An error occurred during sign in."}
@@ -106,15 +109,15 @@ export default function SignInPage() {
 
         <Button
           variant="outline"
-          className="w-full flex items-center justify-center gap-2 bg-background"
+          className="flex w-full items-center justify-center gap-2 bg-background"
           onClick={handleSignIn}
           disabled={isLoading || !token}
           title={!token ? "Please complete the captcha first" : ""}
         >
           {isLoading ? (
             <>
-              <div className="w-4 h-4 border-2 border-muted border-t-primary rounded-full animate-spin"></div>
-              <span className="text-foreground">Signing in...</span>
+              <div className="size-4 animate-spin rounded-full border-2 border-muted border-t-primary" aria-hidden="true" />
+              <span className="text-foreground">Signing in…</span>
             </>
           ) : (
             <>
@@ -137,7 +140,7 @@ export default function SignInPage() {
             </>
           )}
         </Button>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

@@ -16,6 +16,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { PageHeader } from "@/components/dashboard/page-header";
 
 const ease = [0.23, 1, 0.32, 1] as const;
 
@@ -54,9 +55,9 @@ const tabs = [
 ] as const;
 
 const statusStyles: Record<string, string> = {
-    completed: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-    pending: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-    failed: "bg-red-500/10 text-red-500",
+    completed: "bg-positive/10 text-positive",
+    pending: "bg-warning/10 text-warning",
+    failed: "bg-destructive/10 text-destructive",
 };
 
 /* ─── Component ─── */
@@ -95,27 +96,12 @@ export default function TransactionsPage() {
     };
 
     return (
-        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10">
-            {/* Header */}
-            <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, ease }}
-            >
-                <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/80">
-                        <ArrowRightLeft className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                    <div>
-                        <h1 className="font-heading text-2xl font-bold tracking-tight">
-                            Transactions
-                        </h1>
-                        <p className="text-sm text-muted-foreground">
-                            Track all incoming and outgoing payments.
-                        </p>
-                    </div>
-                </div>
-            </motion.div>
+        <div className="flex flex-1 flex-col gap-6 p-4 pb-8 md:p-6 md:pb-10 xl:p-8 xl:pb-12">
+            <PageHeader
+                title="Transactions"
+                description="Track incoming revenue, outgoing payments, and account movement."
+                icon={ArrowRightLeft}
+            />
 
             {/* Financial Summary — unified card */}
             <motion.div
@@ -123,20 +109,20 @@ export default function TransactionsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.06, ease }}
             >
-                <Card className="relative overflow-hidden transition-[border-color,box-shadow] duration-200 hover:border-foreground/10 hover:shadow-md">
+                <Card className="relative overflow-hidden">
                     {/* Gradient top accent — green to red ratio */}
                     <div className="flex h-1">
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${incomePct}%` }}
                             transition={{ duration: 0.8, delay: 0.2, ease }}
-                            className="bg-emerald-500/60"
+                            className="bg-positive/70"
                         />
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${expensePct}%` }}
                             transition={{ duration: 0.8, delay: 0.3, ease }}
-                            className="bg-red-500/40"
+                            className="bg-destructive/55"
                         />
                     </div>
 
@@ -145,7 +131,7 @@ export default function TransactionsPage() {
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-border/30">
                             {/* Transactions count */}
                             <div className="sm:pr-6">
-                                <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
+                                <p className="text-xs font-medium text-muted-foreground">
                                     Transactions
                                 </p>
                                 <p className="mt-1.5 text-3xl font-bold tabular-nums tracking-tight">
@@ -162,11 +148,11 @@ export default function TransactionsPage() {
 
                             {/* Income */}
                             <div className="sm:px-6">
-                                <p className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
-                                    <ArrowDownLeft className="h-3 w-3 text-emerald-500" />
+                                <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                                    <ArrowDownLeft className="h-3 w-3 text-positive" />
                                     Income
                                 </p>
-                                <p className="mt-1.5 text-3xl font-bold tabular-nums tracking-tight text-emerald-600 dark:text-emerald-400">
+                                <p className="mt-1.5 text-3xl font-semibold tabular-nums tracking-[-0.03em] text-positive">
                                     $
                                     {totalIncome.toLocaleString(undefined, {
                                         minimumFractionDigits: 2,
@@ -179,11 +165,11 @@ export default function TransactionsPage() {
 
                             {/* Expenses */}
                             <div className="sm:pl-6">
-                                <p className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wider text-muted-foreground/70">
-                                    <ArrowUpRight className="h-3 w-3 text-red-500" />
+                                <p className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+                                    <ArrowUpRight className="h-3 w-3 text-destructive" />
                                     Expenses
                                 </p>
-                                <p className="mt-1.5 text-3xl font-bold tabular-nums tracking-tight text-red-500">
+                                <p className="mt-1.5 text-3xl font-semibold tabular-nums tracking-[-0.03em] text-destructive">
                                     $
                                     {totalExpense.toLocaleString(undefined, {
                                         minimumFractionDigits: 2,
@@ -205,7 +191,7 @@ export default function TransactionsPage() {
                                     delay: 0.3,
                                     ease,
                                 }}
-                                className="rounded-l-full bg-emerald-500/50"
+                                className="rounded-l-full bg-positive/65"
                             />
                             <motion.div
                                 initial={{ width: 0 }}
@@ -215,7 +201,7 @@ export default function TransactionsPage() {
                                     delay: 0.4,
                                     ease,
                                 }}
-                                className="rounded-r-full bg-red-500/40"
+                                className="rounded-r-full bg-destructive/50"
                             />
                         </div>
 
@@ -227,7 +213,7 @@ export default function TransactionsPage() {
                                     Net balance
                                 </span>
                             </div>
-                            <span className="font-mono text-sm font-semibold tabular-nums text-emerald-600 dark:text-emerald-400">
+                            <span className="text-sm font-semibold tabular-nums text-positive">
                                 +$
                                 {netBalance.toLocaleString(undefined, {
                                     minimumFractionDigits: 2,
@@ -251,9 +237,10 @@ export default function TransactionsPage() {
                         <button
                             key={tab.key}
                             onClick={() => setActiveTab(tab.key)}
-                            className={`flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-xs font-medium transition-all duration-200 ${
+                            aria-pressed={activeTab === tab.key}
+                            className={`flex min-h-11 items-center gap-1.5 rounded-md px-3.5 text-xs font-semibold outline-none transition-[background-color,color] duration-150 focus-visible:ring-2 focus-visible:ring-ring ${
                                 activeTab === tab.key
-                                    ? "bg-background text-foreground shadow-sm"
+                                    ? "bg-background text-foreground"
                                     : "text-muted-foreground hover:text-foreground"
                             }`}
                         >
@@ -275,10 +262,12 @@ export default function TransactionsPage() {
                 <div className="relative w-full sm:w-64">
                     <Search className="absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
                     <Input
-                        placeholder="Search transactions..."
+                        type="search"
+                        aria-label="Search transactions"
+                        placeholder="Search transactions…"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="h-9 pl-9 text-sm"
+                        className="pl-9 text-sm"
                     />
                 </div>
             </motion.div>
@@ -348,7 +337,7 @@ export default function TransactionsPage() {
                                     <span
                                         className={`text-right font-mono text-sm tabular-nums font-medium ${
                                             txn.type === "income"
-                                                ? "text-emerald-600 dark:text-emerald-400"
+                                                ? "text-positive"
                                                 : "text-foreground"
                                         }`}
                                     >

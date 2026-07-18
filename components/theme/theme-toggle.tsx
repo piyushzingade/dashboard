@@ -36,14 +36,15 @@ export function ModeToggle() {
         <Button
             variant='secondary'
             size='icon'
-            className='group/toggle size-8'
+            className='group/toggle'
             onClick={handleThemeToggle}
+            aria-label={`Switch to ${themeMode === 'dark' ? 'light' : 'dark'} mode`}
             title={`Switch to ${themeMode === 'dark' ? 'light' : 'dark'} mode`}
         >
             {themeMode === 'dark' ? (
-                <Sun className='w-4 h-4' />
+                <Sun className='size-4' />
             ) : (
-                <Moon className='w-4 h-4' />
+                <Moon className='size-4' />
             )}
             <span className='sr-only'>Toggle theme</span>
         </Button>

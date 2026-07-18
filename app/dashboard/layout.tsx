@@ -14,11 +14,11 @@ export default async function DashboardLayout({
     return (
         <KBar>
             <SidebarProvider>
-                <div className="flex h-screen w-full overflow-hidden">
+                <div className="flex min-h-svh w-full overflow-hidden bg-background">
                     <AppSidebar />
                     <SidebarInset className="flex flex-col flex-1 overflow-hidden">
                         <Header />
-                        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+                        <div className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain">
                             {children}
                         </div>
                     </SidebarInset>
@@ -27,4 +27,3 @@ export default async function DashboardLayout({
         </KBar>
     )
 }
-

@@ -37,7 +37,7 @@ export function HowItWorks() {
                     transition={{ duration: 0.5, ease }}
                     className="mb-4"
                 >
-                    <p className="text-sm font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+                    <p className="text-sm font-medium text-muted-foreground">
                         How it works
                     </p>
                 </motion.div>

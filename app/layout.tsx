@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { Manrope } from "next/font/google";
 import "./globals.css";
 import AuthProvider from "@/components/providers/session-provider";
 import { getServerSession } from "next-auth";
@@ -9,12 +9,9 @@ import { cookies } from "next/headers";
 import fs from "fs";
 import path from "path";
 
-const inter = Inter({ subsets: ["latin"] });
-
-const bricolage = Bricolage_Grotesque({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-bricolage",
-  weight: ["400", "600", "700", "800"],
+  variable: "--font-manrope",
   display: "swap",
 });
 
@@ -41,11 +38,17 @@ export const metadata: Metadata = {
   },
 };
 
-let themes: Record<string, any> | null = null;
+type ThemeDefinition = {
+  displayName?: string;
+  light: Record<string, string>;
+  dark: Record<string, string>;
+};
+
+let themes: Record<string, ThemeDefinition> | null = null;
 try {
   const themePath = path.join(process.cwd(), "public", "theme.json");
   const raw = fs.readFileSync(themePath, "utf8");
-  themes = JSON.parse(raw);
+  themes = JSON.parse(raw) as Record<string, ThemeDefinition>;
 } catch {
   themes = null;
 }
@@ -63,7 +66,7 @@ function parseActiveTheme(cookieValue?: string) {
 
 function buildInlineVars(name?: string, mode?: "light" | "dark") {
   if (!name || !mode || !themes) return "";
-  const themeObj = (themes as any)[name];
+  const themeObj = themes[name];
   if (!themeObj) return "";
   const vars = themeObj[mode];
   if (!vars) return "";
@@ -82,10 +85,9 @@ export default async function RootLayout({
   const cookieStore = await cookies();
   const activeThemeCookie = cookieStore.get("active_theme")?.value;
 
-  const {
-    name: htmlThemeName,
-    mode: htmlThemeMode,
-  } = parseActiveTheme(activeThemeCookie);
+  const { name: htmlThemeName, mode: parsedThemeMode } =
+    parseActiveTheme(activeThemeCookie);
+  const htmlThemeMode = parsedThemeMode ?? "dark";
 
   const inlineVars = buildInlineVars(
     htmlThemeName,
@@ -103,7 +105,7 @@ export default async function RootLayout({
       className={htmlThemeMode === "dark" ? "dark" : ""}
       data-theme={htmlThemeName ?? undefined}
       data-theme-mode={htmlThemeMode ?? undefined}
-      data-theme-ready={htmlThemeMode ? "true" : undefined}
+      data-theme-ready="true"
       suppressHydrationWarning
     >
       <head>
@@ -179,7 +181,7 @@ export default async function RootLayout({
         ) : null}
       </head>
       <body
-        className={`${inter.className} ${bricolage.variable} antialiased`}
+        className={`${manrope.className} ${manrope.variable} antialiased`}
         style={{ backgroundColor: initialBg }}
         suppressHydrationWarning
       >

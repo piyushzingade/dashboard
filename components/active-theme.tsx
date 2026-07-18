@@ -11,7 +11,15 @@ import {
 const COOKIE_NAME = "active_theme";
 
 const FALLBACK_THEME = "default";
-const FALLBACK_MODE: "light" | "dark" = "light";
+const FALLBACK_MODE: "light" | "dark" = "dark";
+
+type ThemeMode = "light" | "dark";
+type ThemeDefinition = {
+    displayName?: string;
+    light: Record<string, string>;
+    dark: Record<string, string>;
+};
+type ThemesData = Record<string, ThemeDefinition>;
 
 function setThemeCookie(themeName: string, mode: string) {
     if (typeof window === "undefined") return;
@@ -28,11 +36,11 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-async function loadThemes() {
+async function loadThemes(): Promise<ThemesData | null> {
     try {
         const response = await fetch("/theme.json");
         if (!response.ok) return null;
-        return await response.json();
+        return (await response.json()) as ThemesData;
     } catch (error) {
         console.error("Failed to load themes:", error);
         return null;
@@ -42,8 +50,8 @@ async function loadThemes() {
 /** Does not overwrite CSS variables when isDefault = true */
 function applyThemeVariables(
     themeName: string,
-    mode: "light" | "dark",
-    themesData: any,
+    mode: ThemeMode,
+    themesData: ThemesData | null,
     isDefault: boolean
 ) {
     const root = document.documentElement;
@@ -60,7 +68,7 @@ function applyThemeVariables(
     const themeVars = themesData[themeName][mode];
     if (!themeVars) return;
 
-    Object.entries(themeVars).forEach(([key, value]: [string, any]) => {
+    Object.entries(themeVars).forEach(([key, value]) => {
         const cssKey = `--${key}`;
         document.documentElement.style.setProperty(cssKey, value);
     });
@@ -129,7 +137,7 @@ export function ActiveThemeProvider({
 
     const [themeName, setThemeName] = useState<string>(initialName);
     const [themeMode, setThemeMode] = useState<"light" | "dark">(initialMode);
-    const [themesData, setThemesData] = useState<any>(null);
+    const [themesData, setThemesData] = useState<ThemesData | null>(null);
 
     const [isUsingDefaultTheme, setIsUsingDefaultTheme] = useState<boolean>(initialIsDefault);
 
@@ -154,7 +162,7 @@ export function ActiveThemeProvider({
             // prefer that and mark as user theme
             if (initialTheme) {
                 const parts = initialTheme.split("-");
-                let name = parts[0];
+                const name = parts[0];
                 let mode: "light" | "dark" = FALLBACK_MODE;
                 if (parts.length === 2 && (parts[1] === "light" || parts[1] === "dark")) {
                     mode = parts[1] as "light" | "dark";

@@ -1,4 +1,5 @@
 import CalendarComponent from "@/components/CalendarComponent";
+import PageContainer from "@/components/layout/page-container";
 
 export const metadata = {
     title: "Dashboard : Calendar"
@@ -6,8 +7,8 @@ export const metadata = {
 
 export default function CalendarPage() {
     return (
-        <div className="h-full w-full overflow-auto p-4">
+        <PageContainer>
             <CalendarComponent />
-        </div>
+        </PageContainer>
     )
 }

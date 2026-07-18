@@ -1,6 +1,5 @@
 // components/Headers.tsx
 import { Breadcrumbs } from "./Breadcrumbs";
-import CtaGithub from "./CtaGithub";
 import SearchInput from "./search-input";
 import { ModeToggle } from "./theme/theme-toggle";
 import { ThemeSelector } from "./ThemeSelector";
@@ -18,22 +17,19 @@ export default function Header({ className }: HeaderProps) {
         <header
             role="banner"
             className={cn(
-                "sticky top-0 z-50 w-full h-14 shrink-0",
-                "border-b bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/60",
-                "overflow-hidden",
-                "transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12",
+                "sticky top-0 z-40 h-16 w-full shrink-0 border-b border-border bg-background/95",
+                "transition-[height] duration-200 ease-out",
                 className
             )}
         >
             <div className="flex h-full items-center justify-between gap-2">
-                <div className="flex items-center gap-2 px-4">
+                <div className="flex min-w-0 items-center gap-2 px-3 md:px-5">
                     <SidebarTrigger className="-ml-1" />
-                    <Separator orientation="vertical" className="mr-2 h-4" />
+                    <Separator orientation="vertical" className="mx-1 h-5" />
                     <Breadcrumbs />
                 </div>
 
-                <div className="flex items-center gap-2 px-4">
-                    <CtaGithub />
+                <div className="flex items-center gap-1.5 px-3 md:px-5">
                     <div className="hidden md:flex">
                         <SearchInput />
                     </div>

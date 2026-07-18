@@ -9,7 +9,7 @@ import { Preview } from "@/components/landing/preview"
 
 export default function Page() {
     return (
-        <main className="relative min-h-screen overflow-x-hidden bg-background text-foreground dot-grid">
+        <main className="relative min-h-screen overflow-x-hidden bg-background text-foreground">
             <Navbar />
             <HeroSection />
             <Features />
@@ -19,7 +19,7 @@ export default function Page() {
             {/* ─── CTA ─── */}
             <section className="px-6 py-28 text-center sm:py-36">
                 <div className="mx-auto max-w-lg">
-                    <p className="mb-4 text-sm font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+                    <p className="mb-4 text-sm font-medium text-muted-foreground">
                         Get started
                     </p>
                     <h2 className="font-heading text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
@@ -32,7 +32,7 @@ export default function Page() {
                         <Button
                             asChild
                             size="lg"
-                            className="gap-2 rounded-xl bg-emerald-600 px-8 text-white hover:bg-emerald-700 active:scale-[0.97] dark:bg-emerald-500 dark:hover:bg-emerald-600"
+                            className="gap-2 px-8"
                         >
                             <Link href="/dashboard/overview">
                                 Open Dashboard

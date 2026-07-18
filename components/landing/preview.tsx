@@ -1,16 +1,17 @@
 "use client"
 
 import { useRef, useEffect } from "react"
-import { motion } from "motion/react"
+import { motion, useReducedMotion } from "motion/react"
 
 const ease = [0.23, 1, 0.32, 1] as const
 
 export function Preview() {
     const videoRef = useRef<HTMLVideoElement>(null)
+    const shouldReduceMotion = useReducedMotion()
 
     useEffect(() => {
-        videoRef.current?.play().catch(() => {})
-    }, [])
+        if (!shouldReduceMotion) videoRef.current?.play().catch(() => {})
+    }, [shouldReduceMotion])
 
     return (
         <section className="px-6 pb-28 sm:pb-36">
@@ -23,7 +24,7 @@ export function Preview() {
                     transition={{ duration: 0.5, ease }}
                     className="mb-4"
                 >
-                    <p className="text-sm font-medium tracking-widest uppercase text-emerald-600 dark:text-emerald-400">
+                    <p className="text-sm font-medium text-muted-foreground">
                         Preview
                     </p>
                 </motion.div>
@@ -44,7 +45,7 @@ export function Preview() {
                     whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true, margin: "-40px" }}
                     transition={{ duration: 0.6, delay: 0.1, ease }}
-                    className="mt-12 overflow-hidden rounded-xl border border-border/30 bg-card/50 shadow-xl shadow-black/[0.04] dark:shadow-black/[0.15] sm:rounded-2xl"
+                    className="mt-12 overflow-hidden rounded-xl border border-border bg-card"
                 >
                     {/* Title bar */}
                     <div className="flex items-center justify-between border-b border-border/20 px-4 py-2.5">
@@ -68,7 +69,8 @@ export function Preview() {
                             className="aspect-video w-full object-cover"
                             loop
                             muted
-                            autoPlay
+                            autoPlay={!shouldReduceMotion}
+                            controls={Boolean(shouldReduceMotion)}
                             playsInline
                         >
                             <source

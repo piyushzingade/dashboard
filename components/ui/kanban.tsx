@@ -311,7 +311,7 @@ function KanbanRoot<T>(props: KanbanRootProps<T>) {
             if (event.activatorEvent.defaultPrevented) return;
             setActiveId(event.active.id);
         },
-        [kanbanProps.onDragStart],
+        [kanbanProps],
     );
 
     const onDragOver = React.useCallback(
@@ -371,7 +371,7 @@ function KanbanRoot<T>(props: KanbanRootProps<T>) {
                 hasMovedRef.current = true;
             }
         },
-        [value, getColumn, getItemValue, onValueChange, kanbanProps.onDragOver],
+        [value, getColumn, getItemValue, onValueChange, kanbanProps],
     );
 
     const onDragEnd = React.useCallback(
@@ -457,7 +457,7 @@ function KanbanRoot<T>(props: KanbanRootProps<T>) {
             getItemValue,
             onValueChange,
             onMove,
-            kanbanProps.onDragEnd,
+            kanbanProps,
         ],
     );
 
@@ -470,7 +470,7 @@ function KanbanRoot<T>(props: KanbanRootProps<T>) {
             setActiveId(null);
             hasMovedRef.current = false;
         },
-        [kanbanProps.onDragCancel],
+        [kanbanProps],
     );
 
     const announcements: Announcements = React.useMemo(
@@ -755,7 +755,6 @@ function KanbanColumn(props: KanbanColumnProps) {
         animateLayoutChanges,
     });
 
-    //@ts-ignore
     const composedRef = useComposedRefs(ref, (node) => {
         if (disabled) return;
         setNodeRef(node);
@@ -772,7 +771,7 @@ function KanbanColumn(props: KanbanColumnProps) {
     const items = React.useMemo(() => {
         const items = context.items[value] ?? [];
         return items.map((item) => context.getItemValue(item));
-    }, [context.items, value, context.getItemValue]);
+    }, [context, value]);
 
     const columnContext = React.useMemo<KanbanColumnContextValue>(
         () => ({
@@ -837,7 +836,6 @@ function KanbanColumnHandle(props: KanbanColumnHandleProps) {
     const columnContext = useKanbanColumnContext(COLUMN_HANDLE_NAME);
 
     const isDisabled = disabled ?? columnContext.disabled;
-    //@ts-ignore
     const composedRef = useComposedRefs(ref, (node) => {
         if (isDisabled) return;
         columnContext.setActivatorNodeRef(node);
@@ -931,7 +929,6 @@ function KanbanItem(props: KanbanItemProps) {
         throw new Error(`\`${ITEM_NAME}\` value cannot be an empty string`);
     }
 
-    //@ts-ignore
     const composedRef = useComposedRefs(ref, (node) => {
         if (disabled) return;
         setNodeRef(node);
@@ -1000,7 +997,6 @@ function KanbanItemHandle(props: KanbanItemHandleProps) {
 
     const isDisabled = disabled ?? itemContext.disabled;
 
-    //@ts-ignore
     const composedRef = useComposedRefs(ref, (node) => {
         if (isDisabled) return;
         itemContext.setActivatorNodeRef(node);
